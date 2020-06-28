@@ -99,7 +99,11 @@ C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Mi
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
@@ -122,6 +126,7 @@ C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\va
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.AssemblyInfoInputs.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.AssemblyInfo.cs
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.RazorTargetAssemblyInfo.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CopyComplete

@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using vagbhat.api.Extensions;
 
 namespace vagbhat.api.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -24,6 +28,7 @@ namespace vagbhat.api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,sysadmin")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
@@ -31,9 +36,9 @@ namespace vagbhat.api.Controllers
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                Summary = Summaries[rng.Next(Summaries.Length)],
+                UserId = HttpContext.GetUserName()
+            }).ToArray();
         }
     }
 }

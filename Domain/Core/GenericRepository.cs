@@ -9,49 +9,43 @@ namespace Domain.Core
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<T> AddAsync(T entity);        
-        Task<T> EditAsync(T entity);
-        IQueryable<T> Get();
-        Task<T> GetAsync(int key);
-        Task<T> DeleteAsync(int key);
-        Task<T> IsExistAsync(string key);
+        Task<T> AddAsync(T entity);
+        Task<T> EditAsync(T entity);        
+        Task<T> GetAsync(string key);
+        Task<T> DeleteAsync(T entity);        
     }
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly DbContext entitiesContext;
+        private readonly EntitiesContext entitiesContext;
 
         public GenericRepository(DbContext entitiesContext)
         {
-            this.entitiesContext = entitiesContext;
+            this.entitiesContext = (EntitiesContext)entitiesContext;
         }
-        public Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<T> EditAsync(T entity)
-        {
-            throw new NotImplementedException();
+            await entitiesContext.Set<T>().AddAsync(entity);
+            await entitiesContext.SaveChangesAsync();
+            return entity;
         }
 
-        public IQueryable<T> Get()
+        public async Task<T> DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            entitiesContext.Set<T>().Remove(entity);
+            await entitiesContext.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<T> GetAsync(int key)
+        public async Task<T> EditAsync(T entity)
         {
-            throw new NotImplementedException();
+            entitiesContext.Entry(entity).State = EntityState.Modified;
+            await entitiesContext.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<T> IsExistAsync(string key)
+        public async Task<T> GetAsync(string key)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<T> DeleteAsync(int key)
-        {
-            throw new NotImplementedException();
+            return await entitiesContext.Set<T>().FindAsync(key);
         }
     }
 }

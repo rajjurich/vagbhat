@@ -7,5 +7,6 @@ namespace Models.Options
     public class JwtSettings
     {
         public string Secret { get; set; }
+        public string TokenLifeTimeInMinutes { get; set; }
     }
 }

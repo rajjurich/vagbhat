@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace Domain.Extensions
@@ -15,23 +16,25 @@ namespace Domain.Extensions
 
             string roleId = Guid.NewGuid().ToString();
 
+            string roleName = "sysadmin";
+
             modelBuilder.Entity<Role>().HasData(new Role
             {
                 Id = roleId,
-                Name = "sysadmin",
-                NormalizedName = "sysadmin"
+                Name = roleName,
+                NormalizedName = roleName
             });
 
             var hasher = new PasswordHasher<User>();
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = userId,
-                UserName = "sysadmin",
-                NormalizedUserName = "sysadmin",
-                Email = "rajju2512@gmail.com",
-                NormalizedEmail = "rajju2512@gmail.com",
+                UserName = roleName,
+                NormalizedUserName = roleName,
+                Email = "user@example.com",
+                NormalizedEmail = "user@example.com",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "sysadmin@123"),
+                PasswordHash = hasher.HashPassword(null, "string"),
                 SecurityStamp = Guid.NewGuid().ToString()
             });
 
@@ -39,6 +42,22 @@ namespace Domain.Extensions
             {
                 RoleId = roleId,
                 UserId = userId
+            });
+
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(new IdentityUserClaim<string>
+            {
+                Id = 1,
+                UserId = userId,
+                ClaimType = ClaimTypes.Name,
+                ClaimValue = "sysadmin"
+            });
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(new IdentityRoleClaim<string>
+            {
+                Id = 1,
+                RoleId = roleId,
+                ClaimType = ClaimTypes.Role,
+                ClaimValue = roleName,
             });
         }
     }

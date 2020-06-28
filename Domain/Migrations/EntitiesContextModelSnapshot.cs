@@ -19,6 +19,37 @@ namespace Domain.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Domain.Model.RefreshToken", b =>
+                {
+                    b.Property<string>("Token")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsInvalid")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JwtId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Token");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -74,6 +105,15 @@ namespace Domain.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "sysadmin",
+                            RoleId = "abf26842-8a17-457f-80f8-234d985e174f"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
@@ -169,6 +209,15 @@ namespace Domain.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+                            ClaimValue = "sysadmin",
+                            UserId = "9012ce6f-9536-4cfe-a810-9308d56837b8"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -210,8 +259,8 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "5d113633-643c-4206-9df7-6c55cf0d302c",
-                            RoleId = "c85c13a2-3e3d-4059-b60c-3b9fa379f2bf"
+                            UserId = "9012ce6f-9536-4cfe-a810-9308d56837b8",
+                            RoleId = "abf26842-8a17-457f-80f8-234d985e174f"
                         });
                 });
 
@@ -243,8 +292,8 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c85c13a2-3e3d-4059-b60c-3b9fa379f2bf",
-                            ConcurrencyStamp = "127c3e79-e5f4-4939-8315-412185021eaf",
+                            Id = "abf26842-8a17-457f-80f8-234d985e174f",
+                            ConcurrencyStamp = "a4344824-9b06-4add-ad86-0605ddf407fd",
                             Name = "sysadmin",
                             NormalizedName = "sysadmin"
                         });
@@ -259,20 +308,28 @@ namespace Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5d113633-643c-4206-9df7-6c55cf0d302c",
+                            Id = "9012ce6f-9536-4cfe-a810-9308d56837b8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9f2d4718-c9b7-40cc-b705-cd6c18770f68",
-                            Email = "rajju2512@gmail.com",
+                            ConcurrencyStamp = "062f0284-a6f5-4a4d-b39b-f962a6f6c077",
+                            Email = "user@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "rajju2512@gmail.com",
+                            NormalizedEmail = "user@example.com",
                             NormalizedUserName = "sysadmin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEObkz4RdQUDCPURaWxevnv+x0Q0Z/6xeLXf5gWkuees/TpUPc+0HbgGlbE/xvUnpUg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELdYVHy/1n+vW5VQYwOB0SYFSdf5O5ROMmw9YHyVrxb9Gb11NlGQGoFdBsttBoSsmw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8938d8e3-47f3-4beb-8675-fdb0e4e20ec8",
+                            SecurityStamp = "8a6bc7c3-0c42-44da-aa9a-6a411b7beafd",
                             TwoFactorEnabled = false,
                             UserName = "sysadmin"
                         });
+                });
+
+            modelBuilder.Entity("Domain.Model.RefreshToken", b =>
+                {
+                    b.HasOne("Domain.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

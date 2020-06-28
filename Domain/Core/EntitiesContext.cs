@@ -1,4 +1,5 @@
 ﻿using Domain.Extensions;
+using Domain.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +16,8 @@ namespace Domain.Core
         {
 
         }
+        
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

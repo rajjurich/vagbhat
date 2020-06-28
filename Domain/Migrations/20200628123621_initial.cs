@@ -154,20 +154,53 @@ namespace Domain.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Token = table.Column<string>(nullable: false),
+                    JwtId = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ExpiryDate = table.Column<DateTime>(nullable: false),
+                    IsUsed = table.Column<bool>(nullable: false),
+                    IsInvalid = table.Column<bool>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Token);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "c85c13a2-3e3d-4059-b60c-3b9fa379f2bf", "127c3e79-e5f4-4939-8315-412185021eaf", "Role", "sysadmin", "sysadmin" });
+                values: new object[] { "abf26842-8a17-457f-80f8-234d985e174f", "a4344824-9b06-4add-ad86-0605ddf407fd", "Role", "sysadmin", "sysadmin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "5d113633-643c-4206-9df7-6c55cf0d302c", 0, "9f2d4718-c9b7-40cc-b705-cd6c18770f68", "User", "rajju2512@gmail.com", true, false, null, "rajju2512@gmail.com", "sysadmin", "AQAAAAEAACcQAAAAEObkz4RdQUDCPURaWxevnv+x0Q0Z/6xeLXf5gWkuees/TpUPc+0HbgGlbE/xvUnpUg==", null, false, "8938d8e3-47f3-4beb-8675-fdb0e4e20ec8", false, "sysadmin" });
+                values: new object[] { "9012ce6f-9536-4cfe-a810-9308d56837b8", 0, "062f0284-a6f5-4a4d-b39b-f962a6f6c077", "User", "user@example.com", true, false, null, "user@example.com", "sysadmin", "AQAAAAEAACcQAAAAELdYVHy/1n+vW5VQYwOB0SYFSdf5O5ROMmw9YHyVrxb9Gb11NlGQGoFdBsttBoSsmw==", null, false, "8a6bc7c3-0c42-44da-aa9a-6a411b7beafd", false, "sysadmin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoleClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
+                values: new object[] { 1, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "sysadmin", "abf26842-8a17-457f-80f8-234d985e174f" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[] { 1, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "sysadmin", "9012ce6f-9536-4cfe-a810-9308d56837b8" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "5d113633-643c-4206-9df7-6c55cf0d302c", "c85c13a2-3e3d-4059-b60c-3b9fa379f2bf" });
+                values: new object[] { "9012ce6f-9536-4cfe-a810-9308d56837b8", "abf26842-8a17-457f-80f8-234d985e174f" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -207,6 +240,11 @@ namespace Domain.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -225,6 +263,9 @@ namespace Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
