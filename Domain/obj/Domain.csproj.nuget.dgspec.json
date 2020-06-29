@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {}
+    "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
+    "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
+        "projectUniqueName": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\obj\\",
+        "projectPath": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+        "outputPath": "F:\\all git repositories\\vagbhat\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Models\\Models.csproj"
+              "F:\\all git repositories\\vagbhat\\Models\\Models.csproj": {
+                "projectPath": "F:\\all git repositories\\vagbhat\\Models\\Models.csproj"
               }
             }
           }
@@ -80,17 +80,17 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Models\\Models.csproj": {
+    "F:\\all git repositories\\vagbhat\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Models\\Models.csproj",
+        "projectUniqueName": "F:\\all git repositories\\vagbhat\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Models\\Models.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Models\\obj\\",
+        "projectPath": "F:\\all git repositories\\vagbhat\\Models\\Models.csproj",
+        "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+        "outputPath": "F:\\all git repositories\\vagbhat\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

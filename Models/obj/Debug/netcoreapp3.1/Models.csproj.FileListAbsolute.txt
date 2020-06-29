@@ -7,3 +7,11 @@ C:\Users\user\Desktop\project\git\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.
 C:\Users\user\Desktop\project\git\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.csproj.CoreCompileInputs.cache
 C:\Users\user\Desktop\project\git\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.dll
 C:\Users\user\Desktop\project\git\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.pdb
+F:\all git repositories\vagbhat\Models\bin\Debug\netcoreapp3.1\Models.deps.json
+F:\all git repositories\vagbhat\Models\bin\Debug\netcoreapp3.1\Models.dll
+F:\all git repositories\vagbhat\Models\bin\Debug\netcoreapp3.1\Models.pdb
+F:\all git repositories\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.AssemblyInfoInputs.cache
+F:\all git repositories\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.AssemblyInfo.cs
+F:\all git repositories\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.csproj.CoreCompileInputs.cache
+F:\all git repositories\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.dll
+F:\all git repositories\vagbhat\Models\obj\Debug\netcoreapp3.1\Models.pdb

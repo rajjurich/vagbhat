@@ -21,7 +21,8 @@ namespace Domain.Core
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder);            
+
             builder.Seed();
 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

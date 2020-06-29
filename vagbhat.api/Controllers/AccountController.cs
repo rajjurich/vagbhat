@@ -31,14 +31,7 @@ namespace vagbhat.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginSuccessModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(LoginFailedModel))]
         public async Task<IActionResult> Login([FromBody] LoginRequestModel loginRequestModel)
-        {
-            if (!(ModelState.IsValid))
-            {
-                return BadRequest(new LoginFailedModel
-                {
-                    Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage)).ToArray()
-                });
-            }
+        {            
             var response = await accountService.LoginAsync(loginRequestModel);
             if (!(response.Success))
             {
@@ -59,14 +52,7 @@ namespace vagbhat.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginSuccessModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(LoginFailedModel))]
         public async Task<IActionResult> Refresh([FromBody] RefreshRequestModel refreshRequestModel)
-        {
-            if (!(ModelState.IsValid))
-            {
-                return BadRequest(new LoginFailedModel
-                {
-                    Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage)).ToArray()
-                });
-            }
+        {            
             var response = await accountService
                 .RefreshTokenAsync(refreshRequestModel.Token, refreshRequestModel.RefreshToken);
 
@@ -86,6 +72,7 @@ namespace vagbhat.api.Controllers
 
         // GET: api/<AccountController>
         [HttpGet]
+        [NonAction]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -93,6 +80,7 @@ namespace vagbhat.api.Controllers
 
         // GET api/<AccountController>/5
         [HttpGet("{id}")]
+        [NonAction]
         public string Get(int id)
         {
             return "value";
@@ -100,18 +88,21 @@ namespace vagbhat.api.Controllers
 
         // POST api/<AccountController>
         [HttpPost]
+        [NonAction]
         public void Post([FromBody] string value)
         {
         }
 
         // PUT api/<AccountController>/5
         [HttpPut("{id}")]
+        [NonAction]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/<AccountController>/5
         [HttpDelete("{id}")]
+        [NonAction]
         public void Delete(int id)
         {
         }
