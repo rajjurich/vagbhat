@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "vagbhat.api", "vagbhat.api\vagbhat.api.csproj", "{54EE578F-FB47-4F18-9AEA-48F4C0EDAAB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{EFF1FB1D-B4BD-404C-8146-319E70BACF82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{0ECE8A3B-1BB7-442F-8808-D1704A96E503}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{54EE578F-FB47-4F18-9AEA-48F4C0EDAAB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54EE578F-FB47-4F18-9AEA-48F4C0EDAAB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54EE578F-FB47-4F18-9AEA-48F4C0EDAAB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFF1FB1D-B4BD-404C-8146-319E70BACF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFF1FB1D-B4BD-404C-8146-319E70BACF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFF1FB1D-B4BD-404C-8146-319E70BACF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFF1FB1D-B4BD-404C-8146-319E70BACF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ECE8A3B-1BB7-442F-8808-D1704A96E503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ECE8A3B-1BB7-442F-8808-D1704A96E503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ECE8A3B-1BB7-442F-8808-D1704A96E503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ECE8A3B-1BB7-442F-8808-D1704A96E503}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

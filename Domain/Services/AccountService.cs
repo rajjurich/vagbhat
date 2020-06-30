@@ -1,12 +1,12 @@
-﻿using Models.RequestModels;
+﻿using Contracts.RequestModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Models.Options;
+using Contracts.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using Models.ResponseModels;
+using Contracts.ResponseModels;
 using Microsoft.AspNetCore.Identity;
 using Domain.Model;
 using System.Linq;

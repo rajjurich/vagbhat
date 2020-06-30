@@ -20,7 +20,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Models.Options;
+using Contracts.Options;
 
 namespace vagbhat.api
 {
@@ -95,7 +95,7 @@ namespace vagbhat.api
 
             services.AddScoped<DbContext, EntitiesContext>();
 
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));
 
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
@@ -114,6 +114,9 @@ namespace vagbhat.api
             services.AddAuthorization();
 
             services.AddControllers();
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<EntitiesContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,6 +126,8 @@ namespace vagbhat.api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHealthChecks("/health");
 
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);

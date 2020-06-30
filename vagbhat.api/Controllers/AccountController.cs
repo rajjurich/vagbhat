@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models.Contracts;
-using Models.RequestModels;
-using Models.ResponseModels;
+using Contracts;
+using Contracts.RequestModels;
+using Contracts.ResponseModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
