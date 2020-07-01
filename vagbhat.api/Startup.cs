@@ -21,6 +21,10 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Contracts.Options;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Contracts.Checks;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace vagbhat.api
 {
@@ -70,7 +74,7 @@ namespace vagbhat.api
                         }
                     } ,new List<string>()}
                 });
-            });            
+            });
 
             services.AddIdentity<User, Role>()
                           .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
@@ -127,7 +131,25 @@ namespace vagbhat.api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHealthChecks("/health");
+            app.UseHealthChecks("/health", new HealthCheckOptions
+            {
+                ResponseWriter = async (context, report) =>
+                 {
+                     context.Response.ContentType = "application/json";
+                     var healthCheckResponse = new HealthCheckResponse
+                     {
+                         Status = report.Status.ToString(),
+                         Duration = report.TotalDuration,
+                         HealthChecks = report.Entries.Select(x => new HealthCheck
+                         {
+                             Component = x.Key,
+                             Status = x.Value.Status.ToString(),
+                             Description = x.Value.Description
+                         })
+                     };
+                     await context.Response.WriteAsync(JsonConvert.SerializeObject(healthCheckResponse));
+                 }
+            });
 
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
@@ -147,7 +169,7 @@ namespace vagbhat.api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers();                
             });
         }
     }
