@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Contracts.RequestModels
 {
-    public class LoginRequestModel
+    public class TokenRequestModel
     {
         [EmailAddress(ErrorMessage ="Email format is invalid")]
         [Required(ErrorMessage ="Email is required")]

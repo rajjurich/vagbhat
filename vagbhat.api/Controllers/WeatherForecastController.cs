@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Contracts.ResponseModels;
 using vagbhat.api.Extensions;
+using System.Text;
 
 namespace vagbhat.api.Controllers
 {
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "sysadmin")]
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
@@ -43,17 +44,17 @@ namespace vagbhat.api.Controllers
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)],
-                //UserId = HttpContext.GetUserName()
+                UserId = HttpContext.GetUserName()
             }).AsQueryable().Skip(0).Take(5);
 
             var paginatedResponse = new PaginatedResponse<IQueryable<WeatherForecast>>(data)
-            {              
+            {
                 Draw = 5.ToString(),
                 RecordsFiltered = 50.ToString(),
                 RecordsTotal = 50.ToString()
             };
 
             return Ok(paginatedResponse);
-        }
+        }        
     }
 }

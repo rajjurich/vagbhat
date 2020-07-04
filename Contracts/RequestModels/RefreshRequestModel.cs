@@ -7,9 +7,9 @@ namespace Contracts.RequestModels
 {
     public class RefreshRequestModel
     {
-        [Required(ErrorMessage ="Token is required")]
-        public string Token { get; set; }
+        [Required(ErrorMessage ="Access Token is required")]
+        public string Access_Token { get; set; }
         [Required(ErrorMessage = "Refresh token is required")]
-        public string RefreshToken { get; set; }
+        public string Refresh_Token { get; set; }
     }
 }

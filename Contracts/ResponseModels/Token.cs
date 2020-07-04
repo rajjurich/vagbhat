@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Contracts.ResponseModels
 {
-    public class LoginFailedModel
+    public class Token
     {
+        public string Access_Token { get; set; }        
+        public string Refresh_Token { get; set; }
         public string[] Errors { get; set; }
     }
 }

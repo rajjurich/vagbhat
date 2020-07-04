@@ -25,6 +25,9 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Contracts.Checks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using MediatR;
+using Domain.Application.Queries;
+using Domain.Application.Commands;
 
 namespace vagbhat.api
 {
@@ -40,10 +43,9 @@ namespace vagbhat.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            BuildMediator(services);
             services.AddDbContextPool<EntitiesContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-
+                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));            
 
             services.AddSwaggerGen(x =>
             {
@@ -79,11 +81,12 @@ namespace vagbhat.api
             services.AddIdentity<User, Role>()
                           .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
 
+            
             var jwtSettings = new JwtSettings();
             Configuration.Bind(nameof(JwtSettings), jwtSettings);
 
             services.AddSingleton(jwtSettings);
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserService, UserService>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -111,6 +114,19 @@ namespace vagbhat.api
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
+                x.Events = new JwtBearerEvents()
+                {
+                    OnMessageReceived = context =>
+                    {
+                        if (context.Request.Query.ContainsKey("accesstoken"))
+                        {
+                            context.Token = context.Request.Query["accesstoken"];
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
+
                 x.SaveToken = true;
                 x.TokenValidationParameters = tokenValidationParameters;
             });
@@ -121,6 +137,8 @@ namespace vagbhat.api
 
             services.AddHealthChecks()
                 .AddDbContextCheck<EntitiesContext>();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -169,8 +187,20 @@ namespace vagbhat.api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();                
+                endpoints.MapControllers();
             });
+        }
+        private static IMediator BuildMediator(IServiceCollection services)
+        {
+            services.AddScoped<ServiceFactory>(p => p.GetService);
+
+            services.AddMediatR(typeof(GetUsersQueryHandler));
+            services.AddMediatR(typeof(GetUserQueryAsyncHandler));
+            services.AddMediatR(typeof(CreateTokenCommandAsyncHandler));
+
+            var provider = services.BuildServiceProvider();
+
+            return provider.GetRequiredService<IMediator>();
         }
     }
 }

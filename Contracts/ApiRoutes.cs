@@ -8,7 +8,7 @@ namespace Contracts
     {
         public static class Accounts
         {
-            public const string Login = "Login";
+            public const string Token = "Token";
             public const string Refresh = "Refresh";
         }
     }

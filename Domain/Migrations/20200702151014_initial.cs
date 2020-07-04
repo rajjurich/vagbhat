@@ -14,8 +14,7 @@ namespace Domain.Migrations
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false)
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,8 +39,7 @@ namespace Domain.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,31 +174,6 @@ namespace Domain.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "abf26842-8a17-457f-80f8-234d985e174f", "a4344824-9b06-4add-ad86-0605ddf407fd", "Role", "sysadmin", "sysadmin" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "9012ce6f-9536-4cfe-a810-9308d56837b8", 0, "062f0284-a6f5-4a4d-b39b-f962a6f6c077", "User", "user@example.com", true, false, null, "user@example.com", "sysadmin", "AQAAAAEAACcQAAAAELdYVHy/1n+vW5VQYwOB0SYFSdf5O5ROMmw9YHyVrxb9Gb11NlGQGoFdBsttBoSsmw==", null, false, "8a6bc7c3-0c42-44da-aa9a-6a411b7beafd", false, "sysadmin" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoleClaims",
-                columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
-                values: new object[] { 1, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "sysadmin", "abf26842-8a17-457f-80f8-234d985e174f" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserClaims",
-                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
-                values: new object[] { 1, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "sysadmin", "9012ce6f-9536-4cfe-a810-9308d56837b8" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "9012ce6f-9536-4cfe-a810-9308d56837b8", "abf26842-8a17-457f-80f8-234d985e174f" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

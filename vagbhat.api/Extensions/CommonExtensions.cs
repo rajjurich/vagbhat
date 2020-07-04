@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Contracts.ResponseModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +29,7 @@ namespace vagbhat.api.Extensions
                 return string.Empty;
             }
 
-            return httpContext.User.Claims.Single(x => x.Type == ClaimTypes.Email).Value;
-        }
+            return httpContext.User.Claims.Single(x => x.Type == ClaimTypes.NameIdentifier).Value;
+        }        
     }
 }

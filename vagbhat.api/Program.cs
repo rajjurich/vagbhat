@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Domain.Core;
+using Domain.Extensions;
 using Domain.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,10 @@ namespace vagbhat.api
                 var context = serviceScope.ServiceProvider.GetService<EntitiesContext>();
                 //context.Database.EnsureCreatedAsync().Wait();
                 context.Database.MigrateAsync().Wait();
+
+                var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<Role>>();
+                await context.SeedAsync(userManager, roleManager);
             }
             await host.RunAsync();
         }

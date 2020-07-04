@@ -11,16 +11,20 @@ using Microsoft.AspNetCore.Identity;
 using Domain.Model;
 using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore;
+using Domain.Application.Commands;
 
 namespace Domain.Services
 {
-    public interface IAccountService
+    public interface IUserService
     {
-        Task<LoginResponseModel> LoginAsync(LoginRequestModel loginRequestModel);
-        Task<LoginResponseModel> RefreshTokenAsync(string token, string refreshToken);
+        Task<Token> CreateTokenAsync(CreateTokenCommandAsync createTokenCommandAsync);
+        Task<Token> CreateRefreshTokenAsync(CreateRefreshTokenCommandAsync createRefreshCommandAsync);
+        IQueryable<User> Get();
+        Task<User> Get(string id);
     }
 
-    public class AccountService : IAccountService
+    public class UserService : IUserService
     {
         private readonly JwtSettings jwtSettings;
         private readonly UserManager<User> userManager;
@@ -28,7 +32,7 @@ namespace Domain.Services
         private readonly IRefreshTokenService refreshTokenService;
         private readonly TokenValidationParameters tokenValidationParameters;
 
-        public AccountService(JwtSettings jwtSettings
+        public UserService(JwtSettings jwtSettings
             , UserManager<User> userManager
             , RoleManager<Role> roleManager
             , IRefreshTokenService refreshTokenService
@@ -40,25 +44,24 @@ namespace Domain.Services
             this.refreshTokenService = refreshTokenService;
             this.tokenValidationParameters = tokenValidationParameters;
         }
-        public async Task<LoginResponseModel> LoginAsync(LoginRequestModel loginRequestModel)
+        public async Task<Token> CreateTokenAsync(CreateTokenCommandAsync createTokenCommandAsync)
         {
-            var user = await userManager.FindByEmailAsync(loginRequestModel.Email);
+            var user = await userManager.FindByEmailAsync(createTokenCommandAsync.TokenRequestModel.Email);
             if (user == null)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Invalid Email" }
                 };
             }
 
-            var verifiedUser = await userManager.CheckPasswordAsync(user, loginRequestModel.Password);
+            var verifiedUser = await userManager
+                .CheckPasswordAsync(user, createTokenCommandAsync.TokenRequestModel.Password);
 
             if (!(verifiedUser))
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Invalid Password" }
                 };
             }
@@ -66,14 +69,13 @@ namespace Domain.Services
             return await GenerateToken(user);
         }
 
-        public async Task<LoginResponseModel> RefreshTokenAsync(string token, string refreshToken)
+        public async Task<Token> CreateRefreshTokenAsync(CreateRefreshTokenCommandAsync createRefreshCommandAsync)
         {
-            var principal = GetClaimsPrincipal(token);
+            var principal = GetClaimsPrincipal(createRefreshCommandAsync.RefreshRequestModel.Access_Token);
             if (principal == null)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Invalid Token" }
                 };
             }
@@ -86,46 +88,42 @@ namespace Domain.Services
 
             if (tokenExpiryDate > DateTime.UtcNow)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Token is not expired" }
                 };
             }
 
-            var existingRefreshToken = await refreshTokenService.GetAsync(refreshToken);
+            var existingRefreshToken = await refreshTokenService
+                .GetAsync(createRefreshCommandAsync.RefreshRequestModel.Refresh_Token);
             if (existingRefreshToken == null)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Invalid Refresh Token" }
                 };
             }
 
             if (existingRefreshToken.ExpiryDate < DateTime.UtcNow)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Refresh Token is expired" }
                 };
             }
 
             if (existingRefreshToken.IsUsed)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Refresh Token is used" }
                 };
             }
 
             if (existingRefreshToken.IsInvalid)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Refresh Token is invalid" }
                 };
             }
@@ -133,9 +131,8 @@ namespace Domain.Services
             var jti = principal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
             if (jti != existingRefreshToken.JwtId)
             {
-                return new LoginResponseModel
+                return new Token
                 {
-                    Success = false,
                     Errors = new[] { "Invalid Token" }
                 };
             }
@@ -148,6 +145,15 @@ namespace Domain.Services
             return await GenerateToken(user);
         }
 
+        public IQueryable<User> Get()
+        {
+            return userManager.Users;
+        }
+
+        public async Task<User> Get(string id)
+        {
+            return await userManager.FindByIdAsync(id);
+        }
         private ClaimsPrincipal GetClaimsPrincipal(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -168,7 +174,7 @@ namespace Domain.Services
             return (securityToken is JwtSecurityToken jwtSecurityToken) &&
                 jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
         }
-        private async Task<LoginResponseModel> GenerateToken(User user)
+        private async Task<Token> GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
@@ -183,7 +189,7 @@ namespace Domain.Services
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(tokenLifeTimeInMinutes),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -198,23 +204,21 @@ namespace Domain.Services
 
             await refreshTokenService.AddAsync(refreshToken);
 
-            return new LoginResponseModel
+            return new Token
             {
-                Success = true,
-                Token = tokenHandler.WriteToken(token),
-                RefreshToken = refreshToken.Token
+                Access_Token = tokenHandler.WriteToken(token),
+                Refresh_Token = refreshToken.Token
             };
         }
 
         private async Task<List<Claim>> GetClaimsList(User user)
         {
-            
+
             var claims = new List<Claim>(new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub,user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier,user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Email,user.Email),
-                    //new Claim(ClaimTypes.Name,user.UserName),
+                    new Claim(ClaimTypes.Email,user.Email),
                     new Claim("id",user.Id)
                 });
 
@@ -239,5 +243,6 @@ namespace Domain.Services
 
             return claims;
         }
+
     }
 }

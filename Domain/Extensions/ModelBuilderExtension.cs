@@ -1,10 +1,13 @@
-﻿using Domain.Model;
+﻿using Domain.Core;
+using Domain.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Domain.Extensions
 {
@@ -12,53 +15,96 @@ namespace Domain.Extensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            //string userId = Guid.NewGuid().ToString();
+
+            //string roleId = Guid.NewGuid().ToString();
+
+            //string roleName = "sysadmin";
+
+            //modelBuilder.Entity<Role>().HasData(new Role
+            //{
+            //    Id = roleId,
+            //    Name = roleName,
+            //    NormalizedName = roleName
+            //});
+
+            //var hasher = new PasswordHasher<User>();
+            //modelBuilder.Entity<User>().HasData(new User
+            //{
+            //    Id = userId,
+            //    UserName = roleName,
+            //    NormalizedUserName = roleName,
+            //    Email = "user@example.com",
+            //    NormalizedEmail = "user@example.com",
+            //    EmailConfirmed = true,
+            //    PasswordHash = hasher.HashPassword(null, "string"),
+            //    SecurityStamp = Guid.NewGuid().ToString()
+            //});
+
+            //modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            //{
+            //    RoleId = roleId,
+            //    UserId = userId
+            //});
+
+            //modelBuilder.Entity<IdentityUserClaim<string>>().HasData(new IdentityUserClaim<string>
+            //{
+            //    Id = 1,
+            //    UserId = userId,
+            //    ClaimType = ClaimTypes.Name,
+            //    ClaimValue = "sysadmin"
+            //});
+
+            //modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(new IdentityRoleClaim<string>
+            //{
+            //    Id = 1,
+            //    RoleId = roleId,
+            //    ClaimType = ClaimTypes.Role,
+            //    ClaimValue = roleName,
+            //});
+        }
+
+        public static async Task SeedAsync(this EntitiesContext context
+            , UserManager<User> userManager
+            , RoleManager<Role> roleManager)
+        {
             string userId = Guid.NewGuid().ToString();
 
             string roleId = Guid.NewGuid().ToString();
 
-            string roleName = "sysadmin";
+            var roleName = "sysadmin";
 
-            modelBuilder.Entity<Role>().HasData(new Role
+            var role = new Role
             {
                 Id = roleId,
-                Name = roleName,
-                NormalizedName = roleName
-            });
+                Name = roleName
+            };
+
+            if (!await context.Roles.AnyAsync())
+            {
+                await roleManager.CreateAsync(role);
+            }
 
             var hasher = new PasswordHasher<User>();
-            modelBuilder.Entity<User>().HasData(new User
+
+            var user = new User
             {
                 Id = userId,
-                UserName = roleName,
-                NormalizedUserName = roleName,
                 Email = "user@example.com",
-                NormalizedEmail = "user@example.com",
-                EmailConfirmed = true,
+                UserName = "user@example.com",
                 PasswordHash = hasher.HashPassword(null, "string"),
-                SecurityStamp = Guid.NewGuid().ToString()
-            });
+            };
 
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            if (!await context.Users.AnyAsync())
             {
-                RoleId = roleId,
-                UserId = userId
-            });
+                await userManager.CreateAsync(user);
+            }
 
-            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(new IdentityUserClaim<string>
-            {
-                Id = 1,
-                UserId = userId,
-                ClaimType = ClaimTypes.Name,
-                ClaimValue = "sysadmin"
-            });
+            await userManager.AddToRoleAsync(user, roleName);
 
-            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(new IdentityRoleClaim<string>
-            {
-                Id = 1,
-                RoleId = roleId,
-                ClaimType = ClaimTypes.Role,
-                ClaimValue = roleName,
-            });
+            Claim claim = new Claim(ClaimTypes.Role, roleName);
+
+            await roleManager.AddClaimAsync(role, claim);
         }
     }
 }

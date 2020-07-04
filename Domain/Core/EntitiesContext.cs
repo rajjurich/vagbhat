@@ -9,19 +9,19 @@ using System.Text;
 
 namespace Domain.Core
 {
-    public class EntitiesContext : IdentityDbContext
+    public class EntitiesContext : IdentityDbContext<User, Role, string>
     {
         public EntitiesContext(DbContextOptions<EntitiesContext> options)
-            :base(options)
+            : base(options)
         {
 
         }
-        
+
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);            
+            base.OnModelCreating(builder);
 
             builder.Seed();
 
