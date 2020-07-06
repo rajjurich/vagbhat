@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Core;
-using Domain.Model;
+using Domain.Entities;
 using Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,14 +20,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Contracts.Options;
+using Domain.Options;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Contracts.Checks;
+using Domain.Checks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using MediatR;
 using Domain.Application.Queries;
 using Domain.Application.Commands;
+using vagbhat.api.Filters;
 
 namespace vagbhat.api
 {
@@ -45,7 +46,7 @@ namespace vagbhat.api
         {
             BuildMediator(services);
             services.AddDbContextPool<EntitiesContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));            
+                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSwaggerGen(x =>
             {
@@ -69,24 +70,25 @@ namespace vagbhat.api
                     {
                         new OpenApiSecurityScheme
                         {
-                        Reference = new OpenApiReference
-                        {
-                            Id="Bearer",
-                            Type=ReferenceType.SecurityScheme
-                        }
-                    } ,new List<string>()}
+                            Reference = new OpenApiReference
+                            {
+                                Id="Bearer",
+                                Type=ReferenceType.SecurityScheme
+                            }
+                        } ,new List<string>()
+                    }
                 });
             });
 
             services.AddIdentity<User, Role>()
                           .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
 
-            
+
             var jwtSettings = new JwtSettings();
             Configuration.Bind(nameof(JwtSettings), jwtSettings);
 
             services.AddSingleton(jwtSettings);
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccessService, AccessService>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -100,45 +102,49 @@ namespace vagbhat.api
 
             services.AddSingleton(tokenValidationParameters);
 
-            services.AddScoped<DbContext, EntitiesContext>();
+            services.AddScoped<EntitiesContext>();
 
             services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));
 
-            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
-            services.AddAuthentication(x =>
+            services.AddAuthentication(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
             {
-                x.Events = new JwtBearerEvents()
+                options.Events = new JwtBearerEvents()
                 {
                     OnMessageReceived = context =>
                     {
-                        if (context.Request.Query.ContainsKey("accesstoken"))
+                        if (context.Request.Query.ContainsKey("access_token"))
                         {
-                            context.Token = context.Request.Query["accesstoken"];
+                            context.Token = context.Request.Query["access_token"];
                         }
 
                         return Task.CompletedTask;
                     }
                 };
 
-                x.SaveToken = true;
-                x.TokenValidationParameters = tokenValidationParameters;
+                options.SaveToken = true;
+                options.TokenValidationParameters = tokenValidationParameters;
             });
 
             services.AddAuthorization();
 
-            services.AddControllers();
+            services.AddControllers(config =>
+            {
+                config.Filters.Add(new UnitOfWorkAsyncActionFilters());
+            });
 
             services.AddHealthChecks()
                 .AddDbContextCheck<EntitiesContext>();
 
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -197,6 +203,7 @@ namespace vagbhat.api
             services.AddMediatR(typeof(GetUsersQueryHandler));
             services.AddMediatR(typeof(GetUserQueryAsyncHandler));
             services.AddMediatR(typeof(CreateTokenCommandAsyncHandler));
+            services.AddMediatR(typeof(CreateRefreshTokenCommandAsyncHandler));
 
             var provider = services.BuildServiceProvider();
 

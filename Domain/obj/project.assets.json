@@ -1427,16 +1427,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
-      },
-      "Contracts/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "compile": {
-          "bin/placeholder/Contracts.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Contracts.dll": {}
-        }
       }
     }
   },
@@ -5347,16 +5337,10 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
-    },
-    "Contracts/1.0.0": {
-      "type": "project",
-      "path": "../Contracts/Contracts.csproj",
-      "msbuildProject": "../Contracts/Contracts.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Contracts >= 1.0.0",
       "MediatR >= 8.0.2",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 8.0.1",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.5",
@@ -5390,11 +5374,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {
-            "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
-              "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

@@ -1,7 +1,7 @@
-﻿using Domain.Application.Queries;
-using Domain.Model;
+﻿using Domain.Entities;
 using Domain.Services;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +13,16 @@ namespace Domain.Application.Queries
 {
     public class GetUsersQueryHandler : RequestHandler<GetUsersQuery, IQueryable<User>>
     {
-        private readonly IUserService userService;
+        private readonly UserManager<User> userManager;
 
-        public GetUsersQueryHandler(IUserService userService)
+        public GetUsersQueryHandler(UserManager<User> userManager)
         {
-            this.userService = userService;
+            this.userManager = userManager;
         }
 
         protected override IQueryable<User> Handle(GetUsersQuery request)
         {
-            return userService.Get();
+            return userManager.Users;
         }        
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Contracts.Checks
+namespace Domain.Checks
 {
     public class HealthCheckResponse
     {

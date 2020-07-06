@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Model
+namespace Domain.Entities
 {
-    public class User : IdentityUser
+    public class Role : IdentityRole
     {
     }
 }

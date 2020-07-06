@@ -1,5 +1,4 @@
-﻿using Contracts.RequestModels;
-using Contracts.ResponseModels;
+﻿using Domain.Dtos;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,13 +6,13 @@ using System.Text;
 
 namespace Domain.Application.Commands
 {
-    public class CreateTokenCommandAsync : IRequest<Token>
+    public class CreateTokenCommandAsync : IRequest<TokenDto>
     {
-        public CreateTokenCommandAsync(TokenRequestModel tokenRequestModel)
+        public CreateTokenCommandAsync(AccessDto accessDto)
         {
-            TokenRequestModel = tokenRequestModel;
+            AccessDto = accessDto;
         }
         
-        public TokenRequestModel TokenRequestModel { get; }
+        public AccessDto AccessDto { get; }
     }
 }

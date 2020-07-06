@@ -78,11 +78,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "projectReferences": {
-              "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -163,6 +159,9 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
+              "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj"
+              },
               "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
                 "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj"
               }

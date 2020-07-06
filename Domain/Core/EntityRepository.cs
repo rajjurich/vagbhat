@@ -23,9 +23,9 @@ namespace Domain.Core
     {
         private readonly EntitiesContext entitiesContext;
 
-        public EntityRepository(DbContext entitiesContext)
+        public EntityRepository(EntitiesContext entitiesContext)
         {
-            this.entitiesContext = (EntitiesContext)entitiesContext;
+            this.entitiesContext = entitiesContext;
         }
         public async Task<T> AddAsync(T entity)
         {
@@ -68,7 +68,7 @@ namespace Domain.Core
         public IQueryable<T> Get(int start, int length)
         {
             start = start < 0 ? 0 : start;
-            length = length > 1000 ? 1000 : length;
+            length = length < 0 ? 10 : length > 1000 ? 1000 : length;
             return entitiesContext.Set<T>().Skip(start).Take(length);
         }
 

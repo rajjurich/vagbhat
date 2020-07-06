@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Domain.Model
+namespace Domain.Entities
 {
     public class RefreshToken
     {

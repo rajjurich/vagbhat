@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Contracts.Options
+namespace Domain.Options
 {
     public class JwtSettings
     {

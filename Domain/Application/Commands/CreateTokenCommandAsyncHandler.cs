@@ -1,4 +1,4 @@
-﻿using Contracts.ResponseModels;
+﻿using Domain.Dtos;
 using Domain.Services;
 using MediatR;
 using System;
@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Application.Commands
 {
-    public class CreateTokenCommandAsyncHandler : IRequestHandler<CreateTokenCommandAsync, Token>
+    public class CreateTokenCommandAsyncHandler : IRequestHandler<CreateTokenCommandAsync, TokenDto>
     {
-        private readonly IUserService userService;
+        private readonly IAccessService userService;
 
-        public CreateTokenCommandAsyncHandler(IUserService userService)
+        public CreateTokenCommandAsyncHandler(IAccessService userService)
         {
             this.userService = userService;
         }
-        public async Task<Token> Handle(CreateTokenCommandAsync request, CancellationToken cancellationToken)
+        public async Task<TokenDto> Handle(CreateTokenCommandAsync request, CancellationToken cancellationToken)
         {
             return await userService.CreateTokenAsync(request);
         }

@@ -1,5 +1,5 @@
-﻿using Contracts.RequestModels;
-using Contracts.ResponseModels;
+﻿using Domain.Core;
+using Domain.Dtos;
 using Domain.Services;
 using MediatR;
 using System;
@@ -10,19 +10,23 @@ using System.Threading.Tasks;
 
 namespace Domain.Application.Commands
 {
-    public class CreateRefreshTokenCommandAsyncHandler : IRequestHandler<CreateRefreshTokenCommandAsync, Token>
+    public class CreateRefreshTokenCommandAsyncHandler : IRequestHandler<CreateRefreshTokenCommandAsync, TokenDto>
     {
-        private readonly IUserService userService;
+        private readonly IAccessService userService;
+        private readonly IUnitOfWork unitOfWork;
 
-        public CreateRefreshTokenCommandAsyncHandler(IUserService userService)
+        public CreateRefreshTokenCommandAsyncHandler(IAccessService accessService
+            ,IUnitOfWork unitOfWork)
         {
-            this.userService = userService;
+            this.userService = accessService;
+            this.unitOfWork = unitOfWork;
         }
 
         
 
-        public async Task<Token> Handle(CreateRefreshTokenCommandAsync request, CancellationToken cancellationToken)
+        public async Task<TokenDto> Handle(CreateRefreshTokenCommandAsync request, CancellationToken cancellationToken)
         {
+            //await unitOfWork.BeginTransaction();
             return await userService.CreateRefreshTokenAsync(request);
         }
     }

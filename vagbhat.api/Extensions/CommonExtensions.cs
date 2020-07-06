@@ -1,4 +1,5 @@
 ﻿using Contracts.ResponseModels;
+using Domain.Dtos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -30,6 +31,14 @@ namespace vagbhat.api.Extensions
             }
 
             return httpContext.User.Claims.Single(x => x.Type == ClaimTypes.NameIdentifier).Value;
-        }        
+        }
+
+        public static ErrorResponse Error(this object obj, string[] errors)
+        {
+            return new ErrorResponse
+            {
+                Errors = errors
+            };
+        }
     }
 }

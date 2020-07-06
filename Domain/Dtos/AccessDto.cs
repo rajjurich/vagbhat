@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Contracts.RequestModels
+namespace Domain.Dtos
 {
-    public class TokenRequestModel
+    public class AccessDto
     {
         [EmailAddress(ErrorMessage ="Email format is invalid")]
         [Required(ErrorMessage ="Email is required")]

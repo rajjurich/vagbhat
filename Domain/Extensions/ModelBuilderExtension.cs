@@ -1,5 +1,5 @@
 ﻿using Domain.Core;
-using Domain.Model;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -102,9 +102,13 @@ namespace Domain.Extensions
 
             await userManager.AddToRoleAsync(user, roleName);
 
-            Claim claim = new Claim(ClaimTypes.Role, roleName);
+            Claim userClaim = new Claim(ClaimTypes.NameIdentifier, user.UserName);
 
-            await roleManager.AddClaimAsync(role, claim);
+            await userManager.AddClaimAsync(user, userClaim);
+
+            Claim roleClaim = new Claim(ClaimTypes.Role, roleName);
+
+            await roleManager.AddClaimAsync(role, roleClaim);
         }
     }
 }
