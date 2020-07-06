@@ -11,6 +11,8 @@ using Domain.Application.Queries;
 using vagbhat.api.Extensions;
 using Contracts.RequestModels;
 using Domain.Dtos;
+using Domain.Application.Commands;
+using Contracts.ResponseModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,9 +63,43 @@ namespace vagbhat.api.Controllers
             {
                 return BadRequest(new string[] { "Password and Confirm Password does not match" });
             }
-            GetUserDto(userRequest);
 
-            return Ok();
+            var command = new CreateUserCommandAsync(GetUserDto(userRequest));
+            var result = await mediator.Send(command);
+            if (result.Errors != null)
+            {
+                return BadRequest(result.Error(result.Errors));
+            }
+
+            foreach (var role in result.Roles)
+            {
+                var roleResponse = new RoleResponse
+                {
+                    Id=role.
+                }
+            }
+            var roles = 
+            return Ok(new UserResponse
+            {
+                Email = result.Email,
+                Id=result.Id,
+                Roles=result.Roles
+
+                );
+        }
+
+        // PUT api/<UserController>/5
+        [HttpPut("{id}")]
+        [NonAction]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<UserController>/5
+        [HttpDelete("{id}")]
+        [NonAction]
+        public void Delete(int id)
+        {
         }
 
         private static UserDto GetUserDto(UserRequest userRequest)
@@ -86,20 +122,6 @@ namespace vagbhat.api.Controllers
             };
 
             return userDto;
-        }
-
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        [NonAction]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        [NonAction]
-        public void Delete(int id)
-        {
         }
     }
 }

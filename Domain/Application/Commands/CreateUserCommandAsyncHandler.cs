@@ -40,14 +40,15 @@ namespace Domain.Application.Commands
             {
                 Email = request.UserDto.Email,
                 UserName = request.UserDto.Email
+                
             };
 
-            var createdUser = await userManager.CreateAsync(user, request.UserDto.Password);
-            if (!(createdUser.Succeeded))
+            var result = await userManager.CreateAsync(user, request.UserDto.Password);
+            if (!(result.Succeeded))
             {
                 return new UserDto
                 {
-                    Errors = createdUser.Errors.Select(x => x.Description).ToArray()
+                    Errors = result.Errors.Select(x => x.Description).ToArray()
                 };
             }
 
@@ -59,28 +60,11 @@ namespace Domain.Application.Commands
 
             await userManager.AddToRolesAsync(user, roles);
 
-            
+            var createdUser = await userManager.FindByEmailAsync(user.Email);
 
-            
-
-            foreach (var role in roles)
-            {
-
-                
-                //claims.Add(new Claim(ClaimTypes.Role, userRole));
-                //var role = await roleManager.FindByNameAsync(userRole);
-                //if (role != null)
-                //{
-                //    var roleClaims = await roleManager.GetClaimsAsync(role);
-                //    foreach (Claim roleClaim in roleClaims)
-                //    {
-                //        claims.Add(roleClaim);
-                //    }
-                //}
-            }
-
-            
-
+            request.UserDto.Id = createdUser.Id;
+            request.UserDto.Roles.
+            return request.UserDto;
             
         }
 

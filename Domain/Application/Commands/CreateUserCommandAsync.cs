@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Application.Commands
 {
-    public class CreateUserCommandAsync :IRequest<UserDto>
+    public class CreateUserCommandAsync : IRequest<UserDto>
     {
         public CreateUserCommandAsync(UserDto userDto)
         {

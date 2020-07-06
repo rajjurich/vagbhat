@@ -8,6 +8,8 @@ namespace Contracts.ResponseModels
     {
         public string Id { get; set; }
         public string Email { get; set; }
-        public List<RoleResponse> Roles { get; set; }
+        public string Username { get; set; }
+        public string  MobileNumber { get; set; }
+
     }
 }
