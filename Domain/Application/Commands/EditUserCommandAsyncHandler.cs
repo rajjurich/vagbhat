@@ -1,7 +1,6 @@
 ﻿using Domain.Dtos;
 using Domain.Entities;
 using Domain.Extensions;
-using Domain.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -15,15 +14,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Application.Commands
 {
-    public class CreateUserCommandAsyncHandler : IRequestHandler<CreateUserCommandAsync, UserDto>
+    public class EditUserCommandAsyncHandler : IRequestHandler<EditUserCommandAsync, UserDto>
     {
         private readonly UserManager<User> userManager;
 
-        public CreateUserCommandAsyncHandler(UserManager<User> userManager)
+        public EditUserCommandAsyncHandler(UserManager<User> userManager)
         {
             this.userManager = userManager;
         }
-        public async Task<UserDto> Handle(CreateUserCommandAsync request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(EditUserCommandAsync request, CancellationToken cancellationToken)
         {
             //var existingUser = await GetExistingUser(request);
 
@@ -37,7 +36,7 @@ namespace Domain.Application.Commands
 
             var user = request.UserDto.ToUserDto();
 
-            var result = await userManager.CreateAsync(user, request.UserDto.Password);
+            var result = await userManager.UpdateAsync(user);
 
             if (!(result.Succeeded))
             {
@@ -47,16 +46,16 @@ namespace Domain.Application.Commands
                 };
             }
 
+            await userManager.RemoveClaimsAsync(user, await userManager.GetClaimsAsync(user));
             Claim userClaim = new Claim(ClaimTypes.NameIdentifier, user.UserName);
-
             await userManager.AddClaimAsync(user, userClaim);
 
-            var createdUser = await userManager.FindByEmailAsync(user.Email);
+            var updatedUser = await userManager.FindByEmailAsync(user.Email);
 
-            return createdUser.ToUserDto();
+            return updatedUser.ToUserDto();
         }
 
-        private async Task<string> GetExistingUser(CreateUserCommandAsync request)
+        private async Task<string> GetExistingUser(EditUserCommandAsync request)
         {
             return await userManager.FindByEmailAsync(request.UserDto.Email) != null ?
                 "Email already exists" : await userManager.FindByNameAsync(request.UserDto.UserName) != null ?

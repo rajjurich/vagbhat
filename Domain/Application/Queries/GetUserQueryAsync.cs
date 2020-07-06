@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Dtos;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Application.Queries
 {
-    public class GetUserQueryAsync : IRequest<User>
+    public class GetUserQueryAsync : IRequest<UserDto>
     {
         public readonly string id;
 

@@ -1,8 +1,5 @@
 ﻿using Contracts.ResponseModels;
-using Domain.Dtos;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +36,6 @@ namespace vagbhat.api.Extensions
             {
                 Errors = errors
             };
-        }
+        }        
     }
 }

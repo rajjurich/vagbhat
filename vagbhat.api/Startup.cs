@@ -80,8 +80,15 @@ namespace vagbhat.api
                 });
             });
 
-            services.AddIdentity<User, Role>()
-                          .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                //options.User.RequireUniqueEmail = true;
+
+            })
+                .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
 
 
             var jwtSettings = new JwtSettings();
@@ -106,7 +113,7 @@ namespace vagbhat.api
 
             services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));
 
-            services.AddScoped<IRefreshTokenService, RefreshTokenService>();            
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 

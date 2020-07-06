@@ -5,14 +5,15 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Entities;
 using MediatR;
 using Domain.Application.Queries;
 using vagbhat.api.Extensions;
-using Contracts.RequestModels;
+using Contracts.User.RequestModels;
 using Domain.Dtos;
 using Domain.Application.Commands;
 using Contracts.ResponseModels;
+using System.Linq.Expressions;
+using Contracts.RequestModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,6 +25,14 @@ namespace vagbhat.api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator mediator;
+        private static readonly Expression<Func<UserDto, UserResponse>> AsUserResponse =
+            x => new UserResponse
+            {
+                Email = x.Email,
+                Id = x.Id,
+                PhoneNumber = x.PhoneNumber,
+                UserName = x.UserName
+            };
 
         public UserController(IMediator mediator)
         {
@@ -32,67 +41,68 @@ namespace vagbhat.api.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IQueryable<User>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IQueryable<UserResponse>))]
         public async Task<IActionResult> Get()
         {
             var query = new GetUsersQuery();
             var result = await mediator.Send(query);
-            return Ok(result);
+            return Ok(result.Select(AsUserResponse));
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public async Task<IActionResult> Get(string id)
         {
             var query = new GetUserQueryAsync(id);
             var result = await mediator.Send(query);
+
             if (result == null)
             {
                 return NotFound(id);
             }
-            return Ok(result);
+
+            return Ok(result.ToUserResponse());
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserRequest userRequest)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        public async Task<IActionResult> Post([FromBody] CreateUserRequest userRequest)
         {
-            if (userRequest.Password.Equals(userRequest.ConfirmPassword))
-            {
-                return BadRequest(new string[] { "Password and Confirm Password does not match" });
-            }
+            var userDto = userRequest.ToUserDto();
 
-            var command = new CreateUserCommandAsync(GetUserDto(userRequest));
+            var command = new CreateUserCommandAsync(userDto);
+
             var result = await mediator.Send(command);
+
             if (result.Errors != null)
             {
                 return BadRequest(result.Error(result.Errors));
             }
 
-            foreach (var role in result.Roles)
-            {
-                var roleResponse = new RoleResponse
-                {
-                    Id=role.
-                }
-            }
-            var roles = 
-            return Ok(new UserResponse
-            {
-                Email = result.Email,
-                Id=result.Id,
-                Roles=result.Roles
-
-                );
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result.ToUserResponse());
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        [NonAction]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
+        public async Task<IActionResult> Put(int id, [FromBody] EditUserRequest userRequest)
         {
+            var userDto = userRequest.ToUserDto();
+
+            var command = new EditUserCommandAsync(userDto);
+
+            var result = await mediator.Send(command);
+
+            if (result.Errors != null)
+            {
+                return BadRequest(result.Error(result.Errors));
+            }
+
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result.ToUserResponse());
         }
 
         // DELETE api/<UserController>/5
@@ -100,28 +110,6 @@ namespace vagbhat.api.Controllers
         [NonAction]
         public void Delete(int id)
         {
-        }
-
-        private static UserDto GetUserDto(UserRequest userRequest)
-        {
-            List<RoleDto> roleDtos = new List<RoleDto>();
-            foreach (var role in userRequest.Roles)
-            {
-                var roleDto = new RoleDto
-                {
-                    RoleName = role.RoleName
-                };
-
-                roleDtos.Add(roleDto);
-            }
-
-            var userDto = new UserDto
-            {
-                Email = userRequest.Email,
-                Roles = roleDtos
-            };
-
-            return userDto;
         }
     }
 }

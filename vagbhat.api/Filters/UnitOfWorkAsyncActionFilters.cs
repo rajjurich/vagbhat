@@ -12,20 +12,25 @@ namespace vagbhat.api.Filters
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var result = await next();
+            var unitOfWork = context.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
             var x = context.HttpContext.Request.Method;
+
+            await unitOfWork.BeginTransaction();
+
+            var result = await next();
+            
             if (!(x.Equals("get", StringComparison.OrdinalIgnoreCase)))
             {
-                var unitOfwork = context.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
+                
                 if (result.Exception == null)
                 {
                     // commit if no exceptions                
-                    await unitOfwork.Commit();
+                    await unitOfWork.Commit();
                 }
                 else
                 {
                     // rollback if exception
-                    await unitOfwork.Rollback();
+                    await unitOfWork.Rollback();
                 }
             }
         }

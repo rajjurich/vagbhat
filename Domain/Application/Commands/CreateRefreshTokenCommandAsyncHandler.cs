@@ -26,7 +26,6 @@ namespace Domain.Application.Commands
 
         public async Task<TokenDto> Handle(CreateRefreshTokenCommandAsync request, CancellationToken cancellationToken)
         {
-            //await unitOfWork.BeginTransaction();
             return await userService.CreateRefreshTokenAsync(request);
         }
     }

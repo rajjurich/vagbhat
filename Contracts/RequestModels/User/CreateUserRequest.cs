@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Contracts.RequestModels
+namespace Contracts.User.RequestModels
 {
-    public class UserRequest
+    public class CreateUserRequest
     {
         [EmailAddress(ErrorMessage = "Email format is invalid")]
         [Required(ErrorMessage = "Email is required")]
@@ -13,7 +13,9 @@ namespace Contracts.RequestModels
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
         [Required(ErrorMessage = "Confirm Password is required")]
+        [Compare("Password",ErrorMessage = "Password and Confirm Password does not match")]
         public string ConfirmPassword { get; set; }
-        public List<RoleRequest> Roles { get; set; }
+        public string PhoneNumber { get; set; }
+        public string UserName { get; set; }
     }
 }

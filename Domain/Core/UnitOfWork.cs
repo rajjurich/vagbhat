@@ -40,7 +40,6 @@ namespace Domain.Core
             if (transaction != null)
             {
                 await transaction.RollbackAsync();
-                await transaction.RollbackAsync();
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Dtos;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Domain.Application.Queries
 {
-    public class GetUsersQuery : IRequest<IQueryable<User>>
+    public class GetUsersQuery : IRequest<IQueryable<UserDto>>
     {
     }
 }
