@@ -13,7 +13,7 @@ namespace Domain.Core
         Task<T> AddAsync(T entity);
         Task<int> CountAsync(Expression<Func<T, bool>> predicate);
         Task<int> CountAsync();
-        Task<T> DeleteAsync(T entity);
+        Task<T> RemoveAsync(T entity);
         Task<T> EditAsync(T entity);
         IQueryable<T> Find(Expression<Func<T, bool>> predicate, int start, int length);
         IQueryable<T> Get(int start, int length);
@@ -27,10 +27,11 @@ namespace Domain.Core
         {
             this.entitiesContext = entitiesContext;
         }
+
         public async Task<T> AddAsync(T entity)
         {
             await entitiesContext.Set<T>().AddAsync(entity);
-            await entitiesContext.SaveChangesAsync();
+            //await entitiesContext.SaveChangesAsync();
             return entity;
         }
 
@@ -42,19 +43,12 @@ namespace Domain.Core
         public async Task<int> CountAsync()
         {
             return await entitiesContext.Set<T>().CountAsync();
-        }
-
-        public async Task<T> DeleteAsync(T entity)
-        {
-            entitiesContext.Set<T>().Remove(entity);
-            await entitiesContext.SaveChangesAsync();
-            return entity;
-        }
+        }        
 
         public async Task<T> EditAsync(T entity)
         {
-            entitiesContext.Entry(entity).State = EntityState.Modified;
-            await entitiesContext.SaveChangesAsync();
+            await Task.Run(() => entitiesContext.Entry(entity).State = EntityState.Modified);
+            //await entitiesContext.SaveChangesAsync();
             return entity;
         }
 
@@ -75,6 +69,13 @@ namespace Domain.Core
         public async Task<T> GetAsync(string key)
         {
             return await entitiesContext.Set<T>().FindAsync(key);
+        }
+
+        public async Task<T> RemoveAsync(T entity)
+        {
+            await Task.Run(() => entitiesContext.Set<T>().Remove(entity));
+            //await entitiesContext.SaveChangesAsync();
+            return entity;
         }
     }
 }

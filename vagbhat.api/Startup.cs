@@ -28,6 +28,7 @@ using Newtonsoft.Json;
 using MediatR;
 using Domain.Application.Queries;
 using Domain.Application.Commands;
+using Domain.Application.Behaviours;
 using vagbhat.api.Filters;
 
 namespace vagbhat.api
@@ -115,7 +116,8 @@ namespace vagbhat.api
 
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
 
             services.AddAuthentication(options =>
             {
@@ -145,7 +147,8 @@ namespace vagbhat.api
 
             services.AddControllers(config =>
             {
-                config.Filters.Add(new UnitOfWorkAsyncActionFilters());
+                config.Filters.Add(typeof(ApiExceptionFilter));
+                //config.Filters.Add(new UnitOfWorkAsyncActionFilters());
             });
 
             services.AddHealthChecks()

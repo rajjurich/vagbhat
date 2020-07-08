@@ -36,9 +36,9 @@ namespace Domain.Services
             return await entityRepository.CountAsync();
         }
 
-        public async Task<RefreshToken> DeleteAsync(RefreshToken entity)
+        public async Task<RefreshToken> RemoveAsync(RefreshToken entity)
         {
-            return await entityRepository.DeleteAsync(entity);
+            return await entityRepository.RemoveAsync(entity);
         }
 
         public async Task<RefreshToken> EditAsync(RefreshToken entity)

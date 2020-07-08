@@ -78,6 +78,11 @@ namespace vagbhat.api.Controllers
 
             var result = await mediator.Send(command);
 
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
             if (result.Errors != null)
             {
                 return BadRequest(result.Error(result.Errors));

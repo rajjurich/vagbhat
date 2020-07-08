@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,37 +10,89 @@ namespace Domain.Core
 {
     public interface IUnitOfWork
     {
-        Task BeginTransaction();
-        Task Commit();
-        Task Rollback();
+        Task<IDbContextTransaction> BeginTransactionAsync();
+        bool HasActiveTransaction();
+        Task CommitTransactionAsync(IDbContextTransaction transaction);
+        Task RollbackTransactionAsync();
+        IExecutionStrategy CreateExecutionStrategy();
     }
     public class UnitOfWork : IUnitOfWork
     {
         private readonly EntitiesContext entitiesContext;
-        IDbContextTransaction transaction;
+        IDbContextTransaction currentTransaction;
 
         public UnitOfWork(EntitiesContext entitiesContext)
         {
             this.entitiesContext = entitiesContext;
         }
-        public async Task BeginTransaction()
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
         {
-            transaction = await entitiesContext.Database.BeginTransactionAsync();
+            currentTransaction = await entitiesContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+            return currentTransaction;
         }
 
-        public async Task Commit()
+        public async Task CommitTransactionAsync(IDbContextTransaction transaction)
         {
-            if (transaction != null)
+            if (transaction == null)
             {
-                await transaction.CommitAsync();
+                throw new ArgumentNullException(nameof(transaction));
+            }
+            if (transaction != currentTransaction)
+            {
+                throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
+            }
+
+            if (currentTransaction != null)
+            {
+                try
+                {
+                    await entitiesContext.SaveChangesAsync();
+                    await currentTransaction.CommitAsync();
+                }
+                catch
+                {
+                    await RollbackTransactionAsync();
+                    throw;
+                }
+                finally
+                {
+                    if (currentTransaction != null)
+                    {
+                        currentTransaction.Dispose();
+                        currentTransaction = null;
+                    }
+                }
+
             }
         }
 
-        public async Task Rollback()
+        public IExecutionStrategy CreateExecutionStrategy()
         {
-            if (transaction != null)
+            return entitiesContext.Database.CreateExecutionStrategy();
+        }
+
+        public bool HasActiveTransaction()
+        {
+            return currentTransaction != null;
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            if (currentTransaction != null)
             {
-                await transaction.RollbackAsync();
+                try
+                {
+                    await currentTransaction?.RollbackAsync();
+                }
+                finally
+                {
+                    if (currentTransaction != null)
+                    {
+                        currentTransaction.Dispose();
+                        currentTransaction = null;
+                    }
+                }
             }
         }
     }

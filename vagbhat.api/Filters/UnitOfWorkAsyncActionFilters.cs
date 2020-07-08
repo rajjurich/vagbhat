@@ -15,7 +15,7 @@ namespace vagbhat.api.Filters
             var unitOfWork = context.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
             var x = context.HttpContext.Request.Method;
 
-            await unitOfWork.BeginTransaction();
+            await unitOfWork.BeginTransactionAsync();
 
             var result = await next();
             
@@ -25,12 +25,12 @@ namespace vagbhat.api.Filters
                 if (result.Exception == null)
                 {
                     // commit if no exceptions                
-                    await unitOfWork.Commit();
+                    await unitOfWork.CommitTransactionAsync();
                 }
                 else
                 {
                     // rollback if exception
-                    await unitOfWork.Rollback();
+                    await unitOfWork.RollbackTransactionAsync();
                 }
             }
         }
