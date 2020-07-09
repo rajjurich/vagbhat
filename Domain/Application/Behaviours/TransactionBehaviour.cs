@@ -25,7 +25,8 @@ namespace Domain.Application.Behaviours
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var response = default(TResponse);            
+            var response = default(TResponse);
+            var typeName = request.GetGenericTypeName();
 
             try
             {
@@ -48,7 +49,7 @@ namespace Domain.Application.Behaviours
             catch (Exception ex)
             {
                 await unitOfWork.RollbackTransactionAsync();
-                logger.LogError(ex, "ERROR Handling transaction for {CommandName}", request);
+                logger.LogError(ex, "ERROR Handling transaction for {CommandName} ({@Command})", typeName, request);
                 throw;
             }
         }

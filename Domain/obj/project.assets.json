@@ -5350,19 +5350,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\user\\.nuget\\packages\\": {}
+    "C:\\Users\\Rajneesh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
+      "projectUniqueName": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\obj\\",
+      "projectPath": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj",
+      "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+      "outputPath": "F:\\all git repositories\\vagbhat\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

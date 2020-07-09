@@ -11,7 +11,8 @@ namespace vagbhat.api.Extensions
         public static ErrorResponse Error(this object obj, string[] errors)
         {
             return new ErrorResponse
-            {                
+            {
+                Description = obj.GetGenericTypeName(),
                 Errors = errors
             };
         }
