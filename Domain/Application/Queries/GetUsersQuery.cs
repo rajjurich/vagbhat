@@ -9,5 +9,9 @@ namespace Domain.Application.Queries
 {
     public class GetUsersQuery : IRequest<IQueryable<UserDto>>
     {
+        public GetUsersQuery()
+        {
+           
+        }       
     }
 }

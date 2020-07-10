@@ -8,6 +8,6 @@ namespace Domain.Entities
     {
         public string Id { get; set; }
         public string AssociationName { get; set; }        
-        public ICollection<User> User { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }

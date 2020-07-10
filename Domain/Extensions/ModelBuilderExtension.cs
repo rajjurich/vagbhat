@@ -73,6 +73,8 @@ namespace Domain.Extensions
 
             string roleId = Guid.NewGuid().ToString();
 
+            string associationId = Guid.NewGuid().ToString();
+
             var roleName = AllowedRoles.Super;
 
             var role = new Role
@@ -84,7 +86,13 @@ namespace Domain.Extensions
             if (!await context.Roles.AnyAsync())
             {
                 await roleManager.CreateAsync(role);
+                await roleManager.CreateAsync(new Role { Name = AllowedRoles.Admin });
+                await roleManager.CreateAsync(new Role { Name = AllowedRoles.User });
+                await roleManager.CreateAsync(new Role { Name = AllowedRoles.Client });
             }
+
+            await context.AddAsync(new Association { Id = associationId, AssociationName = "self" });
+            await context.SaveChangesAsync();
 
             var hasher = new PasswordHasher<User>();
 
@@ -94,6 +102,9 @@ namespace Domain.Extensions
                 Email = "user@example.com",
                 UserName = "user@example.com",
                 PasswordHash = hasher.HashPassword(null, "string"),
+                AssociationId = associationId,
+                CreatorId = userId,
+                Deleted = false
             };
 
             if (!await context.Users.AnyAsync())
@@ -103,13 +114,15 @@ namespace Domain.Extensions
 
             await userManager.AddToRoleAsync(user, roleName);
 
-            Claim userClaim = new Claim(ClaimTypes.NameIdentifier, user.UserName);
+            List<Claim> userClaims = new List<Claim>();
+            userClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName));
 
-            await userManager.AddClaimAsync(user, userClaim);
+            await userManager.AddClaimsAsync(user, userClaims);
 
-            Claim roleClaim = new Claim(ClaimTypes.Role, roleName);
-
-            await roleManager.AddClaimAsync(role, roleClaim);
+            await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, roleName));
+            await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, AllowedRoles.Admin));
+            await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, AllowedRoles.User));
+            await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, AllowedRoles.Client));
         }
     }
 }

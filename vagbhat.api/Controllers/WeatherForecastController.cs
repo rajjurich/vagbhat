@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Contracts.ResponseModels;
-using vagbhat.api.Extensions;
 using System.Text;
 using Domain.Options;
+using Domain.Extensions;
 
 namespace vagbhat.api.Controllers
 {
@@ -55,6 +55,6 @@ namespace vagbhat.api.Controllers
             };
 
             return Ok(paginatedResponse);
-        }        
+        }
     }
 }

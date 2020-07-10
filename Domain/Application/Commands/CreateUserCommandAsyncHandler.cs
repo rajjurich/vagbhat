@@ -26,7 +26,7 @@ namespace Domain.Application.Commands
         public async Task<UserDto> Handle(CreateUserCommandAsync request, CancellationToken cancellationToken)
         {
             var user = request.UserDto.ToUser();
-
+            user.Deleted = false;
             var result = await userManager.CreateAsync(user, request.UserDto.Password);
 
             if (!(result.Succeeded))
@@ -37,9 +37,10 @@ namespace Domain.Application.Commands
                 };
             }
 
-            Claim userClaim = new Claim(ClaimTypes.NameIdentifier, user.UserName);
+            List<Claim> userClaims = new List<Claim>();
+            userClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName));            
 
-            await userManager.AddClaimAsync(user, userClaim);
+            await userManager.AddClaimsAsync(user, userClaims);
 
             var createdUser = await userManager.FindByEmailAsync(user.Email);
 

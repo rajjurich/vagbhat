@@ -47,7 +47,7 @@ namespace vagbhat.api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IQueryable<UserResponse>))]
         public async Task<IActionResult> Get()
-        {
+        {            
             var query = new GetUsersQuery();
             var result = await mediator.Send(query);
             return Ok(result.Select(AsUserResponse));

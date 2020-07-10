@@ -16,6 +16,6 @@ namespace Domain.Entities
         public bool IsUsed { get; set; }
         public bool IsInvalid { get; set; }
         public string UserId { get; set; }        
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

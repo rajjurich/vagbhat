@@ -63,8 +63,10 @@ namespace Domain.Application.Commands
                     Errors = result.Errors.Select(x => x.Description).ToArray()
                 };
             }
+            
+            user.Deleted = true;
 
-            result = await userManager.DeleteAsync(user);
+            result = await userManager.UpdateAsync(user);
 
             if (!result.Succeeded)
             {

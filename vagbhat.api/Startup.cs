@@ -118,6 +118,7 @@ namespace vagbhat.api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAuthentication(options =>
             {
