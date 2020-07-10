@@ -24,17 +24,18 @@ namespace Domain.Application.Commands
         }
         public async Task<UserDto> Handle(EditUserCommandAsync request, CancellationToken cancellationToken)
         {
-            //var existingUser = await GetExistingUser(request);
+            var user = await userManager.FindByIdAsync(request.UserDto.Id);
 
-            //if (!(string.IsNullOrEmpty(existingUser)))
-            //{
-            //    return new UserDto
-            //    {
-            //        Errors = new string[] { existingUser }
-            //    };
-            //}
+            if (user == null)
+            {
+                return new UserDto
+                {
+                    Errors = new string[] { $"User not found with id == {request.UserDto.Id}" }
+                };
+            }
 
-            var user = request.UserDto.ToUserDto();
+            user.Email = request.UserDto.Email;
+            user.PhoneNumber = request.UserDto.PhoneNumber;
 
             var result = await userManager.UpdateAsync(user);
 
@@ -53,13 +54,6 @@ namespace Domain.Application.Commands
             var updatedUser = await userManager.FindByEmailAsync(user.Email);
 
             return updatedUser.ToUserDto();
-        }
-
-        private async Task<string> GetExistingUser(EditUserCommandAsync request)
-        {
-            return await userManager.FindByEmailAsync(request.UserDto.Email) != null ?
-                "Email already exists" : await userManager.FindByNameAsync(request.UserDto.UserName) != null ?
-                "UserName already exists" : string.Empty;
         }
     }
 }

@@ -14,6 +14,9 @@ using Domain.Application.Commands;
 using Contracts.ResponseModels;
 using System.Linq.Expressions;
 using Contracts.RequestModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Domain.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,6 +25,7 @@ namespace vagbhat.api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin)]
     public class UserController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -78,11 +82,6 @@ namespace vagbhat.api.Controllers
 
             var result = await mediator.Send(command);
 
-            if (result == null)
-            {
-                return BadRequest();
-            }
-
             if (result.Errors != null)
             {
                 return BadRequest(result.Error(result.Errors));
@@ -94,9 +93,11 @@ namespace vagbhat.api.Controllers
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
-        public async Task<IActionResult> Put(int id, [FromBody] EditUserRequest userRequest)
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        public async Task<IActionResult> Put(string id, [FromBody] EditUserRequest userRequest)
         {
             var userDto = userRequest.ToUserDto();
+            userDto.Id = id;
 
             var command = new EditUserCommandAsync(userDto);
 
@@ -107,14 +108,25 @@ namespace vagbhat.api.Controllers
                 return BadRequest(result.Error(result.Errors));
             }
 
-            return CreatedAtAction(nameof(Get), new { id = result.Id }, result.ToUserResponse());
+            return Ok(result.ToUserResponse());
         }
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        [NonAction]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        public async Task<IActionResult> Delete(string id)
         {
+            var command = new DeleteUserCommandAsync(id);
+
+            var result = await mediator.Send(command);
+
+            if (result.Errors != null)
+            {
+                return BadRequest(result.Error(result.Errors));
+            }
+
+            return Ok(result.ToUserResponse());
         }
     }
 }

@@ -29,7 +29,27 @@ namespace Domain.Core
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            FluentApis(builder);
         }
 
+        private static void FluentApis(ModelBuilder builder)
+        {
+            builder.Entity<Association>().HasKey(k => k.Id);
+            builder.Entity<Association>().HasMany(m => m.User)
+                .WithOne(o=>o.Association)
+                .HasForeignKey(fk=>fk.AssociationId)
+                .IsRequired().OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<RefreshToken>().HasKey(k => k.Token);
+            builder.Entity<RefreshToken>().Property(p => p.Token).ValueGeneratedOnAdd();
+            builder.Entity<RefreshToken>().Property(p => p.JwtId).HasMaxLength(450).IsRequired();            
+            builder.Entity<RefreshToken>()
+                            .HasOne(o => o.User)
+                            .WithMany(m => m.RefreshTokens)
+                            .IsRequired()
+                            .HasForeignKey(fk => fk.UserId)
+                            .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

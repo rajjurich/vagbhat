@@ -1,5 +1,6 @@
 ﻿using Domain.Core;
 using Domain.Entities;
+using Domain.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -72,7 +73,7 @@ namespace Domain.Extensions
 
             string roleId = Guid.NewGuid().ToString();
 
-            var roleName = "sysadmin";
+            var roleName = AllowedRoles.Super;
 
             var role = new Role
             {

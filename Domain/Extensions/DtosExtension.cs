@@ -8,7 +8,7 @@ namespace Domain.Extensions
 {
     public static class DtosExtension
     {
-        public static User ToUserDto(this UserDto dto)
+        public static User ToUser(this UserDto dto)
         {
             var user = new User()
             {

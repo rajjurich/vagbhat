@@ -10,10 +10,11 @@ using Microsoft.Extensions.Logging;
 using Contracts.ResponseModels;
 using vagbhat.api.Extensions;
 using System.Text;
+using Domain.Options;
 
 namespace vagbhat.api.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "sysadmin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin_User_Client)]
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
@@ -23,12 +24,11 @@ namespace vagbhat.api.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<WeatherForecastController> logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         [HttpGet]

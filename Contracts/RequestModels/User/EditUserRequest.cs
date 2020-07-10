@@ -7,8 +7,6 @@ namespace Contracts.RequestModels
 {
     public class EditUserRequest
     {
-        [Required(ErrorMessage ="Id is required")]
-        public string Id { get; set; }
         [EmailAddress(ErrorMessage = "Email format is invalid")]
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }

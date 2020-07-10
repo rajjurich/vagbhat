@@ -1,12 +1,3 @@
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.deps.json
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.dll
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.pdb
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.csprojAssemblyReference.cache
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.AssemblyInfoInputs.cache
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.AssemblyInfo.cs
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.csproj.CoreCompileInputs.cache
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.dll
-C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.pdb
 F:\all git repositories\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.deps.json
 F:\all git repositories\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.dll
 F:\all git repositories\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.pdb
@@ -16,3 +7,12 @@ F:\all git repositories\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.Asse
 F:\all git repositories\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.csproj.CoreCompileInputs.cache
 F:\all git repositories\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.dll
 F:\all git repositories\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.pdb
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.deps.json
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.dll
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\bin\Debug\netcoreapp3.1\Contracts.pdb
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.csprojAssemblyReference.cache
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.AssemblyInfoInputs.cache
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.AssemblyInfo.cs
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.dll
+C:\Users\user\Desktop\project\git\vagbhat\Contracts\obj\Debug\netcoreapp3.1\Contracts.pdb

@@ -25,17 +25,7 @@ namespace Domain.Application.Commands
         }
         public async Task<UserDto> Handle(CreateUserCommandAsync request, CancellationToken cancellationToken)
         {
-            //var existingUser = await GetExistingUser(request);
-
-            //if (!(string.IsNullOrEmpty(existingUser)))
-            //{
-            //    return new UserDto
-            //    {
-            //        Errors = new string[] { existingUser }
-            //    };
-            //}
-
-            var user = request.UserDto.ToUserDto();
+            var user = request.UserDto.ToUser();
 
             var result = await userManager.CreateAsync(user, request.UserDto.Password);
 
@@ -54,13 +44,6 @@ namespace Domain.Application.Commands
             var createdUser = await userManager.FindByEmailAsync(user.Email);
 
             return createdUser.ToUserDto();
-        }
-
-        private async Task<string> GetExistingUser(CreateUserCommandAsync request)
-        {
-            return await userManager.FindByEmailAsync(request.UserDto.Email) != null ?
-                "Email already exists" : await userManager.FindByNameAsync(request.UserDto.UserName) != null ?
-                "UserName already exists" : string.Empty;
         }
     }
 }

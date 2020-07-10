@@ -12,7 +12,7 @@ namespace vagbhat.api.Extensions
         {
             return new ErrorResponse
             {
-                Description = obj.GetGenericTypeName(),
+                Description = obj.GetGenericTypeName().Replace("Dto",""),
                 Errors = errors
             };
         }

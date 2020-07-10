@@ -157,12 +157,12 @@ namespace Domain.Migrations
                 columns: table => new
                 {
                     Token = table.Column<string>(nullable: false),
-                    JwtId = table.Column<string>(nullable: true),
+                    JwtId = table.Column<string>(maxLength: 450, nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ExpiryDate = table.Column<DateTime>(nullable: false),
                     IsUsed = table.Column<bool>(nullable: false),
                     IsInvalid = table.Column<bool>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -172,7 +172,7 @@ namespace Domain.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

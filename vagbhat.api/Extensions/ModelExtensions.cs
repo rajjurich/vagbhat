@@ -36,8 +36,7 @@ namespace vagbhat.api.Extensions
         public static UserDto ToUserDto(this EditUserRequest request)
         {
             return new UserDto()
-            {
-                Id = request.Id,
+            {                
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber
             };

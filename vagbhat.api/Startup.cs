@@ -86,7 +86,7 @@ namespace vagbhat.api
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
-                //options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = true;
 
             })
                 .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
