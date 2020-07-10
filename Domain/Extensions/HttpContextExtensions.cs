@@ -16,7 +16,8 @@ namespace Domain.Extensions
                 return string.Empty;
             }
 
-            return httpContext.User.Claims.Single(x => x.Type == "id").Value;
+            //return httpContext.User.Claims.Single(x => x.Type == "id").Value;
+            return httpContext.User?.FindFirstValue("id") ?? string.Empty;
         }
 
         public static string GetUserName(this HttpContext httpContext)
@@ -26,7 +27,17 @@ namespace Domain.Extensions
                 return string.Empty;
             }
 
-            return httpContext.User.Claims.Single(x => x.Type == ClaimTypes.NameIdentifier).Value;
-        }          
+            return httpContext.User?.Claims.Single(x => x.Type == ClaimTypes.NameIdentifier).Value ?? string.Empty;
+        }
+
+        public static string GetEmail(this HttpContext httpContext)
+        {
+            if (httpContext.User == null)
+            {
+                return string.Empty;
+            }
+
+            return httpContext.User?.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
+        }
     }
 }

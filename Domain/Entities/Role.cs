@@ -7,5 +7,7 @@ namespace Domain.Entities
 {
     public class Role : IdentityRole
     {
+        public string AssociationId { get; set; }
+        public virtual Association Association { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using Domain.Extensions;
 
 namespace vagbhat.api.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin_User_Client)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin_Subadmin_User_Client)]
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
@@ -23,12 +23,11 @@ namespace vagbhat.api.Controllers
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-        private readonly ILogger<WeatherForecastController> logger;
+        };        
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController()
         {
-            this.logger = logger;
+            
         }
 
         [HttpGet]

@@ -12,21 +12,17 @@ namespace Domain.Application.Commands
 {
     public class CreateRefreshTokenCommandAsyncHandler : IRequestHandler<CreateRefreshTokenCommandAsync, TokenDto>
     {
-        private readonly IAccessService userService;
-        private readonly IUnitOfWork unitOfWork;
-
-        public CreateRefreshTokenCommandAsyncHandler(IAccessService accessService
-            ,IUnitOfWork unitOfWork)
-        {
-            this.userService = accessService;
-            this.unitOfWork = unitOfWork;
-        }
-
+        private readonly IAccessService accessService;
         
+
+        public CreateRefreshTokenCommandAsyncHandler(IAccessService accessService)
+        {
+            this.accessService = accessService;            
+        }        
 
         public async Task<TokenDto> Handle(CreateRefreshTokenCommandAsync request, CancellationToken cancellationToken)
         {
-            return await userService.CreateRefreshTokenAsync(request);
+            return await accessService.CreateRefreshTokenAsync(request);
         }
     }
 }

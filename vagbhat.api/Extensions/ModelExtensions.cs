@@ -18,7 +18,8 @@ namespace vagbhat.api.Extensions
                 Email = dto.Email,
                 Id = dto.Id,
                 PhoneNumber = dto.PhoneNumber,
-                UserName = dto.UserName
+                UserName = dto.UserName,
+                IsDeleted = dto.IsDeleted
             };
         }
 
@@ -36,7 +37,7 @@ namespace vagbhat.api.Extensions
         public static UserDto ToUserDto(this EditUserRequest request)
         {
             return new UserDto()
-            {                
+            {
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber
             };

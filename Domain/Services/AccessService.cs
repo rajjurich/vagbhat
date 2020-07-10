@@ -205,10 +205,12 @@ namespace Domain.Services
         private async Task<List<Claim>> GetClaimsList(User user)
         {
 
-            var claims = new List<Claim>();            
-            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            claims.Add(new Claim(ClaimTypes.Email, user.Email));
-            claims.Add(new Claim("id", user.Id));
+            var claims = new List<Claim>{
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("id", user.Id),
+                new Claim("del", user.Deleted.ToString())
+            };
 
             var userClaims = await userManager.GetClaimsAsync(user);
             claims.AddRange(userClaims);

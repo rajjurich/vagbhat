@@ -1,6 +1,7 @@
 ﻿using Domain.Dtos;
 using Domain.Entities;
 using Domain.Extensions;
+using Domain.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -12,17 +13,16 @@ using System.Threading.Tasks;
 namespace Domain.Application.Queries
 {
     public class GetUserQueryAsyncHandler : IRequestHandler<GetUserQueryAsync, UserDto>
-    {        
-        private readonly UserManager<User> userManager;
+    {
+        private readonly IUserService userService;
 
-        public GetUserQueryAsyncHandler(UserManager<User> userManager)
-        {            
-            this.userManager = userManager;
+        public GetUserQueryAsyncHandler(IUserService userService)
+        {
+            this.userService = userService;
         }
         public async Task<UserDto> Handle(GetUserQueryAsync request, CancellationToken cancellationToken)
-        {
-            var user = await userManager.FindByIdAsync(request.id);
-            return user.ToUserDto();
+        {            
+            return await userService.GetAsync(request.id);
         }
     }
 }

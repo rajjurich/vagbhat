@@ -30,6 +30,8 @@ using Domain.Application.Queries;
 using Domain.Application.Commands;
 using Domain.Application.Behaviours;
 using vagbhat.api.Filters;
+using vagbhat.api.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vagbhat.api
 {
@@ -116,6 +118,7 @@ namespace vagbhat.api
 
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -144,7 +147,15 @@ namespace vagbhat.api
                 options.TokenValidationParameters = tokenValidationParameters;
             });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(CreatedPolicies.IsDeletedUser, policy =>
+                {
+                    policy.AddRequirements(new IsUserDeletedRequirement());                    
+                });
+            });
+
+            services.AddScoped<IAuthorizationHandler, IsUserDeletedHandler>();
 
             services.AddControllers(config =>
             {

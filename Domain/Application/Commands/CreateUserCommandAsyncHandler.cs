@@ -1,6 +1,7 @@
 ﻿using Domain.Dtos;
 using Domain.Entities;
 using Domain.Extensions;
+using Domain.Options;
 using Domain.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -17,34 +18,15 @@ namespace Domain.Application.Commands
 {
     public class CreateUserCommandAsyncHandler : IRequestHandler<CreateUserCommandAsync, UserDto>
     {
-        private readonly UserManager<User> userManager;
+        private readonly IUserService userService;
 
-        public CreateUserCommandAsyncHandler(UserManager<User> userManager)
+        public CreateUserCommandAsyncHandler(IUserService userService)
         {
-            this.userManager = userManager;
+            this.userService = userService;
         }
         public async Task<UserDto> Handle(CreateUserCommandAsync request, CancellationToken cancellationToken)
         {
-            var user = request.UserDto.ToUser();
-            user.Deleted = false;
-            var result = await userManager.CreateAsync(user, request.UserDto.Password);
-
-            if (!(result.Succeeded))
-            {
-                return new UserDto
-                {
-                    Errors = result.Errors.Select(x => x.Description).ToArray()
-                };
-            }
-
-            List<Claim> userClaims = new List<Claim>();
-            userClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName));            
-
-            await userManager.AddClaimsAsync(user, userClaims);
-
-            var createdUser = await userManager.FindByEmailAsync(user.Email);
-
-            return createdUser.ToUserDto();
+            return await userService.AddAsync(request.UserDto);
         }
     }
 }

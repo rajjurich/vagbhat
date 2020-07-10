@@ -25,7 +25,7 @@ namespace vagbhat.api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin, Policy = CreatedPolicies.IsDeletedUser)]
     public class UserController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -35,7 +35,8 @@ namespace vagbhat.api.Controllers
                 Email = x.Email,
                 Id = x.Id,
                 PhoneNumber = x.PhoneNumber,
-                UserName = x.UserName
+                UserName = x.UserName,
+                IsDeleted = x.IsDeleted
             };
 
         public UserController(IMediator mediator)
@@ -47,7 +48,7 @@ namespace vagbhat.api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IQueryable<UserResponse>))]
         public async Task<IActionResult> Get()
-        {            
+        {
             var query = new GetUsersQuery();
             var result = await mediator.Send(query);
             return Ok(result.Select(AsUserResponse));

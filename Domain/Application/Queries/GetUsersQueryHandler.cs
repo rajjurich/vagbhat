@@ -18,34 +18,18 @@ namespace Domain.Application.Queries
 {
     public class GetUsersQueryHandler : RequestHandler<GetUsersQuery, IQueryable<UserDto>>
     {
-        private readonly UserManager<User> userManager;
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private static readonly Expression<Func<User, UserDto>> AsUserDto =
-            x => new UserDto
-            {
-                Email = x.Email,
-                Id = x.Id,
-                PhoneNumber = x.PhoneNumber,
-                UserName = x.UserName
-            };
+        private readonly IUserService userService;
 
-        public GetUsersQueryHandler(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        public GetUsersQueryHandler(IUserService userService)
         {
-            this.userManager = userManager;
-            this.httpContextAccessor = httpContextAccessor;
+            this.userService = userService;
         }
 
         protected override IQueryable<UserDto> Handle(GetUsersQuery request)
         {
-            var accessId = httpContextAccessor.HttpContext.GetUserId();
-            return (checkRole(accessId).Result) ?
-                userManager.Users.Select(AsUserDto) :
-                userManager.Users.Where(x => x.Association.AssociationName != "self").Select(AsUserDto);
+            return userService.Get(0,10);
         }
 
-        private async Task<bool> checkRole(string id)
-        {
-            return await userManager.IsInRoleAsync(await userManager.FindByIdAsync(id), AllowedRoles.Super);
-        }
+        
     }
 }

@@ -23,7 +23,7 @@ namespace Domain.Core
         {
             base.OnModelCreating(builder);
 
-            builder.Seed();
+            //builder.Seed();
 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
@@ -35,8 +35,8 @@ namespace Domain.Core
 
         private static void FluentApis(ModelBuilder builder)
         {
-            //builder.Entity<User>().Property(p => p.AssociationId).HasMaxLength(450).IsRequired();
-            //builder.Entity<User>().Property(p => p.CreatorId).HasMaxLength(450).IsRequired();
+            builder.Entity<User>().Property(p => p.AssociationId).HasMaxLength(450).IsRequired();
+            builder.Entity<User>().Property(p => p.CreatorId).HasMaxLength(450).IsRequired();
             builder.Entity<User>().Property(p => p.Deleted).IsRequired();
 
             builder.Entity<Association>().HasKey(k => k.Id);

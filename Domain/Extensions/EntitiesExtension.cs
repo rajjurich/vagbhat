@@ -14,8 +14,9 @@ namespace Domain.Extensions
             {
                 Id = entity.Id,
                 Email = entity.Email,
-                PhoneNumber = entity.PhoneNumber,                
-                UserName = entity.UserName
+                PhoneNumber = entity.PhoneNumber,
+                UserName = entity.UserName,
+                IsDeleted = entity.Deleted
             };
         }
     }
