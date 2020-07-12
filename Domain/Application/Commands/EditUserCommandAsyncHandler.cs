@@ -17,15 +17,15 @@ namespace Domain.Application.Commands
 {
     public class EditUserCommandAsyncHandler : IRequestHandler<EditUserCommandAsync, UserDto>
     {
-        private readonly IUserService userService;
+        private readonly IUserService service;
 
-        public EditUserCommandAsyncHandler(IUserService userService)
+        public EditUserCommandAsyncHandler(IUserService service)
         {
-            this.userService = userService;
+            this.service = service;
         }
         public async Task<UserDto> Handle(EditUserCommandAsync request, CancellationToken cancellationToken)
         {
-            return await userService.EditAsync(request.UserDto);
+            return await service.EditAsync(request.Dto);
         }
     }
 }

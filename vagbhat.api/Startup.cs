@@ -47,126 +47,16 @@ namespace vagbhat.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            BuildMediator(services);
-            services.AddDbContextPool<EntitiesContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddSwaggerGen(x =>
-            {
-                x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Vagbhat API", Version = "v1" });
-
-                var security = new Dictionary<string, IEnumerable<string>>
-                {
-                    {"Bearer", new string[0] }
-                };
-
-                x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization Header using Bearer Scheme",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
-                });
-
-                x.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Id="Bearer",
-                                Type=ReferenceType.SecurityScheme
-                            }
-                        } ,new List<string>()
-                    }
-                });
-            });
-
-            services.AddIdentity<User, Role>(options =>
-            {
-                options.Password.RequireUppercase = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.User.RequireUniqueEmail = true;
-
-            })
-                .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
-
-
-            var jwtSettings = new JwtSettings();
-            Configuration.Bind(nameof(JwtSettings), jwtSettings);
-
-            services.AddSingleton(jwtSettings);
-            services.AddScoped<IAccessService, AccessService>();
-
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateLifetime = true,
-                RequireExpirationTime = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret))
-            };
-
-            services.AddSingleton(tokenValidationParameters);
-
-            services.AddScoped<EntitiesContext>();
-
-            services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));
-
-            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Events = new JwtBearerEvents()
-                {
-                    OnMessageReceived = context =>
-                    {
-                        if (context.Request.Query.ContainsKey("access_token"))
-                        {
-                            context.Token = context.Request.Query["access_token"];
-                        }
-
-                        return Task.CompletedTask;
-                    }
-                };
-
-                options.SaveToken = true;
-                options.TokenValidationParameters = tokenValidationParameters;
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(CreatedPolicies.IsDeletedUser, policy =>
-                {
-                    policy.AddRequirements(new IsUserDeletedRequirement());                    
-                });
-            });
-
-            services.AddScoped<IAuthorizationHandler, IsUserDeletedHandler>();
-
-            services.AddControllers(config =>
-            {
-                config.Filters.Add(typeof(ApiExceptionFilter));
-                //config.Filters.Add(new UnitOfWorkAsyncActionFilters());
-            });
-
-            services.AddHealthChecks()
-                .AddDbContextCheck<EntitiesContext>();
-
-
+            services.BuildMediator();
+            services.AddCustomDbContext(Configuration)
+                .AddCustomIntegrations()
+                .AddCustomSwagger()
+                .AddCustomIdentity()
+                .AddCustomAuthentication(Configuration)
+                .AddCustomAuthorization()
+                .AddCustomMvc()
+                .AddHealthChecks()
+               .AddDbContextCheck<EntitiesContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -218,7 +108,73 @@ namespace vagbhat.api
                 endpoints.MapControllers();
             });
         }
-        private static IMediator BuildMediator(IServiceCollection services)
+    }
+
+    static class CustomExtensionsMethods
+    {
+        public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContextPool<EntitiesContext>(
+                options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            return services;
+        }
+        public static IServiceCollection AddCustomIntegrations(this IServiceCollection services)
+        {
+            services.AddScoped<EntitiesContext>();
+
+            services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IAuthorizationHandler, IsUserDeletedHandler>();
+
+            services.AddScoped<IAccessService, AccessService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IAssociationService, AssociationService>();
+
+            return services;
+        }
+        public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Vagbhat API", Version = "v1" });
+
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[0] }
+                };
+
+                x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization Header using Bearer Scheme",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                x.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id="Bearer",
+                                Type=ReferenceType.SecurityScheme
+                            }
+                        } ,new List<string>()
+                    }
+                });
+            });
+            return services;
+        }
+        public static IMediator BuildMediator(this IServiceCollection services)
         {
             services.AddScoped<ServiceFactory>(p => p.GetService);
 
@@ -230,6 +186,89 @@ namespace vagbhat.api
             var provider = services.BuildServiceProvider();
 
             return provider.GetRequiredService<IMediator>();
+        }
+        
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
+        {
+            services.AddControllers(config =>
+            {
+                config.Filters.Add(typeof(ApiExceptionFilter));
+                //config.Filters.Add(new UnitOfWorkAsyncActionFilters());
+            });
+
+            return services;
+        }
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtSettings = new JwtSettings();
+            configuration.Bind(nameof(JwtSettings), jwtSettings);
+            services.AddSingleton(jwtSettings);
+
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateLifetime = true,
+                RequireExpirationTime = false,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret))
+            };            
+
+            services.AddSingleton(tokenValidationParameters);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Events = new JwtBearerEvents()
+                {
+                    OnMessageReceived = context =>
+                    {
+                        if (context.Request.Query.ContainsKey("access_token"))
+                        {
+                            context.Token = context.Request.Query["access_token"];
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
+
+                options.SaveToken = true;
+                options.TokenValidationParameters = tokenValidationParameters;
+            });
+
+            return services;
+        }
+        public static IServiceCollection AddCustomIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.User.RequireUniqueEmail = true;
+
+            })
+                .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(CreatedPolicies.IsDeletedUser, policy =>
+                {
+                    policy.AddRequirements(new IsUserDeletedRequirement());
+                });
+            });
+
+            return services;
         }
     }
 }

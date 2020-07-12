@@ -18,16 +18,16 @@ namespace Domain.Application.Queries
 {
     public class GetUsersQueryHandler : RequestHandler<GetUsersQuery, IQueryable<UserDto>>
     {
-        private readonly IUserService userService;
+        private readonly IUserService service;
 
-        public GetUsersQueryHandler(IUserService userService)
+        public GetUsersQueryHandler(IUserService service)
         {
-            this.userService = userService;
+            this.service = service;
         }
 
         protected override IQueryable<UserDto> Handle(GetUsersQuery request)
         {
-            return userService.Get(0,10);
+            return service.Get(0,10);
         }
 
         

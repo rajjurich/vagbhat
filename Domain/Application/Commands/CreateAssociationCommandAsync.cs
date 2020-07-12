@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Domain.Application.Commands
 {
-    public class CreateUserCommandAsync : IRequest<UserDto>
+    public class CreateAssociationCommandAsync : IRequest<AssociationDto>
     {
-        public CreateUserCommandAsync(UserDto dto)
+        public CreateAssociationCommandAsync(AssociationDto dto)
         {
             Dto = dto;
         }
 
-        public UserDto Dto { get; }
+        public AssociationDto Dto { get; }
     }
 }

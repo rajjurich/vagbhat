@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Contracts.User.RequestModels
+namespace Contracts.RequestModels
 {
     public class CreateUserRequest
     {

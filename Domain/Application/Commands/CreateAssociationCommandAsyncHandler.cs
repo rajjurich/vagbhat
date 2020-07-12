@@ -16,17 +16,18 @@ using System.Threading.Tasks;
 
 namespace Domain.Application.Commands
 {
-    public class CreateUserCommandAsyncHandler : IRequestHandler<CreateUserCommandAsync, UserDto>
+    public class CreateAssociationCommandAsyncHandler : IRequestHandler<CreateAssociationCommandAsync, AssociationDto>
     {
-        private readonly IUserService service;
+        private readonly IAssociationService service;
 
-        public CreateUserCommandAsyncHandler(IUserService service)
+        public CreateAssociationCommandAsyncHandler(IAssociationService service)
         {
             this.service = service;
         }
-        public async Task<UserDto> Handle(CreateUserCommandAsync request, CancellationToken cancellationToken)
+        public async Task<AssociationDto> Handle(CreateAssociationCommandAsync request, CancellationToken cancellationToken)
         {
-            return await service.AddAsync(request.Dto);
+            var result = await service.AddAsync(request.Dto.ToAssociation());
+            return result.ToAssociationDto();
         }
     }
 }

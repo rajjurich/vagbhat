@@ -5,11 +5,11 @@ namespace Domain.Application.Commands
 {
     public class EditUserCommandAsync : IRequest<UserDto>
     {
-        public EditUserCommandAsync(UserDto userDto)
+        public EditUserCommandAsync(UserDto dto)
         {
-            UserDto = userDto;
+            Dto = dto;
         }
 
-        public UserDto UserDto { get; }
+        public UserDto Dto { get; }
     }
 }

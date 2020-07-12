@@ -31,7 +31,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Association");
+                    b.ToTable("Associations");
                 });
 
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>

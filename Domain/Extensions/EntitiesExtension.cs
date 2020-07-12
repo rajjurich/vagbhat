@@ -19,5 +19,14 @@ namespace Domain.Extensions
                 IsDeleted = entity.Deleted
             };
         }
+
+        public static AssociationDto ToAssociationDto(this Association entity)
+        {
+            return new AssociationDto()
+            {
+                Id = entity.Id,
+                AssociationName = entity.AssociationName
+            };
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Domain.Extensions
     {
         public static User ToUser(this UserDto dto)
         {
-            var user = new User()
+            var entity = new User()
             {
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
@@ -19,9 +19,24 @@ namespace Domain.Extensions
 
             if (!(string.IsNullOrWhiteSpace(dto.Id)))
             {
-                user.Id = dto.Id;
+                entity.Id = dto.Id;
             }
-            return user;
+            return entity;
+
+        }
+
+        public static Association ToAssociation(this AssociationDto dto)
+        {
+            var entity = new Association()
+            {
+                AssociationName = dto.AssociationName
+            };
+
+            if (!(string.IsNullOrWhiteSpace(dto.Id)))
+            {
+                entity.Id = dto.Id;
+            }
+            return entity;
 
         }
     }

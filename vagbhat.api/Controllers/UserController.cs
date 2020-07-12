@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using Domain.Application.Queries;
 using vagbhat.api.Extensions;
-using Contracts.User.RequestModels;
+using Contracts.RequestModels;
 using Domain.Dtos;
 using Domain.Application.Commands;
 using Contracts.ResponseModels;
@@ -75,11 +75,11 @@ namespace vagbhat.api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-        public async Task<IActionResult> Post([FromBody] CreateUserRequest userRequest)
+        public async Task<IActionResult> Post([FromBody] CreateUserRequest createRequest)
         {
-            var userDto = userRequest.ToUserDto();
+            var dto = createRequest.ToUserDto();
 
-            var command = new CreateUserCommandAsync(userDto);
+            var command = new CreateUserCommandAsync(dto);
 
             var result = await mediator.Send(command);
 
@@ -95,9 +95,9 @@ namespace vagbhat.api.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-        public async Task<IActionResult> Put(string id, [FromBody] EditUserRequest userRequest)
+        public async Task<IActionResult> Put(string id, [FromBody] EditUserRequest editRequest)
         {
-            var userDto = userRequest.ToUserDto();
+            var userDto = editRequest.ToUserDto();
             userDto.Id = id;
 
             var command = new EditUserCommandAsync(userDto);

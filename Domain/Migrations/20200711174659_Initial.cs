@@ -8,7 +8,7 @@ namespace Domain.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Association",
+                name: "Associations",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -16,7 +16,7 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Association", x => x.Id);
+                    table.PrimaryKey("PK_Associations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,9 +33,9 @@ namespace Domain.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoles_Association_AssociationId",
+                        name: "FK_AspNetRoles_Associations_AssociationId",
                         column: x => x.AssociationId,
-                        principalTable: "Association",
+                        principalTable: "Associations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -67,9 +67,9 @@ namespace Domain.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Association_AssociationId",
+                        name: "FK_AspNetUsers_Associations_AssociationId",
                         column: x => x.AssociationId,
-                        principalTable: "Association",
+                        principalTable: "Associations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -296,7 +296,7 @@ namespace Domain.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Association");
+                name: "Associations");
         }
     }
 }

@@ -14,15 +14,15 @@ namespace Domain.Application.Queries
 {
     public class GetUserQueryAsyncHandler : IRequestHandler<GetUserQueryAsync, UserDto>
     {
-        private readonly IUserService userService;
+        private readonly IUserService service;
 
-        public GetUserQueryAsyncHandler(IUserService userService)
+        public GetUserQueryAsyncHandler(IUserService service)
         {
-            this.userService = userService;
+            this.service = service;
         }
         public async Task<UserDto> Handle(GetUserQueryAsync request, CancellationToken cancellationToken)
         {            
-            return await userService.GetAsync(request.id);
+            return await service.GetAsync(request.id);
         }
     }
 }

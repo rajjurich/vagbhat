@@ -17,15 +17,15 @@ namespace Domain.Application.Commands
 {
     public class DeleteUserCommandAsyncHandler : IRequestHandler<DeleteUserCommandAsync, UserDto>
     {
-        private readonly IUserService userService;
+        private readonly IUserService service;
 
-        public DeleteUserCommandAsyncHandler(IUserService userService)
+        public DeleteUserCommandAsyncHandler(IUserService service)
         {
-            this.userService = userService;
+            this.service = service;
         }
         public async Task<UserDto> Handle(DeleteUserCommandAsync request, CancellationToken cancellationToken)
         {
-            return await userService.RemoveAsync(request.Id);
+            return await service.RemoveAsync(request.Id);
         }
     }
 }

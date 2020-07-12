@@ -1,4 +1,4 @@
-﻿using Contracts.User.RequestModels;
+﻿using Contracts.RequestModels;
 using Contracts.ResponseModels;
 using Domain.Dtos;
 using System;
@@ -40,6 +40,23 @@ namespace vagbhat.api.Extensions
             {
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber
+            };
+        }
+
+        public static AssociationDto ToAssociactionDto(this AssociationRequest request)
+        {
+            return new AssociationDto()
+            {
+                AssociationName = request.AssociationName
+            };
+        }
+
+        public static AssociationResponse ToAssociationResponse(this AssociationDto dto)
+        {
+            return new AssociationResponse()
+            {
+                Id = dto.Id,
+                AssociationName = dto.AssociationName
             };
         }
     }

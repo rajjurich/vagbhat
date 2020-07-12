@@ -28,10 +28,11 @@ namespace Domain.Extensions
             string roleId = Guid.NewGuid().ToString();
 
             string associationId = Guid.NewGuid().ToString();
-
-            await context.AddAsync(new Association { Id = associationId, AssociationName = "self" });
-            await context.SaveChangesAsync();
-
+            if (!await context.Associations.AnyAsync())
+            {
+                await context.AddAsync(new Association { Id = associationId, AssociationName = "self" });
+                await context.SaveChangesAsync();
+            }
             var roleName = AllowedRoles.Super;
 
             var role = new Role
@@ -72,7 +73,7 @@ namespace Domain.Extensions
                 //await roleManager.CreateAsync(roleSubadmin);
                 //await roleManager.CreateAsync(roleUser);
                 //await roleManager.CreateAsync(roleClient);
-            }            
+            }
 
             var hasher = new PasswordHasher<User>();
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(EntitiesContext))]
-    [Migration("20200710184753_Initial")]
+    [Migration("20200711174659_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Association");
+                    b.ToTable("Associations");
                 });
 
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>

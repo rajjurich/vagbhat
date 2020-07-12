@@ -18,6 +18,7 @@ namespace Domain.Core
         }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Association> Associations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -40,6 +41,7 @@ namespace Domain.Core
             builder.Entity<User>().Property(p => p.Deleted).IsRequired();
 
             builder.Entity<Association>().HasKey(k => k.Id);
+            builder.Entity<Association>().Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Entity<Association>().Property(p => p.AssociationName).HasMaxLength(450).IsRequired();          
 
             builder.Entity<RefreshToken>().HasKey(k => k.Token);
