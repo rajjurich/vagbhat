@@ -30,8 +30,7 @@ namespace Domain.Core
 
         public async Task<T> AddAsync(T entity)
         {
-            await entitiesContext.Set<T>().AddAsync(entity);
-            //await entitiesContext.SaveChangesAsync();
+            await entitiesContext.Set<T>().AddAsync(entity);            
             return entity;
         }
 
@@ -47,8 +46,7 @@ namespace Domain.Core
 
         public async Task<T> UpdateAsync(T entity)
         {
-            await Task.Run(() => entitiesContext.Entry(entity).State = EntityState.Modified);
-            //await entitiesContext.SaveChangesAsync();
+            await Task.Run(() => entitiesContext.Entry(entity).State = EntityState.Modified);            
             return entity;
         }
 
@@ -73,8 +71,7 @@ namespace Domain.Core
 
         public async Task<T> RemoveAsync(T entity)
         {
-            await Task.Run(() => entitiesContext.Set<T>().Remove(entity));
-            //await entitiesContext.SaveChangesAsync();
+            await Task.Run(() => entitiesContext.Set<T>().Remove(entity));            
             return entity;
         }
     }

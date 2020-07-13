@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Contracts.RequestModels
 {
-    public class AddRoleRequest
+    public class CreateRoleRequest
     {
         [Required(ErrorMessage = "Role Name is required")]
         public string Name { get; set; }

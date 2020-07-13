@@ -15,10 +15,10 @@ namespace vagbhat.api.MappingProfile
         {
             CreateMap<AssociationRequest, AssociationDto>();
 
-            CreateMap<AddRoleRequest, RoleDto>();
+            CreateMap<CreateRoleRequest, RoleDto>();
             CreateMap<UpdateRoleRequest, RoleDto>();
 
-            CreateMap<AddUserRequest, UserDto>();
+            CreateMap<CreateUserRequest, UserDto>();
             CreateMap<UpdateUserRequest, UserDto>();
         }
     }

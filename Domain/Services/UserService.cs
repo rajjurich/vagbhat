@@ -29,16 +29,19 @@ namespace Domain.Services
     public class UserService : IUserService
     {
         private readonly UserManager<User> userManager;
+        private readonly RoleManager<Role> roleManager;
         private readonly ICommonService commonService;
         private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly IMapper mapper;       
+        private readonly IMapper mapper;
 
         public UserService(UserManager<User> userManager
+            , RoleManager<Role> roleManager
             , ICommonService commonService
             , IHttpContextAccessor httpContextAccessor
             , IMapper mapper)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.commonService = commonService;
             this.httpContextAccessor = httpContextAccessor;
             this.mapper = mapper;
@@ -73,7 +76,11 @@ namespace Domain.Services
 
             await userManager.AddClaimsAsync(user, userClaims);
 
-            await userManager.AddToRoleAsync(user, AllowedRoles.Admin);
+            foreach (var roleId in userDto.RoleIds)
+            {
+                var role = await roleManager.FindByIdAsync(roleId);
+                await userManager.AddToRoleAsync(user, role.Name);
+            }
 
             var createdUser = await userManager.FindByEmailAsync(user.Email);
 

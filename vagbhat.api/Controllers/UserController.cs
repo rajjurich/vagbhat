@@ -71,7 +71,7 @@ namespace vagbhat.api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-        public async Task<IActionResult> Post([FromBody] AddUserRequest createRequest)
+        public async Task<IActionResult> Post([FromBody] CreateUserRequest createRequest)
         {
             var dto = mapper.Map<UserDto>(createRequest);
 

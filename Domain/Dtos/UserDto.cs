@@ -14,5 +14,6 @@ namespace Domain.Dtos
         public string PhoneNumber { get; set; }
         public string AssociationId { get; set; }
         public bool Deleted { get; set; }
+        public List<string> RoleIds { get; set; }
     }
 }

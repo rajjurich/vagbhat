@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Contracts.RequestModels
 {
-    public class AddUserRequest
+    public class CreateUserRequest
     {
         [EmailAddress(ErrorMessage = "Email format is invalid")]
         [Required(ErrorMessage = "Email is required")]
@@ -18,6 +18,7 @@ namespace Contracts.RequestModels
         public string ConfirmPassword { get; set; }
         public string PhoneNumber { get; set; }
         public string AssociationId { get; set; }
+        public List<string> RoleIds { get; set; }
 
     }
 }

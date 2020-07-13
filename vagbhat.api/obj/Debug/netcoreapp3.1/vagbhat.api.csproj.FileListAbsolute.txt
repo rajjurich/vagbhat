@@ -176,3 +176,5 @@ C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Au
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CoreCompileInputs.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\AutoMapper.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

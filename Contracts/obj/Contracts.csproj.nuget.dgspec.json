@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {}
+    "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
+    "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
+        "projectUniqueName": "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj",
         "projectName": "Contracts",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\obj\\",
+        "projectPath": "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj",
+        "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+        "outputPath": "F:\\all git repositories\\vagbhat\\Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

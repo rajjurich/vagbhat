@@ -160,32 +160,28 @@ namespace Domain.Services
             var accessorId = httpContextAccessor.HttpContext.GetUserId();
             var accessor = await userManager.FindByIdAsync(accessorId);
 
-            foreach (var checkRole in roleManager.Roles.Where(x => x.AssociationId == accessor.AssociationId))
+            var accessorRoles = await userManager.GetRolesAsync(accessor);
+
+            var accessorRanks = roleManager.Roles.Where(x => x.AssociationId == accessor.AssociationId && accessorRoles.Contains(x.Name))
+                .Select(x => x.Rank).ToList();
+
+            var checkRank = false;
+            
+            foreach (var accessorRank in accessorRanks)
             {
-                if (key == await roleManager.GetRoleIdAsync(checkRole))
+                checkRank = !(accessorRank < role.Rank);
+                if (checkRank == false)
                 {
-                    return new RoleDto
-                    {
-                        Errors = new string[] { $"Unable to delete your own role with id = {key}" }
-                    };
+                    break;
                 }
             }
 
-
-
-            var accessorRoles = await userManager.GetRolesAsync(accessor);
-
-            //var userRoles = await userManager.GetRolesAsync(user);
-
-            foreach (var accessorRole in accessorRoles)
+            if(checkRank)
             {
-                if (accessorRole == role.Name)
+                return new RoleDto
                 {
-                    return new RoleDto
-                    {
-                        Errors = new string[] { $"Unable to delete role with id {key} due to same access role" }
-                    };
-                }
+                    Errors = new string[] { $"Unable to delete role with id {key} due to higher rank policy" }
+                };
             }
 
             if (role.Name == AllowedRoles.Super)
