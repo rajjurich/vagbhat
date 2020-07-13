@@ -11,6 +11,7 @@ using Domain.Options;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace Domain.Services
 {
@@ -20,7 +21,7 @@ namespace Domain.Services
         Task<int> CountAsync(Expression<Func<UserDto, bool>> predicate);
         Task<int> CountAsync();
         Task<UserDto> RemoveAsync(string key);
-        Task<UserDto> EditAsync(UserDto userDto);
+        Task<UserDto> UpdateAsync(UserDto userDto);
         IQueryable<UserDto> Find(Expression<Func<UserDto, bool>> predicate, int start, int length);
         IQueryable<UserDto> Get(int start, int length);
         Task<UserDto> GetAsync(string key);
@@ -28,36 +29,37 @@ namespace Domain.Services
     public class UserService : IUserService
     {
         private readonly UserManager<User> userManager;
+        private readonly ICommonService commonService;
         private readonly IHttpContextAccessor httpContextAccessor;
-        private static readonly Expression<Func<User, UserDto>> AsUserDto =
-            x => new UserDto
-            {
-                Email = x.Email,
-                Id = x.Id,
-                PhoneNumber = x.PhoneNumber,
-                UserName = x.UserName,
-                IsDeleted = x.Deleted
-            };
+        private readonly IMapper mapper;       
 
         public UserService(UserManager<User> userManager
-            , IHttpContextAccessor httpContextAccessor)
+            , ICommonService commonService
+            , IHttpContextAccessor httpContextAccessor
+            , IMapper mapper)
         {
             this.userManager = userManager;
+            this.commonService = commonService;
             this.httpContextAccessor = httpContextAccessor;
+            this.mapper = mapper;
         }
 
         public async Task<UserDto> AddAsync(UserDto userDto)
         {
             var accessorId = httpContextAccessor.HttpContext.GetUserId();
 
-            var user = userDto.ToUser();
+            var accessor = await userManager.FindByIdAsync(accessorId);
+
+            var user = mapper.Map<User>(userDto);
 
             user.Deleted = false;
             user.CreatorId = accessorId;
+            user.AssociationId = await userManager.IsInRoleAsync(accessor, AllowedRoles.Super) ?
+                userDto.AssociationId : accessor.AssociationId;
 
             var result = await userManager.CreateAsync(user, userDto.Password);
 
-            if (!(result.Succeeded))
+            if (!result.Succeeded)
             {
                 return new UserDto
                 {
@@ -75,7 +77,7 @@ namespace Domain.Services
 
             var createdUser = await userManager.FindByEmailAsync(user.Email);
 
-            return createdUser.ToUserDto();
+            return mapper.Map<UserDto>(createdUser);
         }
 
         public Task<int> CountAsync(Expression<Func<UserDto, bool>> predicate)
@@ -88,7 +90,7 @@ namespace Domain.Services
             throw new NotImplementedException();
         }
 
-        public async Task<UserDto> EditAsync(UserDto userDto)
+        public async Task<UserDto> UpdateAsync(UserDto userDto)
         {
             var user = await userManager.FindByIdAsync(userDto.Id);
 
@@ -105,7 +107,7 @@ namespace Domain.Services
 
             var result = await userManager.UpdateAsync(user);
 
-            if (!(result.Succeeded))
+            if (!result.Succeeded)
             {
                 return new UserDto
                 {
@@ -117,9 +119,9 @@ namespace Domain.Services
             Claim userClaim = new Claim(ClaimTypes.NameIdentifier, user.UserName);
             await userManager.AddClaimAsync(user, userClaim);
 
-            var updatedUser = await userManager.FindByEmailAsync(user.Email);
+            //var updatedUser = await userManager.FindByEmailAsync(user.Email);
 
-            return updatedUser.ToUserDto();
+            return mapper.Map<UserDto>(user);
         }
 
         public IQueryable<UserDto> Find(Expression<Func<UserDto, bool>> predicate, int start, int length)
@@ -130,17 +132,18 @@ namespace Domain.Services
         public IQueryable<UserDto> Get(int start, int length)
         {
             var accessorId = httpContextAccessor.HttpContext.GetUserId();
-            return (IsSuper(accessorId).Result) ?
-                userManager.Users.Select(AsUserDto).Skip(start).Take(length) :
+            var result = (commonService.IsSuper(accessorId).Result) ?
+                userManager.Users.Skip(start).Take(length) :
                 userManager.Users.Where(x => x.Association.AssociationName != "self")
-                .Select(AsUserDto)
                 .Skip(start).Take(length);
+
+            return mapper.Map<List<UserDto>>(result).AsQueryable();
         }
 
         public async Task<UserDto> GetAsync(string key)
         {
             var user = await userManager.FindByIdAsync(key);
-            return user.ToUserDto();
+            return mapper.Map<UserDto>(user);
         }
 
         public async Task<UserDto> RemoveAsync(string key)
@@ -151,7 +154,7 @@ namespace Domain.Services
             {
                 return new UserDto
                 {
-                    Errors = new string[] { $"User cannot be deleted with id == {key}" }
+                    Errors = new string[] { $"Unable to delete yourself with id = {key}" }
                 };
             }
 
@@ -162,13 +165,14 @@ namespace Domain.Services
             {
                 return new UserDto
                 {
-                    Errors = new string[] { $"User not found with id == {key}" }
+                    Errors = new string[] { $"Unable to find user with id = {key}" }
                 };
             }
 
             var accessor = await userManager.FindByIdAsync(accessorId);
 
             var accessorRoles = await userManager.GetRolesAsync(accessor);
+
             var userRoles = await userManager.GetRolesAsync(user);
 
             foreach (var accessorRole in accessorRoles)
@@ -179,7 +183,7 @@ namespace Domain.Services
                     {
                         return new UserDto
                         {
-                            Errors = new string[] { $"User cannot be deleted with id == {key}" }
+                            Errors = new string[] { $"Unable to delete user with id {key} due to same access role" }
                         };
                     }
                 }
@@ -189,7 +193,7 @@ namespace Domain.Services
             {
                 return new UserDto
                 {
-                    Errors = new string[] { $"User cannot be deleted with id == {key}" }
+                    Errors = new string[] { $"Unable to delete Super user with id == {key}" }
                 };
             }
 
@@ -225,12 +229,7 @@ namespace Domain.Services
                 };
             }
 
-            return user.ToUserDto();
-        }
-
-        private async Task<bool> IsSuper(string id)
-        {
-            return await userManager.IsInRoleAsync(await userManager.FindByIdAsync(id), AllowedRoles.Super);
+            return mapper.Map<UserDto>(user);
         }
     }
 }

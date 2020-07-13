@@ -12,6 +12,7 @@ namespace Domain.Dtos
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }        
         public string PhoneNumber { get; set; }
-        public bool IsDeleted { get; set; }
+        public string AssociationId { get; set; }
+        public bool Deleted { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace Domain.Options
 { 
     public static class CreatedPolicies
     {
-        public const string IsDeletedUser = "del";
+        public const string Deleted = "del";
     }
 }

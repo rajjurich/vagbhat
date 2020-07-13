@@ -5,9 +5,12 @@ using System.Text;
 
 namespace Contracts.RequestModels
 {
-    public class RoleRequest
+    public class AddRoleRequest
     {
         [Required(ErrorMessage = "Role Name is required")]
-        public string RoleName { get; set; }
+        public string Name { get; set; }
+        [Range(1,100)]
+        public int Rank { get; set; }
+        public string AssociationId { get; set; }
     }
 }

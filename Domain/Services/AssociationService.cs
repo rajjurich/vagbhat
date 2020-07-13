@@ -40,9 +40,9 @@ namespace Domain.Services
             return await entityRepository.RemoveAsync(entity);
         }
 
-        public async Task<Association> EditAsync(Association entity)
+        public async Task<Association> UpdateAsync(Association entity)
         {
-            return await entityRepository.EditAsync(entity);
+            return await entityRepository.UpdateAsync(entity);
         }
 
         public IQueryable<Association> Find(Expression<Func<Association, bool>> predicate, int start, int length)

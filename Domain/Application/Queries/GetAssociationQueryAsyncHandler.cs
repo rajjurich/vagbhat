@@ -1,4 +1,5 @@
-﻿using Domain.Dtos;
+﻿using AutoMapper;
+using Domain.Dtos;
 using Domain.Entities;
 using Domain.Extensions;
 using Domain.Services;
@@ -15,15 +16,18 @@ namespace Domain.Application.Queries
     public class GetAssociationQueryAsyncHandler : IRequestHandler<GetAssociationQueryAsync, AssociationDto>
     {
         private readonly IAssociationService service;
+        private readonly IMapper mapper;
 
-        public GetAssociationQueryAsyncHandler(IAssociationService service)
+        public GetAssociationQueryAsyncHandler(IAssociationService service
+            , IMapper mapper)
         {
             this.service = service;
+            this.mapper = mapper;
         }
         public async Task<AssociationDto> Handle(GetAssociationQueryAsync request, CancellationToken cancellationToken)
         {
             var result = await service.GetAsync(request.id);
-            return result.ToAssociationDto();
+            return mapper.Map<AssociationDto>(result);
         }
     }
 }

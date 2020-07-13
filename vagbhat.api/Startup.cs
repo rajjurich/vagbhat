@@ -32,6 +32,7 @@ using Domain.Application.Behaviours;
 using vagbhat.api.Filters;
 using vagbhat.api.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace vagbhat.api
 {
@@ -55,6 +56,7 @@ namespace vagbhat.api
                 .AddCustomAuthentication(Configuration)
                 .AddCustomAuthorization()
                 .AddCustomMvc()
+                .AddAutoMapper(typeof(Startup))
                 .AddHealthChecks()
                .AddDbContextCheck<EntitiesContext>();
         }
@@ -121,11 +123,9 @@ namespace vagbhat.api
         }
         public static IServiceCollection AddCustomIntegrations(this IServiceCollection services)
         {
-            services.AddScoped<EntitiesContext>();
-
+            services.AddScoped<EntitiesContext>();            
             services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));            
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();            
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -134,8 +134,9 @@ namespace vagbhat.api
             services.AddScoped<IAccessService, AccessService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IUserService, UserService>();
-
             services.AddScoped<IAssociationService, AssociationService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ICommonService, CommonService>();
 
             return services;
         }
@@ -186,8 +187,7 @@ namespace vagbhat.api
             var provider = services.BuildServiceProvider();
 
             return provider.GetRequiredService<IMediator>();
-        }
-        
+        }        
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
             services.AddControllers(config =>
@@ -257,12 +257,11 @@ namespace vagbhat.api
 
             return services;
         }
-
         public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
         {
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(CreatedPolicies.IsDeletedUser, policy =>
+                options.AddPolicy(CreatedPolicies.Deleted, policy =>
                 {
                     policy.AddRequirements(new IsUserDeletedRequirement());
                 });

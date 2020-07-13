@@ -164,9 +164,6 @@ C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Do
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csprojAssemblyReference.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.AssemblyInfoInputs.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.AssemblyInfo.cs
-C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CoreCompileInputs.cache
-C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.RazorTargetAssemblyInfo.cache
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CopyComplete
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\staticwebassets\vagbhat.api.StaticWebAssets.Manifest.cache
@@ -174,3 +171,8 @@ C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\st
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.pdb
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.genruntimeconfig.cache
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache

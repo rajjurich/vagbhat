@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Contracts.RequestModels
 {
-    public class CreateUserRequest
+    public class AddUserRequest
     {
         [EmailAddress(ErrorMessage = "Email format is invalid")]
         [Required(ErrorMessage = "Email is required")]
@@ -17,6 +17,7 @@ namespace Contracts.RequestModels
         [Compare("Password",ErrorMessage = "Password and Confirm Password does not match")]
         public string ConfirmPassword { get; set; }
         public string PhoneNumber { get; set; }
-        
+        public string AssociationId { get; set; }
+
     }
 }

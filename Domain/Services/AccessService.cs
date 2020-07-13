@@ -135,7 +135,7 @@ namespace Domain.Services
             }
 
             existingRefreshToken.IsUsed = true;
-            await refreshTokenService.EditAsync(existingRefreshToken);
+            await refreshTokenService.UpdateAsync(existingRefreshToken);
 
             var id = principal.Claims.Single(x => x.Type == "id").Value;
             var user = await userManager.FindByIdAsync(id);
@@ -208,8 +208,7 @@ namespace Domain.Services
             var claims = new List<Claim>{
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim("id", user.Id),
-                new Claim("del", user.Deleted.ToString())
+                new Claim("id", user.Id)
             };
 
             var userClaims = await userManager.GetClaimsAsync(user);

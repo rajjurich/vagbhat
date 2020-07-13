@@ -14,7 +14,7 @@ namespace Domain.Core
         Task<int> CountAsync(Expression<Func<T, bool>> predicate);
         Task<int> CountAsync();
         Task<T> RemoveAsync(T entity);
-        Task<T> EditAsync(T entity);
+        Task<T> UpdateAsync(T entity);
         IQueryable<T> Find(Expression<Func<T, bool>> predicate, int start, int length);
         IQueryable<T> Get(int start, int length);
         Task<T> GetAsync(string key);
@@ -45,7 +45,7 @@ namespace Domain.Core
             return await entitiesContext.Set<T>().CountAsync();
         }        
 
-        public async Task<T> EditAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             await Task.Run(() => entitiesContext.Entry(entity).State = EntityState.Modified);
             //await entitiesContext.SaveChangesAsync();

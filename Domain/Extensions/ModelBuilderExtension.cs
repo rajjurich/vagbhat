@@ -30,7 +30,7 @@ namespace Domain.Extensions
             string associationId = Guid.NewGuid().ToString();
             if (!await context.Associations.AnyAsync())
             {
-                await context.AddAsync(new Association { Id = associationId, AssociationName = "self" });
+                await context.AddAsync(new Association { Id = associationId, AssociationName = "self", Deleted = false });
                 await context.SaveChangesAsync();
             }
             var roleName = AllowedRoles.Super;
@@ -39,6 +39,8 @@ namespace Domain.Extensions
             {
                 Id = roleId,
                 Name = roleName,
+                Deleted = false,
+                Rank = 1,
                 AssociationId = associationId
             };
 

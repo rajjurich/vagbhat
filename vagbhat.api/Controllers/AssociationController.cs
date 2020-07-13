@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AutoMapper;
 using Contracts.RequestModels;
 using Contracts.ResponseModels;
 using Domain.Application.Commands;
@@ -26,16 +27,13 @@ namespace vagbhat.api.Controllers
     public class AssociationController : ControllerBase
     {
         private readonly IMediator mediator;
-        private static readonly Expression<Func<AssociationDto, AssociationResponse>> AsAssociationResponse =
-           x => new AssociationResponse
-           {
-               Id = x.Id,
-               AssociationName = x.AssociationName
-           };
+        private readonly IMapper mapper;
 
-        public AssociationController(IMediator mediator)
+        public AssociationController(IMediator mediator
+            , IMapper mapper)
         {
             this.mediator = mediator;
+            this.mapper = mapper;
         }
         // GET: api/<AssociationController>        
         [HttpGet]
@@ -44,7 +42,7 @@ namespace vagbhat.api.Controllers
         {
             var query = new GetAssociationsQuery();
             var result = await mediator.Send(query);
-            return Ok(result.Select(AsAssociationResponse));
+            return Ok(mapper.Map<List<AssociationResponse>>(result));
         }
 
         // GET api/<AssociationController>/5
@@ -61,7 +59,7 @@ namespace vagbhat.api.Controllers
                 return NotFound(id);
             }
 
-            return Ok(result.ToAssociationResponse());
+            return Ok(mapper.Map<AssociationResponse>(result));
         }
 
         // POST api/<AssociationController>
@@ -70,7 +68,7 @@ namespace vagbhat.api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         public async Task<IActionResult> Post([FromBody] AssociationRequest createRequest)
         {
-            var dto = createRequest.ToAssociactionDto();
+            var dto = mapper.Map<AssociationDto>(createRequest);
 
             var command = new CreateAssociationCommandAsync(dto);
 
@@ -81,7 +79,7 @@ namespace vagbhat.api.Controllers
                 return BadRequest();
             }
 
-            return CreatedAtAction(nameof(Get), new { id = result.Id }, result.ToAssociationResponse());
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, mapper.Map<AssociationResponse>(result));
         }
 
         // PUT api/<AssociationController>/5
@@ -90,7 +88,7 @@ namespace vagbhat.api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         public async Task<IActionResult> Put(string id, [FromBody] AssociationRequest editRequest)
         {
-            var dto = editRequest.ToAssociactionDto();
+            var dto = mapper.Map<AssociationDto>(editRequest);
             dto.Id = id;
 
             var command = new EditAssociationCommandAsync(dto);
@@ -102,7 +100,7 @@ namespace vagbhat.api.Controllers
                 return BadRequest();
             }
 
-            return Ok(result.ToAssociationResponse());
+            return Ok(mapper.Map<AssociationResponse>(result));
         }
 
         // DELETE api/<AssociationController>/5
@@ -120,7 +118,7 @@ namespace vagbhat.api.Controllers
                 return BadRequest();
             }
 
-            return Ok(result.ToAssociationResponse());
+            return Ok(mapper.Map<AssociationResponse>(result));
         }
     }
 }

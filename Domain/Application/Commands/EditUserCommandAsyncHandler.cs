@@ -25,7 +25,7 @@ namespace Domain.Application.Commands
         }
         public async Task<UserDto> Handle(EditUserCommandAsync request, CancellationToken cancellationToken)
         {
-            return await service.EditAsync(request.Dto);
+            return await service.UpdateAsync(request.Dto);
         }
     }
 }

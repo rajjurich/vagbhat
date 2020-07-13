@@ -36,17 +36,29 @@ namespace Domain.Core
 
         private static void FluentApis(ModelBuilder builder)
         {
+            builder.Entity<User>().Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Entity<User>().Property(p => p.AssociationId).HasMaxLength(450).IsRequired();
             builder.Entity<User>().Property(p => p.CreatorId).HasMaxLength(450).IsRequired();
             builder.Entity<User>().Property(p => p.Deleted).IsRequired();
+            builder.Entity<User>().Property(p => p.AddedDate).ValueGeneratedOnAdd().HasDefaultValueSql("GetDate()");
+            builder.Entity<User>().Property(p => p.UpdatedDate).ValueGeneratedOnUpdate().HasDefaultValueSql("GetDate()");
+            builder.Entity<User>().HasIndex(i => new { i.UserName, i.AssociationId }).IsUnique();
+
+            builder.Entity<Role>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Role>().Property(p => p.AssociationId).HasMaxLength(450).IsRequired();
+            builder.Entity<Role>().Property(p => p.Rank).IsRequired();
+            builder.Entity<Role>().Property(p => p.Deleted).IsRequired();
+            builder.Entity<Role>().HasIndex(i => new { i.Name, i.AssociationId }).IsUnique();
+
 
             builder.Entity<Association>().HasKey(k => k.Id);
             builder.Entity<Association>().Property(p => p.Id).ValueGeneratedOnAdd();
-            builder.Entity<Association>().Property(p => p.AssociationName).HasMaxLength(450).IsRequired();          
+            builder.Entity<Association>().Property(p => p.AssociationName).HasMaxLength(450).IsRequired();
+            builder.Entity<Association>().Property(p => p.Deleted).IsRequired();
 
             builder.Entity<RefreshToken>().HasKey(k => k.Token);
             builder.Entity<RefreshToken>().Property(p => p.Token).ValueGeneratedOnAdd();
-            builder.Entity<RefreshToken>().Property(p => p.JwtId).HasMaxLength(450).IsRequired();                                       
+            builder.Entity<RefreshToken>().Property(p => p.JwtId).HasMaxLength(450).IsRequired();
         }
     }
 }

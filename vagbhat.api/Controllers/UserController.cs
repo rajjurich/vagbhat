@@ -13,10 +13,11 @@ using Domain.Dtos;
 using Domain.Application.Commands;
 using Contracts.ResponseModels;
 using System.Linq.Expressions;
-using Contracts.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Domain.Options;
+using AutoMapper;
+using Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,23 +26,17 @@ namespace vagbhat.api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin, Policy = CreatedPolicies.IsDeletedUser)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin, Policy = CreatedPolicies.Deleted)]
     public class UserController : ControllerBase
     {
         private readonly IMediator mediator;
-        private static readonly Expression<Func<UserDto, UserResponse>> AsUserResponse =
-            x => new UserResponse
-            {
-                Email = x.Email,
-                Id = x.Id,
-                PhoneNumber = x.PhoneNumber,
-                UserName = x.UserName,
-                IsDeleted = x.IsDeleted
-            };
+        private readonly IMapper mapper;
 
-        public UserController(IMediator mediator)
+        public UserController(IMediator mediator
+            , IMapper mapper)
         {
             this.mediator = mediator;
+            this.mapper = mapper;
         }
 
         // GET: api/<UserController>
@@ -51,7 +46,7 @@ namespace vagbhat.api.Controllers
         {
             var query = new GetUsersQuery();
             var result = await mediator.Send(query);
-            return Ok(result.Select(AsUserResponse));
+            return Ok(mapper.Map<List<UserResponse>>(result));
         }
 
         // GET api/<UserController>/5
@@ -68,16 +63,17 @@ namespace vagbhat.api.Controllers
                 return NotFound(id);
             }
 
-            return Ok(result.ToUserResponse());
+            //return Ok(result.ToUserResponse());
+            return Ok(mapper.Map<UserResponse>(result));
         }
 
         // POST api/<UserController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-        public async Task<IActionResult> Post([FromBody] CreateUserRequest createRequest)
+        public async Task<IActionResult> Post([FromBody] AddUserRequest createRequest)
         {
-            var dto = createRequest.ToUserDto();
+            var dto = mapper.Map<UserDto>(createRequest);
 
             var command = new CreateUserCommandAsync(dto);
 
@@ -88,17 +84,21 @@ namespace vagbhat.api.Controllers
                 return BadRequest(result.Error(result.Errors));
             }
 
-            return CreatedAtAction(nameof(Get), new { id = result.Id }, result.ToUserResponse());
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, mapper.Map<UserResponse>(result));
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-        public async Task<IActionResult> Put(string id, [FromBody] EditUserRequest editRequest)
+        public async Task<IActionResult> Put(string id, [FromBody] UpdateUserRequest editRequest)
         {
-            var userDto = editRequest.ToUserDto();
-            userDto.Id = id;
+            var userDto = mapper.Map<UserDto>(editRequest);
+
+            if (id != editRequest.Id)
+            {
+                return BadRequest(new ErrorResponse { Errors = new string[] { "Id does not match" } });
+            }
 
             var command = new EditUserCommandAsync(userDto);
 
@@ -109,7 +109,7 @@ namespace vagbhat.api.Controllers
                 return BadRequest(result.Error(result.Errors));
             }
 
-            return Ok(result.ToUserResponse());
+            return Ok(mapper.Map<UserResponse>(result));
         }
 
         // DELETE api/<UserController>/5
@@ -127,7 +127,7 @@ namespace vagbhat.api.Controllers
                 return BadRequest(result.Error(result.Errors));
             }
 
-            return Ok(result.ToUserResponse());
+            return Ok(mapper.Map<UserResponse>(result));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Domain.Dtos;
+﻿using AutoMapper;
+using Domain.Dtos;
 using Domain.Entities;
 using Domain.Extensions;
 using Domain.Services;
@@ -18,15 +19,18 @@ namespace Domain.Application.Commands
     public class EditAssociationCommandAsyncHandler : IRequestHandler<EditAssociationCommandAsync, AssociationDto>
     {
         private readonly IAssociationService service;
+        private readonly IMapper mapper;
 
-        public EditAssociationCommandAsyncHandler(IAssociationService service)
+        public EditAssociationCommandAsyncHandler(IAssociationService service
+            , IMapper mapper)
         {
             this.service = service;
+            this.mapper = mapper;
         }
         public async Task<AssociationDto> Handle(EditAssociationCommandAsync request, CancellationToken cancellationToken)
         {
-            var result = await service.EditAsync(request.Dto.ToAssociation());
-            return result.ToAssociationDto();
+            var result = await service.UpdateAsync(mapper.Map<Association>(request.Dto));
+            return mapper.Map<AssociationDto>(result);
         }
     }
 }

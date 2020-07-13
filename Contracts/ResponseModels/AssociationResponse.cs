@@ -8,5 +8,6 @@ namespace Contracts.ResponseModels
     {
         public string Id { get; set; }
         public string AssociationName { get; set; }
+        public bool Deleted { get; set; }
     }
 }

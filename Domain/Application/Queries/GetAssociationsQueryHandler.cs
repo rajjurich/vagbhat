@@ -23,7 +23,8 @@ namespace Domain.Application.Queries
           x => new AssociationDto
           {
               Id = x.Id,
-              AssociationName = x.AssociationName
+              AssociationName = x.AssociationName,
+              Deleted = x.Deleted
           };
 
         public GetAssociationsQueryHandler(IAssociationService service)

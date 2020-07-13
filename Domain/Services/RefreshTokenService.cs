@@ -41,9 +41,9 @@ namespace Domain.Services
             return await entityRepository.RemoveAsync(entity);
         }
 
-        public async Task<RefreshToken> EditAsync(RefreshToken entity)
+        public async Task<RefreshToken> UpdateAsync(RefreshToken entity)
         {
-            return await entityRepository.EditAsync(entity);
+            return await entityRepository.UpdateAsync(entity);
         }
 
         public IQueryable<RefreshToken> Find(Expression<Func<RefreshToken, bool>> predicate, int start, int length)

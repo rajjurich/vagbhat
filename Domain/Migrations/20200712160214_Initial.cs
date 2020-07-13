@@ -12,7 +12,8 @@ namespace Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    AssociationName = table.Column<string>(maxLength: 450, nullable: false)
+                    AssociationName = table.Column<string>(maxLength: 450, nullable: false),
+                    Deleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +28,9 @@ namespace Domain.Migrations
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    AssociationId = table.Column<string>(nullable: true)
+                    AssociationId = table.Column<string>(maxLength: 450, nullable: false),
+                    Deleted = table.Column<bool>(nullable: false),
+                    Rank = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +64,9 @@ namespace Domain.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     CreatorId = table.Column<string>(maxLength: 450, nullable: false),
-                    AssociationId = table.Column<string>(maxLength: 450, nullable: false)
+                    AssociationId = table.Column<string>(maxLength: 450, nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    UpdatedDate = table.Column<DateTime>(nullable: true, defaultValueSql: "GetDate()")
                 },
                 constraints: table =>
                 {
@@ -227,6 +232,13 @@ namespace Domain.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoles_Name_AssociationId",
+                table: "AspNetRoles",
+                columns: new[] { "Name", "AssociationId" },
+                unique: true,
+                filter: "[Name] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
                 column: "UserId");
@@ -262,6 +274,13 @@ namespace Domain.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_UserName_AssociationId",
+                table: "AspNetUsers",
+                columns: new[] { "UserName", "AssociationId" },
+                unique: true,
+                filter: "[UserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
