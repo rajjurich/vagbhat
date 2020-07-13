@@ -11,8 +11,7 @@ namespace vagbhat.api.MappingProfile
     public class DtoToResponse : Profile
     {
         public DtoToResponse()
-        {
-            CreateMap<AssociationDto, AssociationResponse>();                   
+        {                   
             CreateMap<RoleDto, RoleResponse>();
             CreateMap<UserDto, UserResponse>();
         }

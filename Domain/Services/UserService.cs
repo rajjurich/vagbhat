@@ -57,8 +57,6 @@ namespace Domain.Services
 
             user.Deleted = false;
             user.CreatorId = accessorId;
-            user.AssociationId = await userManager.IsInRoleAsync(accessor, AllowedRoles.Super) ?
-                userDto.AssociationId : accessor.AssociationId;
 
             var result = await userManager.CreateAsync(user, userDto.Password);
 
@@ -76,10 +74,30 @@ namespace Domain.Services
 
             await userManager.AddClaimsAsync(user, userClaims);
 
-            foreach (var roleId in userDto.RoleIds)
+            if (userDto.RoleIds.Count > 0)
             {
-                var role = await roleManager.FindByIdAsync(roleId);
-                await userManager.AddToRoleAsync(user, role.Name);
+
+                foreach (var roleId in userDto.RoleIds)
+                {
+                    var role = await roleManager.FindByIdAsync(roleId);
+                    if (role.Name != AllowedRoles.Admin && role.Name != AllowedRoles.Super)
+                    {
+                        await userManager.AddToRoleAsync(user, role.Name);
+                    }
+                }
+            }
+            else
+            {
+
+                if (await userManager.IsInRoleAsync(accessor, AllowedRoles.Super))
+                {
+                    await userManager.AddToRoleAsync(user, AllowedRoles.Admin);
+                }
+                else if (await userManager.IsInRoleAsync(accessor, AllowedRoles.Admin) ||
+                    await userManager.IsInRoleAsync(accessor, AllowedRoles.Subadmin))
+                {
+                    await userManager.AddToRoleAsync(user, AllowedRoles.User);
+                }
             }
 
             var createdUser = await userManager.FindByEmailAsync(user.Email);
@@ -126,8 +144,6 @@ namespace Domain.Services
             Claim userClaim = new Claim(ClaimTypes.NameIdentifier, user.UserName);
             await userManager.AddClaimAsync(user, userClaim);
 
-            //var updatedUser = await userManager.FindByEmailAsync(user.Email);
-
             return mapper.Map<UserDto>(user);
         }
 
@@ -141,7 +157,7 @@ namespace Domain.Services
             var accessorId = httpContextAccessor.HttpContext.GetUserId();
             var result = (commonService.IsSuper(accessorId).Result) ?
                 userManager.Users.Skip(start).Take(length) :
-                userManager.Users.Where(x => x.Association.AssociationName != "self")
+                userManager.Users.Where(x => x.CreatorId == accessorId)
                 .Skip(start).Take(length);
 
             return mapper.Map<List<UserDto>>(result).AsQueryable();
@@ -161,7 +177,7 @@ namespace Domain.Services
             {
                 return new UserDto
                 {
-                    Errors = new string[] { $"Unable to delete yourself with id = {key}" }
+                    Errors = new string[] { $"Unable to delete yourself with id {key}" }
                 };
             }
 
@@ -172,7 +188,15 @@ namespace Domain.Services
             {
                 return new UserDto
                 {
-                    Errors = new string[] { $"Unable to find user with id = {key}" }
+                    Errors = new string[] { $"Unable to find user with id {key}" }
+                };
+            }
+
+            if (await userManager.IsInRoleAsync(user, AllowedRoles.Super))
+            {
+                return new UserDto
+                {
+                    Errors = new string[] { $"Unable to delete Super user with id {key}" }
                 };
             }
 
@@ -180,27 +204,33 @@ namespace Domain.Services
 
             var accessorRoles = await userManager.GetRolesAsync(accessor);
 
+            var accessorRanks = roleManager.Roles.Where(x => accessorRoles.Contains(x.Name))
+                .Select(x => x.Rank).ToList();
+
             var userRoles = await userManager.GetRolesAsync(user);
 
-            foreach (var accessorRole in accessorRoles)
+            var userRanks = roleManager.Roles.Where(x => userRoles.Contains(x.Name))
+                .Select(x => x.Rank).ToList();
+
+            var checkRole = false;
+
+            foreach (var accessorRank in accessorRanks)
             {
-                foreach (var userRole in userRoles)
+                foreach (var userRank in userRanks)
                 {
-                    if (accessorRole == userRole)
+                    checkRole = !(accessorRank < userRank);
+                    if (checkRole == false)
                     {
-                        return new UserDto
-                        {
-                            Errors = new string[] { $"Unable to delete user with id {key} due to same access role" }
-                        };
+                        break;
                     }
                 }
             }
 
-            if (await userManager.IsInRoleAsync(user, AllowedRoles.Super))
+            if (checkRole)
             {
                 return new UserDto
                 {
-                    Errors = new string[] { $"Unable to delete Super user with id == {key}" }
+                    Errors = new string[] { $"Unable to delete user with id {key} due to higher rank policy" }
                 };
             }
 

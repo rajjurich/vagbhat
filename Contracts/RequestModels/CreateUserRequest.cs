@@ -17,8 +17,6 @@ namespace Contracts.RequestModels
         [Compare("Password",ErrorMessage = "Password and Confirm Password does not match")]
         public string ConfirmPassword { get; set; }
         public string PhoneNumber { get; set; }
-        public string AssociationId { get; set; }
         public List<string> RoleIds { get; set; }
-
     }
 }

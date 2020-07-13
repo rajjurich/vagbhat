@@ -26,7 +26,7 @@ namespace vagbhat.api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = AllowedRoles.Super_Admin, Policy = CreatedPolicies.Deleted)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class RoleController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -42,6 +42,7 @@ namespace vagbhat.api.Controllers
         // GET: api/<RoleController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IQueryable<RoleResponse>))]
+        [Authorize(Roles = AllowedRoles.Super_Admin)]
         public async Task<IActionResult> Get()
         {
             var query = new GetRolesQuery();
@@ -53,6 +54,7 @@ namespace vagbhat.api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        [Authorize(Roles = AllowedRoles.Super_Admin)]
         public async Task<IActionResult> Get(string id)
         {
             var query = new GetRoleQueryAsync(id);
@@ -71,6 +73,7 @@ namespace vagbhat.api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        [Authorize(Roles = AllowedRoles.Super)]
         public async Task<IActionResult> Post([FromBody] CreateRoleRequest createRequest)
         {
             var dto = mapper.Map<RoleDto>(createRequest);
@@ -91,6 +94,7 @@ namespace vagbhat.api.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        [Authorize(Roles = AllowedRoles.Super)]
         public async Task<IActionResult> Put(string id, [FromBody] UpdateRoleRequest editRequest)
         {
             var userDto = mapper.Map<RoleDto>(editRequest);
@@ -116,6 +120,7 @@ namespace vagbhat.api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        [Authorize(Roles = AllowedRoles.Super)]
         public async Task<IActionResult> Delete(string id)
         {
             var command = new DeleteRoleCommandAsync(id);

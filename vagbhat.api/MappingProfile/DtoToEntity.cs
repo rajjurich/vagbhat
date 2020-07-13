@@ -11,8 +11,7 @@ namespace vagbhat.api.MappingProfile
     public class DtoToEntity:Profile
     {
         public DtoToEntity()
-        {
-            CreateMap<AssociationDto, Association>();
+        {            
             CreateMap<RoleDto, Role>();
             CreateMap<UserDto, User>();
         }

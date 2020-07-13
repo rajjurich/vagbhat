@@ -11,7 +11,5 @@ namespace Contracts.RequestModels
         public string Id { get; set; }
         [Required(ErrorMessage = "Role Name is required")]
         public string Name { get; set; }
-        [Range(1, 100)]
-        public int Rank { get; set; }
     }
 }

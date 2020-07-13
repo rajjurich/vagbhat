@@ -8,7 +8,6 @@ namespace Contracts.ResponseModels
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public int Rank { get; set; }
         public bool Deleted { get; set; }
     }
 }

@@ -8,19 +8,6 @@ namespace Domain.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Associations",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    AssociationName = table.Column<string>(maxLength: 450, nullable: false),
-                    Deleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Associations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -28,19 +15,11 @@ namespace Domain.Migrations
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    AssociationId = table.Column<string>(maxLength: 450, nullable: false),
-                    Deleted = table.Column<bool>(nullable: false),
                     Rank = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoles_Associations_AssociationId",
-                        column: x => x.AssociationId,
-                        principalTable: "Associations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,19 +43,12 @@ namespace Domain.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     CreatorId = table.Column<string>(maxLength: 450, nullable: false),
-                    AssociationId = table.Column<string>(maxLength: 450, nullable: false),
                     AddedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
                     UpdatedDate = table.Column<DateTime>(nullable: true, defaultValueSql: "GetDate()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Associations_AssociationId",
-                        column: x => x.AssociationId,
-                        principalTable: "Associations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_AspNetUsers_CreatorId",
                         column: x => x.CreatorId,
@@ -220,23 +192,11 @@ namespace Domain.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoles_AssociationId",
-                table: "AspNetRoles",
-                column: "AssociationId");
-
-            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoles_Name_AssociationId",
-                table: "AspNetRoles",
-                columns: new[] { "Name", "AssociationId" },
-                unique: true,
-                filter: "[Name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -254,11 +214,6 @@ namespace Domain.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_AssociationId",
-                table: "AspNetUsers",
-                column: "AssociationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_CreatorId",
                 table: "AspNetUsers",
                 column: "CreatorId");
@@ -274,13 +229,6 @@ namespace Domain.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserName_AssociationId",
-                table: "AspNetUsers",
-                columns: new[] { "UserName", "AssociationId" },
-                unique: true,
-                filter: "[UserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
@@ -313,9 +261,6 @@ namespace Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Associations");
         }
     }
 }

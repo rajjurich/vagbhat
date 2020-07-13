@@ -8,10 +8,7 @@ namespace Domain.Entities
 {
     public class Role : IdentityRole
     {
-        public string AssociationId { get; set; }
-        public bool Deleted { get; set; }
-        [Range(1, 100)]
+        [Range(1, 20)]
         public int Rank { get; set; }
-        public virtual Association Association { get; set; }
     }
 }

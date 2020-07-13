@@ -13,8 +13,6 @@ namespace vagbhat.api.MappingProfile
     {
         public RequestToDto()
         {
-            CreateMap<AssociationRequest, AssociationDto>();
-
             CreateMap<CreateRoleRequest, RoleDto>();
             CreateMap<UpdateRoleRequest, RoleDto>();
 

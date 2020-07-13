@@ -29,39 +29,23 @@ namespace Domain.Services
     public class RoleService : IRoleService
     {
         private readonly RoleManager<Role> roleManager;
-        private readonly ICommonService commonService;
-        private readonly UserManager<User> userManager;
-        private readonly IHttpContextAccessor httpContextAccessor;
+
         private readonly IMapper mapper;
 
         public RoleService(RoleManager<Role> roleManager
-            , ICommonService commonService
-            , UserManager<User> userManager
-            , IHttpContextAccessor httpContextAccessor
             , IMapper mapper)
         {
             this.roleManager = roleManager;
-            this.commonService = commonService;
-            this.userManager = userManager;
-            this.httpContextAccessor = httpContextAccessor;
             this.mapper = mapper;
         }
 
         public async Task<RoleDto> AddAsync(RoleDto roleDto)
         {
-            var accessorId = httpContextAccessor.HttpContext.GetUserId();
-
-            var accessor = await userManager.FindByIdAsync(accessorId);
-
             var role = mapper.Map<Role>(roleDto);
-
-            role.Deleted = false;
-            role.AssociationId = await userManager.IsInRoleAsync(accessor, AllowedRoles.Super) ?
-                roleDto.AssociationId : accessor.AssociationId;
 
             var result = await roleManager.CreateAsync(role);
 
-            if (!(result.Succeeded))
+            if (!result.Succeeded)
             {
                 return new RoleDto
                 {
@@ -99,7 +83,6 @@ namespace Domain.Services
             }
 
             role.Name = roleDto.Name;
-            role.Rank = roleDto.Rank;
 
             var result = await roleManager.UpdateAsync(role);
 
@@ -118,8 +101,6 @@ namespace Domain.Services
 
             await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, roleDto.Name));
 
-            //var updatedRole = await roleManager.FindByIdAsync(role.Id);
-
             return mapper.Map<RoleDto>(role);
         }
 
@@ -130,12 +111,9 @@ namespace Domain.Services
 
         public IQueryable<RoleDto> Get(int start, int length)
         {
-            var accessorId = httpContextAccessor.HttpContext.GetUserId();
-            var result = (commonService.IsSuper(accessorId).Result) ?
-                roleManager.Roles.Skip(start).Take(length) :
-                roleManager.Roles.Where(x => x.Association.AssociationName != "self")
+            var result = roleManager.Roles
+                .Where(x => x.Name != AllowedRoles.Super && x.Name != AllowedRoles.Admin)
                 .Skip(start).Take(length);
-
             return mapper.Map<List<RoleDto>>(result).AsQueryable();
         }
 
@@ -157,33 +135,6 @@ namespace Domain.Services
                 };
             }
 
-            var accessorId = httpContextAccessor.HttpContext.GetUserId();
-            var accessor = await userManager.FindByIdAsync(accessorId);
-
-            var accessorRoles = await userManager.GetRolesAsync(accessor);
-
-            var accessorRanks = roleManager.Roles.Where(x => x.AssociationId == accessor.AssociationId && accessorRoles.Contains(x.Name))
-                .Select(x => x.Rank).ToList();
-
-            var checkRank = false;
-            
-            foreach (var accessorRank in accessorRanks)
-            {
-                checkRank = !(accessorRank < role.Rank);
-                if (checkRank == false)
-                {
-                    break;
-                }
-            }
-
-            if(checkRank)
-            {
-                return new RoleDto
-                {
-                    Errors = new string[] { $"Unable to delete role with id {key} due to higher rank policy" }
-                };
-            }
-
             if (role.Name == AllowedRoles.Super)
             {
                 return new RoleDto
@@ -192,36 +143,10 @@ namespace Domain.Services
                 };
             }
 
-            await roleManager.DeleteAsync(role);
-
-            //foreach (var roleClaim in await roleManager.GetClaimsAsync(role))
-            //{
-            //    await roleManager.RemoveClaimAsync(role, roleClaim);
-            //}
-
-
-
-            //var result = await userManager.RemoveFromRolesAsync(user, await userManager.GetRolesAsync(user));
-
-            //if (!result.Succeeded)
-            //{
-            //    return new UserDto
-            //    {
-            //        Errors = result.Errors.Select(x => x.Description).ToArray()
-            //    };
-            //}
-
-            //user.Deleted = true;
-
-            //result = await userManager.UpdateAsync(user);
-
-            //if (!result.Succeeded)
-            //{
-            //    return new UserDto
-            //    {
-            //        Errors = result.Errors.Select(x => x.Description).ToArray()
-            //    };
-            //}
+            foreach (var roleClaim in await roleManager.GetClaimsAsync(role))
+            {
+                await roleManager.RemoveClaimAsync(role, roleClaim);
+            }
 
             return mapper.Map<RoleDto>(role);
         }

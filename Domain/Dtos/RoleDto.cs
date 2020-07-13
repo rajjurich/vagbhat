@@ -8,8 +8,6 @@ namespace Domain.Dtos
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public int Rank { get; set; }
-        public string AssociationId { get; set; }
         public bool Deleted { get; set; }
     }
 }

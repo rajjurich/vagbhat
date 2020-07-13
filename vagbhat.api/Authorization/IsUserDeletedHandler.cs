@@ -13,13 +13,11 @@ namespace vagbhat.api.Authorization
     public class IsUserDeletedHandler : AuthorizationHandler<IsUserDeletedRequirement>
     {
         private readonly UserManager<User> userManager;
-        private readonly IAssociationService associationService;
+       
 
-        public IsUserDeletedHandler(UserManager<User> userManager
-            , IAssociationService associationService)
+        public IsUserDeletedHandler(UserManager<User> userManager)
         {
-            this.userManager = userManager;
-            this.associationService = associationService;
+            this.userManager = userManager;           
         }
         protected async override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsUserDeletedRequirement requirement)
         {
@@ -29,9 +27,7 @@ namespace vagbhat.api.Authorization
             {
                 var accessor = await userManager.FindByIdAsync(accessorId);
 
-                accessor.Association = await associationService.GetAsync(accessor.AssociationId);
-
-                if (accessor.Deleted || accessor.Association.Deleted)
+                if (accessor.Deleted)
                 {
                     context.Fail();
                 }

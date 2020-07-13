@@ -133,8 +133,7 @@ namespace vagbhat.api
 
             services.AddScoped<IAccessService, AccessService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAssociationService, AssociationService>();
+            services.AddScoped<IUserService, UserService>();            
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICommonService, CommonService>();
 
