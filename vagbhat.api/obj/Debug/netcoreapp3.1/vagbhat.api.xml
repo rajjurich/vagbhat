@@ -8,10 +8,10 @@
             <summary>
             Create User to access application
             </summary>
-            <param name="createRequest">Please provide **user** details as in following example</param>
+            <param name="createRequest">See **user** example</param>
             <returns>New User</returns>
-            <response code="201">Successfully created, Returns created user</response>
-            <response code="400">Failed due to some error</response>  
+            <response code="201">Success returns user</response>
+            <response code="400">Failed returns error</response>  
         </member>
     </members>
 </doc>
