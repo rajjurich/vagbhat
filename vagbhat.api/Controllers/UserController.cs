@@ -67,6 +67,13 @@ namespace vagbhat.api.Controllers
             return Ok(mapper.Map<UserResponse>(result));
         }
 
+        /// <summary>
+        /// Create User to access application
+        /// </summary>
+        /// <param name="createRequest">See **user** example</param>
+        /// <returns>New User</returns>
+        /// <response code="201">Success returns user</response>
+        /// <response code="400">Failed returns error</response>  
         // POST api/<UserController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserResponse))]

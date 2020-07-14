@@ -33,6 +33,9 @@ using vagbhat.api.Filters;
 using vagbhat.api.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+using Swashbuckle.AspNetCore.Filters;
+using System.Reflection;
+using System.IO;
 
 namespace vagbhat.api
 {
@@ -123,9 +126,9 @@ namespace vagbhat.api
         }
         public static IServiceCollection AddCustomIntegrations(this IServiceCollection services)
         {
-            services.AddScoped<EntitiesContext>();            
-            services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));            
-            services.AddScoped<IUnitOfWork, UnitOfWork>();            
+            services.AddScoped<EntitiesContext>();
+            services.AddScoped(typeof(IEntityRepository<>), typeof(EntityRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -133,7 +136,7 @@ namespace vagbhat.api
 
             services.AddScoped<IAccessService, AccessService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-            services.AddScoped<IUserService, UserService>();            
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICommonService, CommonService>();
 
@@ -144,6 +147,8 @@ namespace vagbhat.api
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Vagbhat API", Version = "v1" });
+
+                x.ExampleFilters();
 
                 var security = new Dictionary<string, IEnumerable<string>>
                 {
@@ -171,7 +176,14 @@ namespace vagbhat.api
                         } ,new List<string>()
                     }
                 });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                x.IncludeXmlComments(xmlPath);
             });
+
+            services.AddSwaggerExamplesFromAssemblyOf<Startup>();
             return services;
         }
         public static IMediator BuildMediator(this IServiceCollection services)
@@ -186,7 +198,7 @@ namespace vagbhat.api
             var provider = services.BuildServiceProvider();
 
             return provider.GetRequiredService<IMediator>();
-        }        
+        }
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
             services.AddControllers(config =>
@@ -212,7 +224,7 @@ namespace vagbhat.api
                 ValidateLifetime = true,
                 RequireExpirationTime = false,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret))
-            };            
+            };
 
             services.AddSingleton(tokenValidationParameters);
 

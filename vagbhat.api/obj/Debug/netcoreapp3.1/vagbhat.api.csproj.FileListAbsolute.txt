@@ -76,9 +76,6 @@ F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Domain.pdb
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csprojAssemblyReference.cache
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.AssemblyInfoInputs.cache
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.AssemblyInfo.cs
-F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CoreCompileInputs.cache
-F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cs
-F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.RazorTargetAssemblyInfo.cache
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CopyComplete
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\staticwebassets\vagbhat.api.StaticWebAssets.Manifest.cache
@@ -178,3 +175,16 @@ C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\st
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.pdb
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.genruntimeconfig.cache
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Scrutor.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Annotations.dll
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Filters.dll
+F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CoreCompileInputs.cache
+F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cs
+F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache
+F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\vagbhat.api.xml
+F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.xml
