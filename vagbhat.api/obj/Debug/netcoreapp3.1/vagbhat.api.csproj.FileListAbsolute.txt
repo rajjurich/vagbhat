@@ -188,3 +188,13 @@ F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache
 F:\all git repositories\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\vagbhat.api.xml
 F:\all git repositories\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.xml
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\vagbhat.api.xml
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Scrutor.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.xml

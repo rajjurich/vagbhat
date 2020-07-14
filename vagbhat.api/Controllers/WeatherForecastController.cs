@@ -35,7 +35,6 @@ namespace vagbhat.api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResponse<IQueryable<WeatherForecast>>))]
         public IActionResult Get()
         {
-
             var rng = new Random();
 
             var data = Enumerable.Range(1, 50).Select(index => new WeatherForecast
