@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {}
+    "F:\\all git repositories\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
+    "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
+        "projectUniqueName": "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj",
         "projectName": "Contracts",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\obj\\",
+        "projectPath": "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj",
+        "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+        "outputPath": "F:\\all git repositories\\vagbhat\\Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -52,21 +52,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
+    "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
+        "projectUniqueName": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\obj\\",
+        "projectPath": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+        "outputPath": "F:\\all git repositories\\vagbhat\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -144,21 +144,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {
+    "F:\\all git repositories\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
+        "projectUniqueName": "F:\\all git repositories\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
         "projectName": "vagbhat.api",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\obj\\",
+        "projectPath": "F:\\all git repositories\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
+        "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+        "outputPath": "F:\\all git repositories\\vagbhat\\vagbhat.api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -171,11 +171,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj"
+              "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj": {
+                "projectPath": "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj"
               },
-              "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj"
+              "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj": {
+                "projectPath": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj"
               }
             }
           }
@@ -250,7 +250,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
