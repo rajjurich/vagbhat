@@ -24,7 +24,7 @@ namespace vagbhat.web.Controllers
         {
             return View();
         }
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

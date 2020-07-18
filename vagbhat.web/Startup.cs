@@ -33,9 +33,10 @@ namespace vagbhat.web
             {
                 config.ClientId = "client-Id";
                 config.ClientSecret = "client-secret";
-                config.CallbackPath = "/oauth/callback";
+                config.CallbackPath = "/home/index";
                 config.AuthorizationEndpoint = "http://localhost/vagbhat.api/Values/auth";
                 config.TokenEndpoint= "http://localhost/vagbhat.api/Values/chk";
+                config.SaveTokens = true;
             });
             services.AddAuthorization();
             services.AddControllersWithViews();

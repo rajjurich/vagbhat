@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.web\\vagbhat.web.csproj": {}
+    "F:\\all git repositories\\vagbhat\\vagbhat.web\\vagbhat.web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.web\\vagbhat.web.csproj": {
+    "F:\\all git repositories\\vagbhat\\vagbhat.web\\vagbhat.web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.web\\vagbhat.web.csproj",
+        "projectUniqueName": "F:\\all git repositories\\vagbhat\\vagbhat.web\\vagbhat.web.csproj",
         "projectName": "vagbhat.web",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.web\\vagbhat.web.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.web\\obj\\",
+        "projectPath": "F:\\all git repositories\\vagbhat\\vagbhat.web\\vagbhat.web.csproj",
+        "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
+        "outputPath": "F:\\all git repositories\\vagbhat\\vagbhat.web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
