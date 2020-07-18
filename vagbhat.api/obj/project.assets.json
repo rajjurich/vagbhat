@@ -6780,19 +6780,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Rajneesh\\.nuget\\packages\\": {}
+    "C:\\Users\\user\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\all git repositories\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
       "projectName": "vagbhat.api",
-      "projectPath": "F:\\all git repositories\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
-      "packagesPath": "C:\\Users\\Rajneesh\\.nuget\\packages\\",
-      "outputPath": "F:\\all git repositories\\vagbhat\\vagbhat.api\\obj\\",
+      "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
+      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Rajneesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6805,11 +6805,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj": {
-              "projectPath": "F:\\all git repositories\\vagbhat\\Contracts\\Contracts.csproj"
+            "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj"
             },
-            "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj": {
-              "projectPath": "F:\\all git repositories\\vagbhat\\Domain\\Domain.csproj"
+            "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj"
             }
           }
         }

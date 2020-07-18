@@ -22,10 +22,24 @@ namespace vagbhat.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication().AddCookie();
+            services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = "ClientCookie";
+                config.DefaultSignInScheme = "ClientCookie";
+                config.DefaultChallengeScheme = "MyServer";
+
+            }).AddCookie("ClientCookie")
+            .AddOAuth("MyServer", config =>
+            {
+                config.ClientId = "client-Id";
+                config.ClientSecret = "client-secret";
+                config.CallbackPath = "/oauth/callback";
+                config.AuthorizationEndpoint = "http://localhost/vagbhat.api/Values/auth";
+                config.TokenEndpoint= "http://localhost/vagbhat.api/Values/chk";
+            });
             services.AddAuthorization();
             services.AddControllersWithViews();
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
