@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>vagbhat.api</name>
+    </assembly>
+    <members>
+        <member name="M:vagbhat.api.Controllers.UserController.Post(Contracts.RequestModels.CreateUserRequest)">
+            <summary>
+            Create User to access application
+            </summary>
+            <param name="createRequest">See **user** example</param>
+            <returns>New User</returns>
+            <response code="201">Success returns user</response>
+            <response code="400">Failed returns error</response>  
+        </member>
+    </members>
+</doc>
