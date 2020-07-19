@@ -29,13 +29,18 @@ namespace Domain.Services
     public class RoleService : IRoleService
     {
         private readonly RoleManager<Role> roleManager;
-
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ICommonService commonService;
         private readonly IMapper mapper;
 
         public RoleService(RoleManager<Role> roleManager
+            , IHttpContextAccessor httpContextAccessor
+            , ICommonService commonService
             , IMapper mapper)
         {
             this.roleManager = roleManager;
+            this.httpContextAccessor = httpContextAccessor;
+            this.commonService = commonService;
             this.mapper = mapper;
         }
 
@@ -111,8 +116,10 @@ namespace Domain.Services
 
         public IQueryable<RoleDto> Get(int start, int length)
         {
-            var result = roleManager.Roles
-                .Where(x => x.Name != AllowedRoles.Super && x.Name != AllowedRoles.Admin)
+            var accessorId = httpContextAccessor.HttpContext.GetUserId();
+            var result = (commonService.IsSuper(accessorId).Result) ?
+                roleManager.Roles.Skip(start).Take(length) :
+                roleManager.Roles.Where(x => x.Rank > 0)
                 .Skip(start).Take(length);
             return mapper.Map<List<RoleDto>>(result).AsQueryable();
         }

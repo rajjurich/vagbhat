@@ -32,10 +32,13 @@ namespace vagbhat.api.Authorization
 
                 if (accessor.Deleted)
                 {
-                    context.Fail();
+                    await Task.CompletedTask;
                 }
-
-                context.Succeed(requirement);
+                else
+                {
+                    context.Succeed(requirement);
+                    await Task.CompletedTask;
+                }
             }
         }
     }

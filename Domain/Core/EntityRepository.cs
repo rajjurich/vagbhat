@@ -15,7 +15,7 @@ namespace Domain.Core
         Task<int> CountAsync();
         Task<T> RemoveAsync(T entity);
         Task<T> UpdateAsync(T entity);
-        IQueryable<T> Find(Expression<Func<T, bool>> predicate, int start, int length);
+        IQueryable<T> Find(Expression<Func<T, bool>> predicate, int? start, int? length);
         IQueryable<T> Get(int start, int length);
         Task<T> GetAsync(string key);
     }
@@ -30,7 +30,7 @@ namespace Domain.Core
 
         public async Task<T> AddAsync(T entity)
         {
-            await entitiesContext.Set<T>().AddAsync(entity);            
+            await entitiesContext.Set<T>().AddAsync(entity);
             return entity;
         }
 
@@ -42,19 +42,26 @@ namespace Domain.Core
         public async Task<int> CountAsync()
         {
             return await entitiesContext.Set<T>().CountAsync();
-        }        
+        }
 
         public async Task<T> UpdateAsync(T entity)
         {
-            await Task.Run(() => entitiesContext.Entry(entity).State = EntityState.Modified);            
+            await Task.Run(() => entitiesContext.Entry(entity).State = EntityState.Modified);
             return entity;
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, int start, int length)
+        public IQueryable<T> Find(Expression<Func<T, bool>> predicate, int? start, int? length)
         {
-            start = start < 0 ? 0 : start;
-            length = length < 0 ? 10 : length > 1000 ? 1000 : length;
-            return entitiesContext.Set<T>().Where(predicate).Skip(start).Take(length);
+            if (start == null && length == null)
+            {
+                return entitiesContext.Set<T>().Where(predicate);
+            }
+            else
+            {
+                start = start < 0 ? 0 : start;
+                length = length < 0 ? 10 : length > 1000 ? 1000 : length;
+                return entitiesContext.Set<T>().Where(predicate).Skip((int)start).Take((int)length);
+            }
         }
 
         public IQueryable<T> Get(int start, int length)
@@ -71,7 +78,7 @@ namespace Domain.Core
 
         public async Task<T> RemoveAsync(T entity)
         {
-            await Task.Run(() => entitiesContext.Set<T>().Remove(entity));            
+            await Task.Run(() => entitiesContext.Set<T>().Remove(entity));
             return entity;
         }
     }

@@ -36,6 +36,7 @@ using AutoMapper;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace vagbhat.api
 {
@@ -218,6 +219,7 @@ namespace vagbhat.api
 
             var tokenValidationParameters = new TokenValidationParameters
             {
+                ClockSkew = TimeSpan.Zero,
                 ValidateIssuerSigningKey = true,
                 ValidateAudience = false,
                 ValidateIssuer = false,
@@ -262,6 +264,8 @@ namespace vagbhat.api
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.User.RequireUniqueEmail = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
 
             })
                 .AddEntityFrameworkStores<EntitiesContext>().AddDefaultTokenProviders();

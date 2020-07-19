@@ -198,3 +198,4 @@ C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Sc
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Annotations.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.xml
+C:\Users\user\Desktop\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.DataProtection.Abstractions.dll

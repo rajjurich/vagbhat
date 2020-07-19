@@ -46,7 +46,7 @@ namespace Domain.Services
             return await entityRepository.UpdateAsync(entity);
         }
 
-        public IQueryable<RefreshToken> Find(Expression<Func<RefreshToken, bool>> predicate, int start, int length)
+        public IQueryable<RefreshToken> Find(Expression<Func<RefreshToken, bool>> predicate, int? start, int? length)
         {
             return entityRepository.Find(predicate, start, length);
         }

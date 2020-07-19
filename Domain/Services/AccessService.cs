@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
 using Domain.Application.Commands;
 using Domain.Dtos;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Domain.Services
 {
@@ -26,18 +27,24 @@ namespace Domain.Services
         private readonly JwtSettings jwtSettings;
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
+        private readonly SignInManager<User> signInManager;
+        private readonly IDataProtector dataProtector;
         private readonly IRefreshTokenService refreshTokenService;
         private readonly TokenValidationParameters tokenValidationParameters;
 
         public AccessService(JwtSettings jwtSettings
             , UserManager<User> userManager
             , RoleManager<Role> roleManager
+            , SignInManager<User> signInManager
+            , IDataProtectionProvider dataProtectionProvider
             , IRefreshTokenService refreshTokenService
             , TokenValidationParameters tokenValidationParameters)
         {
             this.jwtSettings = jwtSettings;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.signInManager = signInManager;
+            this.dataProtector = dataProtectionProvider.CreateProtector("refresh_token");
             this.refreshTokenService = refreshTokenService;
             this.tokenValidationParameters = tokenValidationParameters;
         }
@@ -48,98 +55,135 @@ namespace Domain.Services
             {
                 return new TokenDto
                 {
-                    Errors = new[] { "Invalid Email" }
+                    Errors = new[] { "Some Error Occurred!!!" }
                 };
             }
 
-            var verifiedUser = await userManager
-                .CheckPasswordAsync(user, createTokenCommandAsync.AccessDto.Password);
+            var verifiedUser = await signInManager
+                .PasswordSignInAsync(user, createTokenCommandAsync.AccessDto.Password, false, true);
 
-            if (!(verifiedUser))
+            if (verifiedUser.IsLockedOut)
             {
                 return new TokenDto
                 {
-                    Errors = new[] { "Invalid Password" }
+                    Errors = new[] { "Account Locked" }
                 };
             }
+
+            if (!verifiedUser.Succeeded)
+            {
+                return new TokenDto
+                {
+                    Errors = new[] { $"Invalid Login Attempt {user.AccessFailedCount}, max 5" }
+                };
+            }
+
+            
+
+
 
             return await GenerateToken(user);
         }
 
         public async Task<TokenDto> CreateRefreshTokenAsync(CreateRefreshTokenCommandAsync createRefreshCommandAsync)
         {
-            var principal = GetClaimsPrincipal(createRefreshCommandAsync.RefreshDto.Access_Token);
-            if (principal == null)
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = GetClaimsPrincipal(createRefreshCommandAsync.RefreshDto.Access_Token);
+                if (principal == null)
+                {
+                    return new TokenDto
+                    {
+                        Errors = new[] { "Invalid Token" }
+                    };
+                }
+                else
+                {
+                    return new TokenDto
+                    {
+                        Errors = new[] { "Token is not expired" }
+                    };
+                }
+
+                //var tokenExpiryDateUnix =
+                //    long.Parse(principal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
+
+                //DateTime tokenExpiryDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                //    .AddSeconds(tokenExpiryDateUnix);
+
+                //if (tokenExpiryDate > DateTime.UtcNow)
+                //{
+                //    return new TokenDto
+                //    {
+                //        Errors = new[] { "Token is not expired" }
+                //    };
+                //}
+            }
+            catch (SecurityTokenExpiredException expEx)
+            {
+
+
+                Console.WriteLine(expEx);
+
+
+                var existingRefreshToken = await refreshTokenService
+                    .GetAsync(dataProtector.Unprotect(createRefreshCommandAsync.RefreshDto.Refresh_Token));
+                if (existingRefreshToken == null)
+                {
+                    return new TokenDto
+                    {
+                        Errors = new[] { "Invalid Refresh Token" }
+                    };
+                }
+
+                if (existingRefreshToken.ExpiryDate < DateTime.UtcNow)
+                {
+                    return new TokenDto
+                    {
+                        Errors = new[] { "Refresh Token is expired" }
+                    };
+                }
+
+                if (existingRefreshToken.IsUsed)
+                {
+                    return new TokenDto
+                    {
+                        Errors = new[] { "Refresh Token is used" }
+                    };
+                }
+
+                if (existingRefreshToken.IsInvalid)
+                {
+                    return new TokenDto
+                    {
+                        Errors = new[] { "Refresh Token is invalid" }
+                    };
+                }
+
+                //var jti = principal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+                //if (jti != existingRefreshToken.JwtId)
+                //{
+                //    return new TokenDto
+                //    {
+                //        Errors = new[] { "Invalid Token" }
+                //    };
+                //}
+
+                existingRefreshToken.IsUsed = true;
+                await refreshTokenService.UpdateAsync(existingRefreshToken);
+
+                var id = existingRefreshToken.UserId;
+                var user = await userManager.FindByIdAsync(id);
+                return await GenerateToken(user);
+            }
+            catch
             {
                 return new TokenDto
                 {
                     Errors = new[] { "Invalid Token" }
                 };
             }
-
-            var tokenExpiryDateUnix =
-               long.Parse(principal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-
-            DateTime tokenExpiryDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
-                .AddSeconds(tokenExpiryDateUnix);
-
-            if (tokenExpiryDate > DateTime.UtcNow)
-            {
-                return new TokenDto
-                {
-                    Errors = new[] { "Token is not expired" }
-                };
-            }
-
-            var existingRefreshToken = await refreshTokenService
-                .GetAsync(createRefreshCommandAsync.RefreshDto.Refresh_Token);
-            if (existingRefreshToken == null)
-            {
-                return new TokenDto
-                {
-                    Errors = new[] { "Invalid Refresh Token" }
-                };
-            }
-
-            if (existingRefreshToken.ExpiryDate < DateTime.UtcNow)
-            {
-                return new TokenDto
-                {
-                    Errors = new[] { "Refresh Token is expired" }
-                };
-            }
-
-            if (existingRefreshToken.IsUsed)
-            {
-                return new TokenDto
-                {
-                    Errors = new[] { "Refresh Token is used" }
-                };
-            }
-
-            if (existingRefreshToken.IsInvalid)
-            {
-                return new TokenDto
-                {
-                    Errors = new[] { "Refresh Token is invalid" }
-                };
-            }
-
-            var jti = principal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
-            if (jti != existingRefreshToken.JwtId)
-            {
-                return new TokenDto
-                {
-                    Errors = new[] { "Invalid Token" }
-                };
-            }
-
-            existingRefreshToken.IsUsed = true;
-            await refreshTokenService.UpdateAsync(existingRefreshToken);
-
-            var id = principal.Claims.Single(x => x.Type == "id").Value;
-            var user = await userManager.FindByIdAsync(id);
-            return await GenerateToken(user);
         }
 
         private ClaimsPrincipal GetClaimsPrincipal(string token)
@@ -149,6 +193,10 @@ namespace Domain.Services
             {
                 var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
                 return IsJwtWithValidSecurityAlgoritm(securityToken) ? principal : null;
+            }
+            catch (SecurityTokenExpiredException expEx)
+            {
+                throw expEx;
             }
             catch
             {
@@ -170,12 +218,21 @@ namespace Domain.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(await GetClaimsList(user)),
-                Expires = DateTime.UtcNow.AddMinutes(GetTokenLifeTimeInMinutes()),
+                Expires = DateTime.UtcNow.AddSeconds(GetTokenLifeTimeInSeconds()),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
                 , SecurityAlgorithms.HmacSha512)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            var existingRefreshTokens = refreshTokenService
+                .Find(x => x.UserId == user.Id, null, null);
+
+            foreach (var existingRefreshToken in existingRefreshTokens)
+            {
+                existingRefreshToken.IsInvalid = true;
+                await refreshTokenService.UpdateAsync(existingRefreshToken);
+            }
 
             var refreshToken = new RefreshToken
             {
@@ -190,16 +247,16 @@ namespace Domain.Services
             return new TokenDto
             {
                 Access_Token = tokenHandler.WriteToken(token),
-                Refresh_Token = refreshToken.Token
+                Refresh_Token = dataProtector.Protect(refreshToken.Token)
             };
         }
 
-        private int GetTokenLifeTimeInMinutes()
+        private int GetTokenLifeTimeInSeconds()
         {
-            Int32.TryParse(jwtSettings.TokenLifeTimeInMinutes, out int tokenLifeTimeInMinutes);
+            Int32.TryParse(jwtSettings.TokenLifeTimeInSeconds, out int tokenLifeTimeInSeconds);
 
-            tokenLifeTimeInMinutes = tokenLifeTimeInMinutes == 0 ? 2 : tokenLifeTimeInMinutes;
-            return tokenLifeTimeInMinutes;
+            tokenLifeTimeInSeconds = tokenLifeTimeInSeconds == 0 ? 2 : tokenLifeTimeInSeconds;
+            return tokenLifeTimeInSeconds;
         }
 
         private async Task<List<Claim>> GetClaimsList(User user)

@@ -7,6 +7,6 @@ namespace Domain.Options
     public class JwtSettings
     {
         public string Secret { get; set; }
-        public string TokenLifeTimeInMinutes { get; set; }
+        public string TokenLifeTimeInSeconds { get; set; }
     }
 }
