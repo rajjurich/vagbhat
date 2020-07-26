@@ -18,6 +18,12 @@ namespace Domain.Core
         }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Treatment> Treatments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -46,6 +52,29 @@ namespace Domain.Core
             builder.Entity<RefreshToken>().HasKey(k => k.Token);
             builder.Entity<RefreshToken>().Property(p => p.Token).ValueGeneratedOnAdd();
             builder.Entity<RefreshToken>().Property(p => p.JwtId).HasMaxLength(450).IsRequired();
+
+            builder.Entity<Address>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Address>().Property(p => p.PatientId).IsRequired();
+
+            builder.Entity<Appointment>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Appointment>().Property(p => p.PatientId).IsRequired();
+            builder.Entity<Appointment>().Property(p => p.DoctorId).IsRequired();
+
+            builder.Entity<Doctor>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Doctor>().Property(p => p.UserId).IsRequired();
+            builder.Entity<Doctor>().Property(p => p.DoctorName).IsRequired();
+            builder.Entity<Doctor>().HasIndex(i => i.DoctorName);
+
+            builder.Entity<Patient>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Patient>().Property(p => p.UserId).IsRequired();
+            builder.Entity<Patient>().Property(p => p.PatientName).IsRequired();
+            builder.Entity<Patient>().HasIndex(i => i.PatientName);
+            builder.Entity<Patient>().Property(p => p.MobileNumber).HasMaxLength(15);
+            builder.Entity<Patient>().Property(p => p.Gender).HasMaxLength(10);
+
+            builder.Entity<Treatment>().HasOne(o => o.Appointment)
+                .WithOne(o => o.Treatment)
+                .HasForeignKey<Treatment>(fk => fk.Id);
         }
     }
 }
