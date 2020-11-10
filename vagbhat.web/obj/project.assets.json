@@ -16,6 +16,18 @@
           "lib/netcoreapp3.1/Microsoft.AspNetCore.Authorization.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Blazor.HttpClient/3.2.0-preview3.20168.3": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Json": "4.7.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Blazor.HttpClient.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Blazor.HttpClient.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Components/3.1.6": {
         "type": "package",
         "dependencies": {
@@ -267,6 +279,20 @@
           "lib/netstandard2.0/Microsoft.Extensions.Http.dll": {}
         }
       },
+      "Microsoft.Extensions.Http.Polly/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Http": "5.0.0",
+          "Polly": "7.1.0",
+          "Polly.Extensions.Http": "3.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.dll": {}
+        }
+      },
       "Microsoft.Extensions.Logging/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -339,6 +365,27 @@
         },
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Polly/7.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Polly.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Polly.dll": {}
+        }
+      },
+      "Polly.Extensions.Http/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Polly": "7.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Polly.Extensions.Http.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Polly.Extensions.Http.dll": {}
         }
       },
       "System.Collections.Immutable/1.5.0": {
@@ -438,6 +485,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Contracts": "1.0.0",
+          "Microsoft.AspNetCore.Blazor.HttpClient": "3.2.0-preview3.20168.3",
           "Microsoft.AspNetCore.Components": "3.1.6",
           "Microsoft.Extensions.Http": "5.0.0",
           "Newtonsoft.Json": "12.0.3"
@@ -467,6 +515,20 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.xml",
         "microsoft.aspnetcore.authorization.3.1.6.nupkg.sha512",
         "microsoft.aspnetcore.authorization.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Blazor.HttpClient/3.2.0-preview3.20168.3": {
+      "sha512": "6J1vBdhSnGW53BQsKeIjI8algTQdW8+Dnx/R9eZ/ldhtY8mx2KXOSkEVr7Tb0xwg5OM5+rHZS+PuzIv1nuvDCg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.blazor.httpclient/3.2.0-preview3.20168.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.txt",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Blazor.HttpClient.dll",
+        "microsoft.aspnetcore.blazor.httpclient.3.2.0-preview3.20168.3.nupkg.sha512",
+        "microsoft.aspnetcore.blazor.httpclient.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Components/3.1.6": {
@@ -760,6 +822,20 @@
         "version.txt"
       ]
     },
+    "Microsoft.Extensions.Http.Polly/5.0.0": {
+      "sha512": "HSevU/I7eDDi9IAoAosrV6ekHwGPwmGchcD9kcjYjzXN3RLZuazDM2MGu3HxU30mlGg0JCD0x0YCwaZEtmdiSQ==",
+      "type": "package",
+      "path": "microsoft.extensions.http.polly/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.xml",
+        "microsoft.extensions.http.polly.5.0.0.nupkg.sha512",
+        "microsoft.extensions.http.polly.nuspec"
+      ]
+    },
     "Microsoft.Extensions.Logging/5.0.0": {
       "sha512": "MgOwK6tPzB6YNH21wssJcw/2MKwee8b2gI7SllYfn6rvTpIrVvVS5HAjSU2vqSku1fwqRvWP0MdIi14qjd93Aw==",
       "type": "package",
@@ -908,6 +984,36 @@
         "newtonsoft.json.12.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
+      ]
+    },
+    "Polly/7.1.0": {
+      "sha512": "mpQsvlEn4ipgICh5CGyVLPV93RFVzOrBG7wPZfzY8gExh7XgWQn0GCDY9nudbUEJ12UiGPP9i4+CohghBvzhmg==",
+      "type": "package",
+      "path": "polly/7.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.1/Polly.dll",
+        "lib/netstandard1.1/Polly.xml",
+        "lib/netstandard2.0/Polly.dll",
+        "lib/netstandard2.0/Polly.xml",
+        "polly.7.1.0.nupkg.sha512",
+        "polly.nuspec"
+      ]
+    },
+    "Polly.Extensions.Http/3.0.0": {
+      "sha512": "drrG+hB3pYFY7w1c3BD+lSGYvH2oIclH8GRSehgfyP5kjnFnHKQuuBhuHLv+PWyFuaTDyk/vfRpnxOzd11+J8g==",
+      "type": "package",
+      "path": "polly.extensions.http/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.1/Polly.Extensions.Http.dll",
+        "lib/netstandard1.1/Polly.Extensions.Http.xml",
+        "lib/netstandard2.0/Polly.Extensions.Http.dll",
+        "lib/netstandard2.0/Polly.Extensions.Http.xml",
+        "polly.extensions.http.3.0.0.nupkg.sha512",
+        "polly.extensions.http.nuspec"
       ]
     },
     "System.Collections.Immutable/1.5.0": {
@@ -1134,7 +1240,9 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Contracts >= 1.0.0",
+      "Microsoft.AspNetCore.Blazor.HttpClient >= 3.2.0-preview3.20168.3",
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 3.1.6",
+      "Microsoft.Extensions.Http.Polly >= 5.0.0",
       "WebClient >= 1.0.0"
     ]
   },
@@ -1182,9 +1290,17 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "Microsoft.AspNetCore.Blazor.HttpClient": {
+            "target": "Package",
+            "version": "[3.2.0-preview3.20168.3, )"
+          },
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
             "target": "Package",
             "version": "[3.1.6, )"
+          },
+          "Microsoft.Extensions.Http.Polly": {
+            "target": "Package",
+            "version": "[5.0.0, )"
           }
         },
         "imports": [

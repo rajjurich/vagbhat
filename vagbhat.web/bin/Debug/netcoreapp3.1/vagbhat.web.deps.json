@@ -25,7 +25,9 @@
       "vagbhat.web/1.0.0": {
         "dependencies": {
           "Contracts": "1.0.0",
+          "Microsoft.AspNetCore.Blazor.HttpClient": "3.2.0-preview3.20168.3",
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "3.1.6",
+          "Microsoft.Extensions.Http.Polly": "5.0.0",
           "WebClient": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -320,6 +322,20 @@
           "lib/netcoreapp3.1/Microsoft.AspNetCore.Authorization.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Blazor.HttpClient/3.2.0-preview3.20168.3": {
+        "dependencies": {
+          "System.Text.Json": "4.7.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Blazor.HttpClient.dll": {
+            "assemblyVersion": "3.2.0.0",
+            "fileVersion": "3.200.20.16803"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Blazor.HttpClient.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Components/3.1.6": {
         "dependencies": {
           "Microsoft.AspNetCore.Authorization": "3.1.6",
@@ -579,6 +595,22 @@
           "lib/netstandard2.0/Microsoft.Extensions.Http.dll": {}
         }
       },
+      "Microsoft.Extensions.Http.Polly/5.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Http": "5.0.0",
+          "Polly": "7.1.0",
+          "Polly.Extensions.Http": "3.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.20.52001"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.dll": {}
+        }
+      },
       "Microsoft.Extensions.Logging/5.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "5.0.0",
@@ -657,6 +689,31 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
+      "Polly/7.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/Polly.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Polly.dll": {}
+        }
+      },
+      "Polly.Extensions.Http/3.0.0": {
+        "dependencies": {
+          "Polly": "7.1.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Polly.Extensions.Http.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Polly.Extensions.Http.dll": {}
+        }
+      },
       "System.Collections.Immutable/1.5.0": {},
       "System.Diagnostics.DiagnosticSource/5.0.0": {
         "runtime": {
@@ -701,6 +758,7 @@
       "WebClient/1.0.0": {
         "dependencies": {
           "Contracts": "1.0.0",
+          "Microsoft.AspNetCore.Blazor.HttpClient": "3.2.0-preview3.20168.3",
           "Microsoft.AspNetCore.Components": "3.1.6",
           "Microsoft.Extensions.Http": "5.0.0",
           "Newtonsoft.Json": "12.0.3"
@@ -2341,6 +2399,13 @@
       "path": "microsoft.aspnetcore.authorization/3.1.6",
       "hashPath": "microsoft.aspnetcore.authorization.3.1.6.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Blazor.HttpClient/3.2.0-preview3.20168.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6J1vBdhSnGW53BQsKeIjI8algTQdW8+Dnx/R9eZ/ldhtY8mx2KXOSkEVr7Tb0xwg5OM5+rHZS+PuzIv1nuvDCg==",
+      "path": "microsoft.aspnetcore.blazor.httpclient/3.2.0-preview3.20168.3",
+      "hashPath": "microsoft.aspnetcore.blazor.httpclient.3.2.0-preview3.20168.3.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Components/3.1.6": {
       "type": "package",
       "serviceable": true,
@@ -2439,6 +2504,13 @@
       "path": "microsoft.extensions.http/5.0.0",
       "hashPath": "microsoft.extensions.http.5.0.0.nupkg.sha512"
     },
+    "Microsoft.Extensions.Http.Polly/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HSevU/I7eDDi9IAoAosrV6ekHwGPwmGchcD9kcjYjzXN3RLZuazDM2MGu3HxU30mlGg0JCD0x0YCwaZEtmdiSQ==",
+      "path": "microsoft.extensions.http.polly/5.0.0",
+      "hashPath": "microsoft.extensions.http.polly.5.0.0.nupkg.sha512"
+    },
     "Microsoft.Extensions.Logging/5.0.0": {
       "type": "package",
       "serviceable": true,
@@ -2487,6 +2559,20 @@
       "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
+    },
+    "Polly/7.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mpQsvlEn4ipgICh5CGyVLPV93RFVzOrBG7wPZfzY8gExh7XgWQn0GCDY9nudbUEJ12UiGPP9i4+CohghBvzhmg==",
+      "path": "polly/7.1.0",
+      "hashPath": "polly.7.1.0.nupkg.sha512"
+    },
+    "Polly.Extensions.Http/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-drrG+hB3pYFY7w1c3BD+lSGYvH2oIclH8GRSehgfyP5kjnFnHKQuuBhuHLv+PWyFuaTDyk/vfRpnxOzd11+J8g==",
+      "path": "polly.extensions.http/3.0.0",
+      "hashPath": "polly.extensions.http.3.0.0.nupkg.sha512"
     },
     "System.Collections.Immutable/1.5.0": {
       "type": "package",

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Polly;
 using WebClient;
 
 namespace vagbhat.web
@@ -28,13 +29,14 @@ namespace vagbhat.web
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddServerSideBlazor();
 
-            services.AddScoped<IPatientClient, PatientClient>();
             services.AddHttpClient("webapi", client =>
             {
                 client.BaseAddress = new Uri(Configuration.GetSection("WebApi").Value);
-            });
+            })
+                .AddTransientHttpErrorPolicy(x => x
+                .WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(300)));
 
-            
+            services.AddScoped<IPatientClient, PatientClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

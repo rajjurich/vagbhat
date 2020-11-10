@@ -94,6 +94,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.AspNetCore.Blazor.HttpClient": {
+              "target": "Package",
+              "version": "[3.2.0-preview3.20168.3, )"
+            },
             "Microsoft.AspNetCore.Components": {
               "target": "Package",
               "version": "[3.1.6, )"
