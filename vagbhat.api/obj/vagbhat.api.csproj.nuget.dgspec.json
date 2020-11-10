@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {}
+    "D:\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
+    "D:\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
+        "projectUniqueName": "D:\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
         "projectName": "Contracts",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
+        "projectPath": "D:\\project\\git\\vagbhat\\Contracts\\Contracts.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\obj\\",
+        "outputPath": "D:\\project\\git\\vagbhat\\Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -56,14 +56,14 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
+    "D:\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
+        "projectUniqueName": "D:\\project\\git\\vagbhat\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
+        "projectPath": "D:\\project\\git\\vagbhat\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\obj\\",
+        "outputPath": "D:\\project\\git\\vagbhat\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -156,14 +156,14 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {
+    "D:\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
+        "projectUniqueName": "D:\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
         "projectName": "vagbhat.api",
-        "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
+        "projectPath": "D:\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\vagbhat.api\\obj\\",
+        "outputPath": "D:\\project\\git\\vagbhat\\vagbhat.api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -179,11 +179,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Contracts\\Contracts.csproj"
+              "D:\\project\\git\\vagbhat\\Contracts\\Contracts.csproj": {
+                "projectPath": "D:\\project\\git\\vagbhat\\Contracts\\Contracts.csproj"
               },
-              "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj"
+              "D:\\project\\git\\vagbhat\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\project\\git\\vagbhat\\Domain\\Domain.csproj"
               }
             }
           }

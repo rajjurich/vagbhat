@@ -140,6 +140,10 @@ namespace vagbhat.api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<ITreatmentService, TreatmentService>();
 
             return services;
         }

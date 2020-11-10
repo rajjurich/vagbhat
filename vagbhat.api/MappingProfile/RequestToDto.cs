@@ -18,6 +18,8 @@ namespace vagbhat.api.MappingProfile
 
             CreateMap<CreateUserRequest, UserDto>();
             CreateMap<UpdateUserRequest, UserDto>();
+
+            CreateMap<CreatePatientRequest, CreatePatientDto>();
         }
     }
 }

@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "vagbhat.api", "vagbhat.api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{0ECE8A3B-1BB7-442F-8808-D1704A96E503}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "vagbhat.web", "vagbhat.web\vagbhat.web.csproj", "{9FA5334A-617F-44F0-A47D-2F233AD63C45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{17216088-3F9B-4C53-8428-A345FCF0945C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{0ECE8A3B-1BB7-442F-8808-D1704A96E503}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ECE8A3B-1BB7-442F-8808-D1704A96E503}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ECE8A3B-1BB7-442F-8808-D1704A96E503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA5334A-617F-44F0-A47D-2F233AD63C45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA5334A-617F-44F0-A47D-2F233AD63C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA5334A-617F-44F0-A47D-2F233AD63C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA5334A-617F-44F0-A47D-2F233AD63C45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17216088-3F9B-4C53-8428-A345FCF0945C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17216088-3F9B-4C53-8428-A345FCF0945C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17216088-3F9B-4C53-8428-A345FCF0945C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17216088-3F9B-4C53-8428-A345FCF0945C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

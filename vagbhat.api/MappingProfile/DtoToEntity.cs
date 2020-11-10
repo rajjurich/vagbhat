@@ -14,6 +14,11 @@ namespace vagbhat.api.MappingProfile
         {            
             CreateMap<RoleDto, Role>();
             CreateMap<UserDto, User>();
+
+            CreateMap<CreatePatientDto, Patient>();
+            CreateMap<CreatePatientDto, Address>();
+            CreateMap<CreatePatientDto, Appointment>();
+            CreateMap<CreatePatientDto, Treatment>();
         }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OE/h+6IDyI4WXm0l7L9KYr1mFxx/63k9F3XTPs7Qzxv+W20i5yL1uT6/8nRJvxc8rVIr3DypwyiAknNvxWdAqQ==",
+  "dgSpecHash": "TP8Gl73oN+xdJTMbmj/WggG3R+PyV3sK2mSdVfctVjbhcElzp51h4HUOAdOd0VUo4broMPeOzhVTHg2/ohsWQA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Desktop\\project\\git\\vagbhat\\Domain\\Domain.csproj",
+  "projectFilePath": "D:\\project\\git\\vagbhat\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\10.0.0\\automapper.10.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.0.0\\automapper.extensions.microsoft.dependencyinjection.8.0.0.nupkg.sha512",

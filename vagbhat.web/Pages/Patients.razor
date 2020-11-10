@@ -1,0 +1,31 @@
+﻿@page "/patients"
+@inherits PatientsBase
+
+<h3>Patients</h3>
+
+@if (Patients == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Patient Name</th>
+                <th>MobileNumber</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Patients)
+            {
+                <tr>
+                    <td>@patient.Id</td>
+                    <td>@patient.PatientName</td>
+                    <td>@patient.MobileNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
