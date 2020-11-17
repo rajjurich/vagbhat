@@ -737,3 +737,5 @@ D:\project\git\vagbhat\vagbhat.web\obj\Debug\netcoreapp3.1\Razor\Pages\Patients.
 D:\project\git\vagbhat\vagbhat.web\obj\Debug\netcoreapp3.1\Razor\Shared\MainLayout.razor.g.cs
 D:\project\git\vagbhat\vagbhat.web\obj\Debug\netcoreapp3.1\Razor\Shared\NavMenu.razor.g.cs
 D:\project\git\vagbhat\vagbhat.web\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
+D:\project\git\vagbhat\vagbhat.web\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Visitor.razor.g.cs
+D:\project\git\vagbhat\vagbhat.web\obj\Debug\netcoreapp3.1\Razor\Shared\Visitor.razor.g.cs
