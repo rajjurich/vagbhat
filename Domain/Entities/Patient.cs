@@ -6,7 +6,7 @@ namespace Domain.Entities
 {
     public class Patient
     {
-        public string Id { get; set; }
+        public string PatientId { get; set; }
         public string PatientName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string MobileNumber { get; set; }

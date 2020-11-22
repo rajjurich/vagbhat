@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,7 @@ namespace vagbhat.web
         {
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddServerSideBlazor();
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddHttpClient("webapi", client =>
             {
                 client.BaseAddress = new Uri(Configuration.GetSection("WebApi").Value);

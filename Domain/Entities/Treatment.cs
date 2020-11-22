@@ -6,7 +6,7 @@ namespace Domain.Entities
 {
     public class Treatment
     {
-        public string Id { get; set; }
+        public string TreatmentId { get; set; }
         public string Complain { get; set; }
         public string RxTreatment { get; set; }
         public string Diagnosis { get; set; }

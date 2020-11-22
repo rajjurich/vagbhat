@@ -6,7 +6,7 @@ namespace Domain.Entities
 {
     public class Appointment
     {
-        public string Id { get; set; }
+        public string AppointmentId { get; set; }
         public DateTime AppointmentDate { get; set; }
         public bool IsVisited { get; set; }
         public double Fees { get; set; }

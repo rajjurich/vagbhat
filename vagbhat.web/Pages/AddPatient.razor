@@ -1,7 +1,112 @@
 ﻿@page "/addpatient"
+@inherits AddPatientBase
 
-<h3>AddPatient</h3>
+<div class="row">
+    <div class="col-sm-1 float-sm-left">
+        <a href="/">Back</a>
+    </div>
+    <div class="col-sm-11">
+        <h3></h3>
+    </div>
 
-@code {
+</div>
+    <div class="col-md-6 m-auto">
+        <EditForm Model="Patient" OnValidSubmit="SubmitForm">
+            <DataAnnotationsValidator />
+            @*<ValidationSummary />*@
 
-}
+            <div class="form-group row">
+                <label for="patientName" class="col-sm-4 col-form-label">
+                    Name
+                </label>
+                <div class="col-sm-8">
+                    <InputText id="patientName" class="form-control" placeholder="Patient Name"
+                               @bind-Value="Patient.PatientName" />
+                    <ValidationMessage For="@(()=>Patient.PatientName)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="age" class="col-sm-4 col-form-label">
+                    Age
+                </label>
+                <div class="col-sm-8">
+                    <InputNumber id="age" class="form-control" placeholder="Age"
+                                 @bind-Value="Patient.Age" />
+                    <ValidationMessage For="@(()=>Patient.Age)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="mobileNumber" class="col-sm-4 col-form-label">
+                    Mobile Number
+                </label>
+                <div class="col-sm-8">
+                    <InputText id="mobileNumber" class="form-control" placeholder="Mobile Number"
+                               @bind-Value="Patient.MobileNumber" />
+                    <ValidationMessage For="@(()=>Patient.MobileNumber)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fullAddress" class="col-sm-4 col-form-label">
+                    Address
+                </label>
+                <div class="col-sm-8">
+                    <InputTextArea id="fullAddress" class="form-control" placeholder="Full Address"
+                                   @bind-Value="Patient.FullAddress" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="patientHistory" class="col-sm-4 col-form-label">
+                    History
+                </label>
+                <div class="col-sm-8">
+                    <InputTextArea id="patientHistory" class="form-control" placeholder="History"
+                                   @bind-Value="Patient.PatientHistory" />
+                    <ValidationMessage For="@(()=>Patient.PatientHistory)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="complain" class="col-sm-4 col-form-label">
+                    Complain
+                </label>
+                <div class="col-sm-8">
+                    <InputTextArea id="complain" class="form-control" placeholder="Complain"
+                                   @bind-Value="Patient.Complain" />
+                    <ValidationMessage For="@(()=>Patient.Complain)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="rxTreatment" class="col-sm-4 col-form-label">
+                    Rx(Treatment)
+                </label>
+                <div class="col-sm-8">
+                    <InputTextArea id="rxTreatment" class="form-control" placeholder="RxTreatment"
+                                   @bind-Value="Patient.RxTreatment" />
+                    <ValidationMessage For="@(()=>Patient.RxTreatment)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="nextAppointmentDate" class="col-sm-4 col-form-label">
+                    Next Visit
+                </label>
+                <div class="col-sm-8">
+                    <InputDate id="nextAppointmentDate" class="form-control" placeholder="Next Appointment Date"
+                               @bind-Value="Patient.NextAppointmentDate" />
+                    <ValidationMessage For="@(()=>Patient.NextAppointmentDate)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fees" class="col-sm-4 col-form-label">
+                    Fees
+                </label>
+                <div class="col-sm-8">
+                    <InputNumber id="fees" class="form-control" placeholder="Fees"
+                                 @bind-Value="Patient.Fees" />
+                    <ValidationMessage For="@(()=>Patient.Fees)"></ValidationMessage>
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+        </EditForm>
+    </div>
+<br />
+
+

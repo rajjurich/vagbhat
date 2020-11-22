@@ -37,7 +37,7 @@ namespace Domain.Services
 
         public IQueryable<Address> Find(Expression<Func<Address, bool>> predicate, int? start, int? length)
         {
-            throw new NotImplementedException();
+            return entityRepository.Find(predicate, start, length);
         }
 
         public IQueryable<Address> Get(int start, int length)
@@ -57,7 +57,7 @@ namespace Domain.Services
 
         public Task<Address> UpdateAsync(Address entity)
         {
-            throw new NotImplementedException();
+            return entityRepository.UpdateAsync(entity);
         }
     }
 }

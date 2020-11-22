@@ -79,11 +79,9 @@ using vagbhat.web.Shared;
         {
             __builder.OpenElement(0, "div");
             __builder.AddAttribute(1, "class", "main");
-            __builder.AddMarkupContent(2, "\r\n\r\n    ");
-            __builder.OpenElement(3, "div");
-            __builder.AddAttribute(4, "class", "content px-4");
-            __builder.AddMarkupContent(5, "\r\n        ");
-            __builder.AddContent(6, 
+            __builder.OpenElement(2, "div");
+            __builder.AddAttribute(3, "class", "content px-4");
+            __builder.AddContent(4, 
 #nullable restore
 #line 13 "D:\project\git\vagbhat\vagbhat.web\Shared\MainLayout.razor"
          Body
@@ -92,9 +90,7 @@ using vagbhat.web.Shared;
 #line hidden
 #nullable disable
             );
-            __builder.AddMarkupContent(7, "\r\n    ");
             __builder.CloseElement();
-            __builder.AddMarkupContent(8, "\r\n");
             __builder.CloseElement();
         }
         #pragma warning restore 1998

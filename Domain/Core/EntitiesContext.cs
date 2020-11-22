@@ -53,28 +53,31 @@ namespace Domain.Core
             builder.Entity<RefreshToken>().Property(p => p.Token).ValueGeneratedOnAdd();
             builder.Entity<RefreshToken>().Property(p => p.JwtId).HasMaxLength(450).IsRequired();
 
-            builder.Entity<Address>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Address>().Property(p => p.AddressId).ValueGeneratedOnAdd();
             builder.Entity<Address>().Property(p => p.PatientId).IsRequired();
 
-            builder.Entity<Appointment>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Appointment>().Property(p => p.AppointmentId).ValueGeneratedOnAdd();
             builder.Entity<Appointment>().Property(p => p.PatientId).IsRequired();
             builder.Entity<Appointment>().Property(p => p.DoctorId).IsRequired();
 
-            builder.Entity<Doctor>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Doctor>().Property(p => p.DoctorId).ValueGeneratedOnAdd();
             builder.Entity<Doctor>().Property(p => p.UserId).IsRequired();
             builder.Entity<Doctor>().Property(p => p.DoctorName).IsRequired();
             builder.Entity<Doctor>().HasIndex(i => i.DoctorName);
 
-            builder.Entity<Patient>().Property(p => p.Id).ValueGeneratedOnAdd();
+            builder.Entity<Patient>().Property(p => p.PatientId).ValueGeneratedOnAdd();
             builder.Entity<Patient>().Property(p => p.UserId).IsRequired();
             builder.Entity<Patient>().Property(p => p.PatientName).IsRequired();
             builder.Entity<Patient>().HasIndex(i => i.PatientName);
+            builder.Entity<Patient>().Property(p => p.MobileNumber).IsRequired();
             builder.Entity<Patient>().Property(p => p.MobileNumber).HasMaxLength(15);
             builder.Entity<Patient>().Property(p => p.Gender).HasMaxLength(10);
+            builder.Entity<Patient>().Property(p => p.Gender).IsRequired();
+            builder.Entity<Patient>().Property(p => p.PatientHistory).IsRequired();
 
             builder.Entity<Treatment>().HasOne(o => o.Appointment)
                 .WithOne(o => o.Treatment)
-                .HasForeignKey<Treatment>(fk => fk.Id);
+                .HasForeignKey<Treatment>(fk => fk.TreatmentId);
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿@page "/"
 @inherits IndexBase
 
-<h1>Vagbhat Ayurveda Clinic</h1>
+<h2>Welcome to Vagbhat Ayurveda Clinic Application</h2>
 
-Welcome! @DateTime.Now.ToString("dd MMM yyyy hh:mm")
+<p style="text-decoration:underline">Please select your Task</p>
 
 <ul>
     <li><a href="#" @onclick="NewPatient">New Patient</a></li>
+    <li><a href="/patients">Search</a></li>
 </ul>
 
 <button @onclick="ToggleVisibility">@VisibilityText</button>

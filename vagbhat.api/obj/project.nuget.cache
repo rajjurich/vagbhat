@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "LRPr5T51ryKOD+62qy3TppJoNNcYLcNkBCIpOQZKKZ9sxby6DU+wL35iBnfn7toLnOyVd1QQ1fAoWEHSyPYpMA==",
+  "dgSpecHash": "TxfWXHZ/WSFh3vxoS4nlQgJtYGmAxbG4ZunpMj3UikdtBfhOACf4ymKTiyMSkc3Bu8tkzn4U66JQ4yyIoE195g==",
   "success": true,
   "projectFilePath": "D:\\project\\git\\vagbhat\\vagbhat.api\\vagbhat.api.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\user\\.nuget\\packages\\automapper\\10.0.0\\automapper.10.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.0.0\\automapper.extensions.microsoft.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mediatr\\8.0.2\\mediatr.8.0.2.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\8.0.1\\mediatr.extensions.microsoft.dependencyinjection.8.0.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

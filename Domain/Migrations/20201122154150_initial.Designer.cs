@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(EntitiesContext))]
-    [Migration("20200726062447_Initial")]
-    partial class Initial
+    [Migration("20201122154150_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Entities.Address", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("AddressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
@@ -34,7 +34,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AddressId");
 
                     b.HasIndex("PatientId");
 
@@ -43,7 +43,7 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("AppointmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
@@ -64,7 +64,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AppointmentId");
 
                     b.HasIndex("DoctorId");
 
@@ -75,7 +75,7 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("DoctorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
@@ -87,7 +87,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("DoctorId");
 
                     b.HasIndex("DoctorName");
 
@@ -98,7 +98,7 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("PatientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
@@ -106,14 +106,17 @@ namespace Domain.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
                     b.Property<string>("MobileNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
                     b.Property<string>("PatientHistory")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientName")
@@ -124,7 +127,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("PatientId");
 
                     b.HasIndex("PatientName");
 
@@ -198,7 +201,7 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Entities.Treatment", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("TreatmentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Complain")
@@ -210,7 +213,7 @@ namespace Domain.Migrations
                     b.Property<string>("RxTreatment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("TreatmentId");
 
                     b.ToTable("Treatments");
                 });
@@ -459,7 +462,7 @@ namespace Domain.Migrations
                 {
                     b.HasOne("Domain.Entities.Appointment", "Appointment")
                         .WithOne("Treatment")
-                        .HasForeignKey("Domain.Entities.Treatment", "Id")
+                        .HasForeignKey("Domain.Entities.Treatment", "TreatmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

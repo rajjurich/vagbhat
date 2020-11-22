@@ -15,7 +15,7 @@ namespace Contracts
 
         public static class Patients
         {
-            public const string Get = Root + "Patient";
+            public const string Sub = Root + "Patient";
         }
     }
 }

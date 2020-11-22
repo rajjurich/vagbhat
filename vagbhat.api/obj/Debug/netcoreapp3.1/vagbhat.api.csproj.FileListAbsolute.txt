@@ -203,7 +203,6 @@ D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\nlog.config
 D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\web.config
 D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\appsettings.Development.json
 D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\appsettings.json
-D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\vagbhat.api.exe
 D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\vagbhat.api.deps.json
 D:\project\git\vagbhat\vagbhat.api\bin\Debug\netcoreapp3.1\vagbhat.api.runtimeconfig.json
@@ -292,10 +291,11 @@ D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.AssemblyI
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CoreCompileInputs.cache
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cs
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.MvcApplicationPartsAssemblyInfo.cache
-D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.RazorTargetAssemblyInfo.cache
-D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CopyComplete
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\staticwebassets\vagbhat.api.StaticWebAssets.Manifest.cache
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\staticwebassets\vagbhat.api.StaticWebAssets.xml
+D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\scopedcss\bundle\vagbhat.api.styles.css
+D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.RazorTargetAssemblyInfo.cache
+D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.csproj.CopyComplete
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.dll
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.xml
 D:\project\git\vagbhat\vagbhat.api\obj\Debug\netcoreapp3.1\vagbhat.api.pdb

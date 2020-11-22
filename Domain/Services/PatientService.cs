@@ -47,7 +47,7 @@ namespace Domain.Services
 
         public Task<Patient> GetAsync(string key)
         {
-            throw new NotImplementedException();
+            return entityRepository.GetAsync(key);
         }
 
         public Task<Patient> RemoveAsync(Patient entity)
@@ -57,7 +57,7 @@ namespace Domain.Services
 
         public Task<Patient> UpdateAsync(Patient entity)
         {
-            throw new NotImplementedException();
+            return entityRepository.UpdateAsync(entity);
         }
     }
 }

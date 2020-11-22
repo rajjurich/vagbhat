@@ -9,6 +9,7 @@ using Domain.Application.Commands;
 using Domain.Application.Queries;
 using Domain.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,7 @@ namespace vagbhat.api.Controllers
         // GET: api/<PatientController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IQueryable<PatientResponse>))]
+        //[Authorize]
         public async Task<IActionResult> Get()
         {
             var query = new GetPatientsQuery();
@@ -43,9 +45,19 @@ namespace vagbhat.api.Controllers
 
         // GET api/<PatientController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PatientResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            var query = new GetPatientQueryAsync(id);
+            var result = await mediator.Send(query);
+
+            if (result == null)
+            {
+                return NotFound(id);
+            }
+
+            return Ok(mapper.Map<PatientResponse>(result));
         }
 
         // POST api/<PatientController>
@@ -54,25 +66,39 @@ namespace vagbhat.api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(PatientResponse))]
         public async Task<IActionResult> Post([FromBody] CreatePatientRequest createPatientRequest)
         {
-            var dto = mapper.Map<CreatePatientDto>(createPatientRequest);
+            var dto = mapper.Map<PatientDto>(createPatientRequest);
 
             var command = new CreatePatientCommandAsync(dto);
 
             var result = await mediator.Send(command);
 
-            if (result== null)
+            if (result == null)
             {
                 return BadRequest();
             }
 
-            return CreatedAtAction(nameof(Get), new { id = result.Id }, mapper.Map<PatientResponse>(result));
+            return CreatedAtAction(nameof(Get), new { id = result.PatientId }, mapper.Map<PatientResponse>(result));
 
         }
 
         // PUT api/<PatientController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PatientResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(PatientResponse))]
+        public async Task<IActionResult> Put(string Id, [FromBody] CreatePatientRequest createPatientRequest)
         {
+            var dto = mapper.Map<PatientDto>(createPatientRequest);
+
+            var command = new CreatePatientCommandAsync(dto);
+
+            var result = await mediator.Send(command);
+
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(mapper.Map<PatientResponse>(result));
         }
 
         // DELETE api/<PatientController>/5

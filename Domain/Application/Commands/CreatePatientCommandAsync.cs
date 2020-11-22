@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Domain.Application.Commands
 {
-    public class CreatePatientCommandAsync : IRequest<CreatePatientDto>
+    public class CreatePatientCommandAsync : IRequest<PatientDto>
     {
-        public CreatePatientCommandAsync(CreatePatientDto dto)
+        public CreatePatientCommandAsync(PatientDto dto)
         {
             Dto = dto;
         }
 
-        public CreatePatientDto Dto { get; }
+        public PatientDto Dto { get; }
     }
 }

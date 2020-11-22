@@ -1,7 +1,15 @@
 ﻿@page "/patients"
 @inherits PatientsBase
 
-<h3>Patients</h3>
+    <div class="row">
+        <div class="col-sm-1 float-sm-left">
+            <a href="/">Back</a>
+        </div>
+        <div class="col-sm-11">
+            <h3></h3>
+        </div>
+
+    </div>
 
 @if (Patients == null)
 {
@@ -9,23 +17,25 @@
 }
 else
 {
-    <table class="table">
+<center>
+    <table class="table col-sm-6">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Patient Name</th>
-                <th>MobileNumber</th>
+                <th>Age</th>
+                <th>Mobile Number</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var patient in Patients)
             {
                 <tr>
-                    <td>@patient.Id</td>
-                    <td>@patient.PatientName</td>
+                    <td><a href="/editpatient/@patient.PatientId">@patient.PatientName</a></td>
+                    <td>@patient.Age</td>
                     <td>@patient.MobileNumber</td>
                 </tr>
             }
         </tbody>
     </table>
+</center>
 }

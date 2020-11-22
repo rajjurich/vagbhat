@@ -12,12 +12,12 @@ namespace vagbhat.web.Pages
     public class PatientsBase : ComponentBase
     {
         [Inject]
-        public IPatientClient IPatientClient { get; set; }
+        public IPatientClient PatientClient { get; set; }
         protected IEnumerable<PatientResponse> Patients { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Patients = await IPatientClient.GetPatients();           
+            Patients = await PatientClient.GetPatients();           
         }
     }
 }

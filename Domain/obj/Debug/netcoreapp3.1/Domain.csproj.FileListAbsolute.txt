@@ -27,10 +27,10 @@ D:\project\git\vagbhat\Domain\bin\Debug\netcoreapp3.1\Domain.runtimeconfig.json
 D:\project\git\vagbhat\Domain\bin\Debug\netcoreapp3.1\Domain.runtimeconfig.dev.json
 D:\project\git\vagbhat\Domain\bin\Debug\netcoreapp3.1\Domain.dll
 D:\project\git\vagbhat\Domain\bin\Debug\netcoreapp3.1\Domain.pdb
+D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.csprojAssemblyReference.cache
 D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.AssemblyInfoInputs.cache
 D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.AssemblyInfo.cs
 D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.csproj.CoreCompileInputs.cache
 D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.dll
 D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.pdb
 D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.genruntimeconfig.cache
-D:\project\git\vagbhat\Domain\obj\Debug\netcoreapp3.1\Domain.csprojAssemblyReference.cache

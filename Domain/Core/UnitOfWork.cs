@@ -50,10 +50,10 @@ namespace Domain.Core
                     await entitiesContext.SaveChangesAsync();
                     await currentTransaction.CommitAsync();
                 }
-                catch
+                catch(Exception ex)
                 {
                     await RollbackTransactionAsync();
-                    throw;
+                    throw ex;
                 }
                 finally
                 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Domain.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -167,13 +167,13 @@ namespace Domain.Migrations
                 name: "Doctors",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    DoctorId = table.Column<string>(nullable: false),
                     DoctorName = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Doctors", x => x.Id);
+                    table.PrimaryKey("PK_Doctors", x => x.DoctorId);
                     table.ForeignKey(
                         name: "FK_Doctors_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -186,17 +186,17 @@ namespace Domain.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    PatientId = table.Column<string>(nullable: false),
                     PatientName = table.Column<string>(nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    MobileNumber = table.Column<string>(maxLength: 15, nullable: true),
-                    Gender = table.Column<string>(maxLength: 10, nullable: true),
-                    PatientHistory = table.Column<string>(nullable: true),
+                    MobileNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    Gender = table.Column<string>(maxLength: 10, nullable: false),
+                    PatientHistory = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.PrimaryKey("PK_Patients", x => x.PatientId);
                     table.ForeignKey(
                         name: "FK_Patients_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -232,18 +232,18 @@ namespace Domain.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    AddressId = table.Column<string>(nullable: false),
                     FullAddress = table.Column<string>(nullable: true),
                     PatientId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
                     table.ForeignKey(
                         name: "FK_Addresses_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "Id",
+                        principalColumn: "PatientId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -251,7 +251,7 @@ namespace Domain.Migrations
                 name: "Appointments",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    AppointmentId = table.Column<string>(nullable: false),
                     AppointmentDate = table.Column<DateTime>(nullable: false),
                     IsVisited = table.Column<bool>(nullable: false),
                     Fees = table.Column<double>(nullable: false),
@@ -260,18 +260,18 @@ namespace Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.PrimaryKey("PK_Appointments", x => x.AppointmentId);
                     table.ForeignKey(
                         name: "FK_Appointments_Doctors_DoctorId",
                         column: x => x.DoctorId,
                         principalTable: "Doctors",
-                        principalColumn: "Id",
+                        principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Appointments_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "Id",
+                        principalColumn: "PatientId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -279,19 +279,19 @@ namespace Domain.Migrations
                 name: "Treatments",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    TreatmentId = table.Column<string>(nullable: false),
                     Complain = table.Column<string>(nullable: true),
                     RxTreatment = table.Column<string>(nullable: true),
                     Diagnosis = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Treatments", x => x.Id);
+                    table.PrimaryKey("PK_Treatments", x => x.TreatmentId);
                     table.ForeignKey(
-                        name: "FK_Treatments_Appointments_Id",
-                        column: x => x.Id,
+                        name: "FK_Treatments_Appointments_TreatmentId",
+                        column: x => x.TreatmentId,
                         principalTable: "Appointments",
-                        principalColumn: "Id",
+                        principalColumn: "AppointmentId",
                         onDelete: ReferentialAction.Restrict);
                 });
 

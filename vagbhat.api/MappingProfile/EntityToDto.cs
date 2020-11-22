@@ -15,8 +15,8 @@ namespace vagbhat.api.MappingProfile
             CreateMap<Role, RoleDto>();
             CreateMap<User, UserDto>();
 
-            CreateMap<Patient, CreatePatientDto>();
-            CreateMap<Patient, PatientDto>();
+            CreateMap<Patient, PatientDto>().ForMember(d => d.Age,
+                opt => opt.MapFrom(s => DateTime.Now.Year - s.DateOfBirth.Year));
         }
     }
 }

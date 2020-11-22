@@ -37,7 +37,7 @@ namespace Domain.Services
 
         public IQueryable<Appointment> Find(Expression<Func<Appointment, bool>> predicate, int? start, int? length)
         {
-            throw new NotImplementedException();
+            return entityRepository.Find(predicate, start, length);
         }
 
         public IQueryable<Appointment> Get(int start, int length)
@@ -57,7 +57,7 @@ namespace Domain.Services
 
         public Task<Appointment> UpdateAsync(Appointment entity)
         {
-            throw new NotImplementedException();
+            return entityRepository.UpdateAsync(entity);
         }
     }
 }
